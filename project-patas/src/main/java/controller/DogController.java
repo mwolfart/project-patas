@@ -1,19 +1,22 @@
 package controller;
 
 import java.util.Date;
-
 import model.Dog;
 import model.Dog.Availability;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class DogController {
-	
-	@RequestMapping("/dog")
-    public Dog dogRegister(@RequestParam(value="name",required = false) String name) {
+	//como não disse qual metodo é, o default é GET, ou seja a url coloca algo na tela como um list ou visualização
+	@RequestMapping(value = "/dog2")
+    public Dog dogRegisterGet(@RequestParam(value="name",required = false) String name) {
 		name = "veia";
 		Double weight = 20.5;
 	    String gender = "F";
@@ -31,4 +34,12 @@ public class DogController {
         return new Dog(name, weight, gender, size, pelageColor, dateBirth, age, arrivalDate, 
         		castrated, castrationDate, availability, disease, diseaseDescription, godfathers) ;
     }  
+	
+	@RequestMapping(value = "/dog",method = RequestMethod.POST)
+    public ResponseEntity<?> dogRegister(@RequestBody Dog dog) {
+		
+		//Dog newDog = new Dog(dog.getName(), dog.getWeight(), dog.getGender(), dog.getSize(), dog.getPelageColor(), dog.getDateBirth(), dog.getAge(), dog.getArrivalDate(), dog.getCastrated(), dog.getCastrationDate(), dog.getAvailability(), dog.getDisease(), dog.getDiseaseDescription(), dog.getGodfathers());
+		System.out.print(dog);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 }

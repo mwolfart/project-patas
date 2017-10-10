@@ -1,6 +1,6 @@
 package model;
-
 import java.util.Date;
+
 
 public class Dog {
 	
@@ -128,4 +128,18 @@ public class Dog {
 	public void setGodfathers(String godfathers) {
 		this.godfathers = godfathers;
 	}
+
+	@Override
+	public String toString() {
+		return "Dog [name=" + name + ", weight=" + weight + ", gender="
+				+ gender + ", size=" + size + ", pelageColor=" + pelageColor
+				+ ", dateBirth=" + dateBirth + ", age=" + age
+				+ ", arrivalDate=" + arrivalDate + ", castrated=" + castrated
+				+ ", castrationDate=" + castrationDate + ", availability="
+				+ availability + ", disease=" + disease
+				+ ", diseaseDescription=" + diseaseDescription
+				+ ", godfathers=" + godfathers + "]";
+	}
+	
+	
 }
