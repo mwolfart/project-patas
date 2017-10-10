@@ -19,6 +19,11 @@ public class Dog {
 	private String diseaseDescription;
 	private String godfathers;
 	
+	
+	//Introducing the dummy constructor
+    public Dog() {
+    }
+    
 	public enum Availability{
 		DISPONIVEL,INDISPONIVEL,ADOTADO,MORREU,LARREPOUSO,DESAPARECIDO;
 	}
