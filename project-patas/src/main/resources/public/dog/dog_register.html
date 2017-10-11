@@ -8,57 +8,49 @@
     	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
 		
 		<script type="text/javascript">
-			function serialToJson(serial) {
-				var dict = {};
+			// formToJson := Object -> Object
+			// obj.: recieves an Object (should be of a form) and returns a JSON object
+			// with the data that the form contains
+			function formToJson(form){
+				JSON_data = {};
 				
-				var pairs = serial.split("&");
+				form_data = $(form).serializeArray();
+				   
+					form_data.forEach( function(input){
+						JSON_data[input.name] = input.value;
+					});
 				
-				// BRUTEFORCE
-				
-				for (var i = 0, len = pairs.length; i < len; i++) {
-					var current_pair = pairs[i].split("=");
-					
-					if (i == 1 || i == 6) {
-						dict[current_pair[0]] = parseInt(current_pair[1]);
-					}
-					else if (i == 8 || i == 11) {
-						if (current_pair[1] == "Sim") {
-							dict[current_pair[0]] = true;
-						}
-						else {
-							dict[current_pair[0]] = false;
-						}
-					}
-					else if (i == 5 || i == 7 || i == 9) {
-						dict[current_pair[0]] = 1507686806954;
-					}
-					else {
-						dict[current_pair[0]] = current_pair[1];
-					}
-				}
-				
-				json = JSON.stringify(dict);
-				
-				return json;
+				// Fix data types
+			    return JSON_data;
 			}
 		
-			// THE AJAX SCRIPT IN THIS PART WON'T WORK
-			
+			// Document load script
 			$(document).ready(function() {
-				$( "#register_form" ).submit(function() {
-					alert(serialToJson( $( "#register_form" ).serialize() ) );
+				// Prevent from user typing letters and other symbols to "weight" field
+				// PROBLEM: you can use shift to insert symbols (in the digit keys)
+				$( "#register_form input[name=weight]" ).keydown(function (key) {
+					var isDigit = (key.which >= 48 && key.which <= 57);
+					var isDot = (key.which == 190);
+					var isBackspace = (key.which == 8);
+					var isTab = (key.which == 9);
 					
+					if (!isDigit && !isDot && !isBackspace && !isTab)
+						return false;
+				});
+				
+				// Set the submit configuration for the form
+				$( "#register_form" ).submit(function(event) {
+					event.preventDefault();
+					
+					console.log(formToJson(this));
+					
+					// Post the data
 					$.ajax({
 						url: "http://localhost:8080/dogPost",
 						type: "POST",
 						dataType: "json",
-						data: serialToJson( $( "#register_form" ).serialize() ),
+						data: formToJson(this),
 						contentType: "application/json; charset=UTF-8",
-						error: function(xhr, textStatus, error){
-							console.log(xhr.statusText);
-							console.log(textStatus);
-							console.log(error);
-						}
 					});
 				});
 			});
@@ -71,42 +63,54 @@
 			<input type="text" name="name" placeholder="Nome do cachorro">
 			
 			<label for="weight">Peso</label>
-			<input type="text" name="weight" placeholder="Peso do cachorro">
+			<input name="weight" placeholder="Peso do cachorro">
 			
 			<label for="gender">Sexo</label>
-			<input type="text" name="gender" placeholder="Sexo do cachorro">
+			<select name="gender" placeholder="Sexo do cachorro">
+				<option value="M">Macho</option>
+				<option value="F">Fêmea</option>
+			</select>
 			
 			<label for="size">Porte</label>
-			<input type="text" name="size" placeholder="Porte do cachorro">
+			<select name="size" placeholder="Sexo do cachorro">
+				<option value="P">Pequeno</option>
+				<option value="M">Médio</option>
+				<option value="G">Grande</option>
+			</select>
 			
 			<label for="pelageColor">Cor do pelo</label>
 			<input type="text" name="pelageColor" placeholder="Cor do pelo do cachorro">
 			
 			<label for="dateBirth">Data de nascimento</label>
-			<input type="text" name="dateBirth" placeholder="Data de nascimento do cachorro">
+			<input type="date" name="dateBirth" placeholder="Data de nascimento do cachorro">
 			
 			<label for="age">Idade</label>
-			<input type="text" name="age" value="">
+			<input name="age" value="" readonly>
 			
 			<label for="arrivalDate">Data de chegada</label>
 			<input type="date" name="arrivalDate">
 			
 			<label for="castrated">Castrado</label>
-			<input type="radio" name="castrated" value="Sim" checked>
-			<input type="radio" name="castrated" value="Não">
+			<input type="checkbox" name="castrated">
 			
 			<label for="castrationDate">Data de castração</label>
-			<input type="date" name="castrationDate">
+			<input type="date" name="castrationDate" disabled>
 			
 			<label for="availability">Disponibilidade</label>
-			<input type="text" name="availability" value="">
+			<select name="availability"">
+				<option value="DISPONIVEL">Disponível</option>
+				<option value="INDISPONIVEL">Indisponível</option>
+				<option value="ADOTADO">Adotado</option>
+				<option value="FALECIDO">Falecido</option>
+				<option value="REPOUSO">Em lar de repouso</option>
+				<option value="DESAPARECIDO">Desaparecido</option>
+			</select>
 			
 			<label for="disease">Doenças</label>
-			<input type="radio" name="disease" value="Sim" checked>
-			<input type="radio" name="disease" value="Não">
+			<input type="checkbox" name="disease">
 			
 			<label for="diseaseDescription">Descrição</label>
-			<input type="text" name="diseaseDescription" placeholder="Doença do cachorro">
+			<input type="text" name="diseaseDescription" placeholder="Doença do cachorro" disabled>
 			
 			<label for="godfathers">Padrinhos</label>
 			<input type="text" name="godfathers" placeholder="Padrinho do cachorro">
