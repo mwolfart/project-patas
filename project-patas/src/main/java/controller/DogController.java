@@ -22,8 +22,8 @@ public class DogController {
 	@Autowired 
 	private DogRepository dogRepository;
 	
-	//como não disse qual metodo é, o default é GET, ou seja a url coloca algo na tela como um list ou visualização
-	@RequestMapping(value = "/dog2")
+	// REQUEST
+	@RequestMapping(value = "/dogGet")
     public Dog dogRegisterGet(@RequestParam(value="name",required = false) String name) {
 		name = "veia";
 		Double weight = 20.5;
@@ -43,7 +43,8 @@ public class DogController {
         		castrated, castrationDate, availability, disease, diseaseDescription, godfathers) ;
     }  
 	
-	@RequestMapping(value = "/dog",method = RequestMethod.POST)
+	// POST
+	@RequestMapping(value = "/dogPost", method = RequestMethod.POST)
     public ResponseEntity<?> dogRegister(@RequestBody Dog dog) {
 		
 		//Dog newDog = new Dog(dog.getName(), dog.getWeight(), dog.getGender(), dog.getSize(), dog.getPelageColor(), dog.getDateBirth(), dog.getAge(), dog.getArrivalDate(), dog.getCastrated(), dog.getCastrationDate(), dog.getAvailability(), dog.getDisease(), dog.getDiseaseDescription(), dog.getGodfathers());

@@ -3,57 +3,170 @@
 	<head>
 		<title>Cadastro de Cachorro</title>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+		<script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+    	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+    	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+		
+		<script type="text/javascript">
+			
+			// arrayContains := Array -> Boolean
+			// checks if a given array contains a given value
+			function arrayContains(array, value) {
+				var len = array.length;
+				var iter = 0;
+				
+				while (iter < len && array[iter] != value)
+					iter++;
+				
+				return (iter < len);
+			}
+		
+			// isDateValid := String -> Boolean
+			// checks if a given date (by string) is valid or not.
+			function isDateValid(date_as_string) {
+				var parts = date_as_string.split("/");
+				
+				var year = parseInt(parts[2]);
+				var month = parseInt(parts[1]);
+				var day = parseInt(parts[0]);
+				
+				var year_is_valid = (year > 0);
+				var month_is_valid = (month > 0 && month <= 12);
+				
+				if (!month_is_valid || !year_is_valid)
+					return false;
+				
+				var day_is_valid;
+				var long_months = new Array(1,3,5,7,8,10,12);
+				var short_months = new Array(4,6,9,10);
+				
+				if (arrayContains(long_months, month) && day < 32 && day > 0)
+					return true;
+				else if (arrayContains(short_months, month) && day < 31 && day > 0)
+					return true;
+				else if (month == 2 && day < 30 && (year % 4 == 0) && day > 0)
+					return true;
+				else if (month == 2 && day < 29 && day > 0)
+					return true;
+				else return false;
+			}
+		
+			// formToJson := Object -> Object
+			// recieves an Object (should be of a form) and returns a JSON object
+			// with the data that the form contains
+			function formToJson(form){
+				JSON_data = {};
+				
+				form_data = $(form).serializeArray();
+				   
+					form_data.forEach( function(input){
+						//Test if value is a number (float)
+						if (isFinite(input.value))
+							JSON_data[input.name] = parseFloat(input.value);
+						//Test if value is a date
+						else if (isDateValid(input.value))
+							JSON_data[input.name] = Date.parse(input.value);
+						//Else, it's a string or boolean
+						else JSON_data[input.name] = input.value;
+					});
+				
+			    return JSON_data;
+			}
+		
+			// Document load script
+			$(document).ready(function() {
+				// Prevent from user typing letters and other symbols to "weight" field
+				// PROBLEM: you can use shift to insert symbols (in the digit keys)
+				$( "#register_form input[name=weight]" ).keydown(function (key) {
+					var isDigit = (key.which >= 48 && key.which <= 57);
+					var isDot = (key.which == 190);
+					var isBackspace = (key.which == 8);
+					var isTab = (key.which == 9);
+					
+					if (!isDigit && !isDot && !isBackspace && !isTab)
+						return false;
+				});
+				
+				// Set the submit configuration for the form
+				$( "#register_form" ).submit(function(event) {
+					event.preventDefault();
+					
+					console.log(formToJson(this));
+					
+					// Post the data
+					$.ajax({
+						url: "http://localhost:8080/dogPost",
+						type: "POST",
+						dataType: "json",
+						data: formToJson(this),
+						contentType: "application/json; charset=UTF-8",
+					});
+				});
+			});
+		</script>
 	</head>
 	<body>
-		<form action="" method="post">
+		<form action="http://localhost:8080/dog/dog_register.html" id="register_form">
 			
 			<label for="name">Nome</label>
-			<input type="text" id="name" placeholder="Nome do cachorro">
+			<input type="text" name="name" placeholder="Nome do cachorro">
 			
 			<label for="weight">Peso</label>
-			<input type="text" id="weight" placeholder="Peso do cachorro">
+			<input name="weight" placeholder="Peso do cachorro">
 			
-			<label for="sex">Sexo</label>
-			<input type="text" id="sex" placeholder="Sexo do cachorro">
+			<label for="gender">Sexo</label>
+			<select name="gender" placeholder="Sexo do cachorro">
+				<option value="M">Macho</option>
+				<option value="F">Fêmea</option>
+			</select>
 			
 			<label for="size">Porte</label>
-			<input type="text" id="size" placeholder="Porte do cachorro">
+			<select name="size" placeholder="Sexo do cachorro">
+				<option value="P">Pequeno</option>
+				<option value="M">Médio</option>
+				<option value="G">Grande</option>
+			</select>
 			
-			<label for="coat_color">Cor do pelo</label>
-			<input type="text" id="coat_color" placeholder="Cor do pelo do cachorro">
+			<label for="pelageColor">Cor do pelo</label>
+			<input type="text" name="pelageColor" placeholder="Cor do pelo do cachorro">
 			
-			<label for="birth_date">Data de nascimento</label>
-			<input type="text" id="birth_date" placeholder="Data de nascimento do cachorro">
+			<label for="dateBirth">Data de nascimento</label>
+			<input type="date" name="dateBirth" placeholder="Data de nascimento do cachorro">
 			
 			<label for="age">Idade</label>
-			<input type="text" id="age" value="" readonly>
+			<input name="age" value="" readonly>
 			
-			<label for="arrival_date">Data de chegada</label>
-			<input type="date" id="arrival_date">
+			<label for="arrivalDate">Data de chegada</label>
+			<input type="date" name="arrivalDate">
 			
 			<label for="castrated">Castrado</label>
-			<input type="radio" name="castrated" value="Sim" checked>
-			<input type="radio" nae="castrated" value="Não">
+			<input type="checkbox" name="castrated" value=true>
 			
-			<label for="castration_date">Data de castração</label>
-			<input type="date" id="castration_date">
+			<label for="castrationDate">Data de castração</label>
+			<input type="date" name="castrationDate" disabled>
 			
-			<label for="diseases">Doenças</label>
-			<input type="text" name="diseases" placeholder="Doença do cachorro">
+			<label for="availability">Disponibilidade</label>
+			<select name="availability"">
+				<option value="DISPONIVEL">Disponível</option>
+				<option value="INDISPONIVEL">Indisponível</option>
+				<option value="ADOTADO">Adotado</option>
+				<option value="FALECIDO">Falecido</option>
+				<option value="REPOUSO">Em lar de repouso</option>
+				<option value="DESAPARECIDO">Desaparecido</option>
+			</select>
 			
-			<label for="sponsors">Padrinhos</label>
-			<input type="text" name="sponsors" placeholder="Padrinho do cachorro">
+			<label for="disease">Doenças</label>
+			<input type="checkbox" name="disease" value=true>
 			
+			<label for="diseaseDescription">Descrição</label>
+			<input type="text" name="diseaseDescription" placeholder="Doença do cachorro" disabled>
 			
+			<label for="godfathers">Padrinhos</label>
+			<input type="text" name="godfathers" placeholder="Padrinho do cachorro">
 			
 			<input type="submit" id="register" value="Cadastrar">
 		
 		</form>
-	<script src="js/dog.js"></script> 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
 	
 	</body>
 </html>
