@@ -1,9 +1,18 @@
 package model;
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "dog")
 public class Dog {
-	
+	 
+	@Id 
+	@GeneratedValue
+	private Long id;
 	private String name;
 	private Double weight;
 	private String gender;
@@ -20,7 +29,6 @@ public class Dog {
 	private String godfathers;
 	
 	
-	//Introducing the dummy constructor
     public Dog() {
     }
     
@@ -49,6 +57,15 @@ public class Dog {
 		this.godfathers = godfathers;
 	}
 	
+	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+
 	public String getName() {
 		return name;
 	}

@@ -1,9 +1,11 @@
 package controller;
 
 import java.util.Date;
+
 import model.Dog;
 import model.Dog.Availability;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,8 +14,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import repository.DogRepository;
+
+
 @RestController
-public class DogController {
+public class DogController { 
+	@Autowired 
+	private DogRepository dogRepository;
+	
 	// REQUEST
 	@RequestMapping(value = "/dogGet")
     public Dog dogRegisterGet(@RequestParam(value="name",required = false) String name) {
@@ -41,6 +49,8 @@ public class DogController {
 		
 		//Dog newDog = new Dog(dog.getName(), dog.getWeight(), dog.getGender(), dog.getSize(), dog.getPelageColor(), dog.getDateBirth(), dog.getAge(), dog.getArrivalDate(), dog.getCastrated(), dog.getCastrationDate(), dog.getAvailability(), dog.getDisease(), dog.getDiseaseDescription(), dog.getGodfathers());
 		System.out.print(dog);
+		
+		dogRepository.saveAndFlush(dog);  
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }
