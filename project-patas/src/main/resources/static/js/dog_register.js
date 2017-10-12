@@ -13,7 +13,7 @@ function arrayContains(array, value) {
 
 // isDateValid := String -> Boolean
 // checks if a given date (by string) is valid or not.
-function isDateValid(date_as_string) {
+function isDateValid(date_as_string) {	
 	var parts = date_as_string.split("/");
 
 	var year = parseInt(parts[2]);
@@ -39,6 +39,19 @@ function isDateValid(date_as_string) {
 	else if (month == 2 && day < 29 && day > 0)
 		return true;
 	else return false;
+}
+
+// fixDateFormat := String -> String
+// receives a date in a specific format and converts it to a string, in universal format for this project
+// potentially unused. Only used if we use datepicker.
+function fixDateFormat(date) {
+	var parts = date.split("-");
+	
+	if (parts.length == 3) {
+		var correctDate = parts[2] + "/" + parts[1] + "/" + parts[0];
+		
+		return correctDate;	
+	}
 }
 
 // stringToDate := String -> Date
@@ -78,8 +91,7 @@ function formToJson(form){
 			JSON_data[input.name] = input.value;
 	});
 
-	//Fix JSON so it's in the right format
-	return JSON.stringify(JSON_data);
+	return JSON_data;
 }
 
 // computeAge := Date -> Integer
@@ -117,7 +129,7 @@ $(document).ready(function() {
 	});
 
 	//Automatically compute age
-	$( "#register_form input[name=dateBirth]" ).focusout(function () {
+	$( "#register_form input[name=birth_date]" ).focusout( function() {
 		if (isDateValid(this.value)) {
 			var age = computeAge(stringToDate(this.value));
 			
@@ -128,28 +140,41 @@ $(document).ready(function() {
 	//Enable/disable the castration date field
 	$( "#register_form input[name=castrated]" ).click(function() {
 		if (this.checked)
-			$( "#register_form input[name=castrationDate]" ).prop("disabled", false);
+			$( "#register_form input[name=castration_date]" ).prop("disabled", false);
 		else {
-			$( "#register_form input[name=castrationDate]" ).prop("disabled", true);
-			$( "#register_form input[name=castrationDate]" ).val("");
+			$( "#register_form input[name=castration_date]" ).prop("disabled", true);
+			$( "#register_form input[name=castration_date]" ).val("");
 		}
 	});
 	
 	//Enable/disable the disease description field
 	$( "#register_form input[name=disease]" ).click(function() {
 		if (this.checked)
-			$( "#register_form input[name=diseaseDescription]" ).prop("disabled", false);
+			$( "#register_form input[name=disease_description]" ).prop("disabled", false);
 		else {
-			$( "#register_form input[name=diseaseDescription]" ).prop("disabled", true);
-			$( "#register_form input[name=diseaseDescription]" ).val("");
+			$( "#register_form input[name=disease_description]" ).prop("disabled", true);
+			$( "#register_form input[name=disease_description]" ).val("");
 		}
 	});
 	
 	// Set the submit configuration for the form
 	$( "#register_form" ).submit(function(event) {
 		event.preventDefault();
-
+		
+		// Convert form to json
 		var jsonData = formToJson(this);
+		
+		// Fix the checkbox values within the json
+		if ( document.getElementById("checkbox_dis").checked )
+			jsonData["disease"] = true;
+		else jsonData["disease"] = false;
+		
+		if ( document.getElementById("checkbox_castr").checked )
+			jsonData["castrated"] = true;
+		else jsonData["castrated"] = false;
+		
+		// Fix JSON so it's in the right format
+		jsonData = JSON.stringify(jsonData);
 		
 		console.log(jsonData);
 
