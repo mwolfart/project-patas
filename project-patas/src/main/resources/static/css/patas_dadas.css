@@ -1,0 +1,22 @@
+
+#header{
+	background-color: #FFD700;
+	height: 25%;
+	padding: 0px 0px 0px 0px;	
+}
+
+#header>h1{
+	color: #372821;
+	font-family: serif, "Times New Roman", Times;
+	display: inline;
+	margin-left:10%;
+    vertical-align:middle;
+    position: relative;
+}
+
+#header>img{
+	height: 200x;
+	width: 200px;
+	display: inline;
+	margin: 10px 10px 10px 30px;
+}

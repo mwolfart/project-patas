@@ -1,7 +1,12 @@
 $(document).ready(function() {
     $.ajax({
-        url: "http://localhost:8080/dog"
+        url: "http://localhost:8080/"
     }).then(function(data) { 
-       //TODO
+    	$("#register").click( function(){
+    	
+    		alert("Fui clicado");
+    	}
+    	
+    	)
     });
 });
