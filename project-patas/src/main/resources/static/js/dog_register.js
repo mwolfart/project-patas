@@ -1,4 +1,4 @@
-alert("aq");
+
 //arrayContains := Array -> Boolean
 // checks if a given array contains a given value
 function arrayContains(array, value) {
