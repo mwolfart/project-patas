@@ -41,6 +41,23 @@ function isDateValid(date_as_string) {
 	else return false;
 }
 
+// stringToDate := String -> Date
+// given a date in string format, returns the date in Date format.
+// if invalid, returns null.
+function stringToDate(date_as_string) {
+	if (!isDateValid(date_as_string))
+		return null;
+	
+	var new_date = new Date();
+	var date_str_parts = date_as_string.split("/");
+	
+	new_date.setDate(date_str_parts[0]);
+	new_date.setMonth(date_str_parts[1] - 1);
+	new_date.setFullYear(date_str_parts[2]);
+	
+	return new_date;	
+}
+
 // formToJson := Object -> Object
 // recieves an Object (should be of a form) and returns a JSON object
 // with the data that the form contains
@@ -48,19 +65,41 @@ function formToJson(form){
 	JSON_data = {};
 
 	form_data = $(form).serializeArray();
-
+	
 	form_data.forEach( function(input){
 		//Test if value is a number (float)
-		if (isFinite(input.value))
+		if (isFinite(input.value) && input.value != "")
 			JSON_data[input.name] = parseFloat(input.value);
 		//Test if value is a date
-		else if (isDateValid(input.value))
-			JSON_data[input.name] = Date.parse(input.value);
-		//Else, it's a string or boolean
-		else JSON_data[input.name] = input.value;
+		else if (isDateValid(input.value) && input.value != "")
+			JSON_data[input.name] = stringToDate(input.value);
+		//Else, if not empty, it's a string or boolean
+		else if (input.value != "")
+			JSON_data[input.name] = input.value;
 	});
 
-	return JSON_data;
+	//Fix JSON so it's in the right format
+	return JSON.stringify(JSON_data);
+}
+
+// computeAge := Date -> Integer
+// given an arbitrary date, computes the age (difference between this date and the current one).
+// If the given date is greater (more recent) than the current date, it uses the given date as "current date"
+function computeAge(datee) {
+	var cur_date = new Date();
+	
+	if (datee > cur_date) {
+		cur_date = datee;
+		datee = new Date();
+	}
+	
+	var diff_year = cur_date.getFullYear() - datee.getFullYear();
+	var diff_month = cur_date.getMonth() - datee.getMonth();
+	var diff_days = cur_date.getDate() - datee.getDate();
+	
+	if (diff_month > 0 || (diff_month == 0 && diff_days >= 0))
+		return diff_year;
+	else return diff_year - 1;
 }
 
 // Document load script
@@ -77,18 +116,49 @@ $(document).ready(function() {
 			return false;
 	});
 
+	//Automatically compute age
+	$( "#register_form input[name=dateBirth]" ).focusout(function () {
+		if (isDateValid(this.value)) {
+			var age = computeAge(stringToDate(this.value));
+			
+			$( "#register_form input[name=age]" ).val(age);
+		}
+	});
+	
+	//Enable/disable the castration date field
+	$( "#register_form input[name=castrated]" ).click(function() {
+		if (this.checked)
+			$( "#register_form input[name=castrationDate]" ).prop("disabled", false);
+		else {
+			$( "#register_form input[name=castrationDate]" ).prop("disabled", true);
+			$( "#register_form input[name=castrationDate]" ).val("");
+		}
+	});
+	
+	//Enable/disable the disease description field
+	$( "#register_form input[name=disease]" ).click(function() {
+		if (this.checked)
+			$( "#register_form input[name=diseaseDescription]" ).prop("disabled", false);
+		else {
+			$( "#register_form input[name=diseaseDescription]" ).prop("disabled", true);
+			$( "#register_form input[name=diseaseDescription]" ).val("");
+		}
+	});
+	
 	// Set the submit configuration for the form
 	$( "#register_form" ).submit(function(event) {
 		event.preventDefault();
 
-		console.log(formToJson(this));
+		var jsonData = formToJson(this);
+		
+		console.log(jsonData);
 
 		// Post the data
 		$.ajax({
 			url: "http://localhost:8080/dogPost",
 			type: "POST",
 			dataType: "json",
-			data: formToJson(this),
+			data: jsonData,
 			contentType: "application/json; charset=UTF-8",
 		});
 	});
