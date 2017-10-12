@@ -85,7 +85,7 @@ function formToJson(form){
 			JSON_data[input.name] = parseFloat(input.value);
 		//Test if value is a date
 		else if (isDateValid(input.value) && input.value != "")
-			JSON_data[input.name] = stringToDate(input.value);
+			JSON_data[input.name] = stringToDate(input.value).getTime();
 		//Else, if not empty, it's a string or boolean
 		else if (input.value != "")
 			JSON_data[input.name] = input.value;
@@ -118,7 +118,7 @@ function computeAge(datee) {
 $(document).ready(function() {
 	// Prevent from user typing letters and other symbols to "weight" field
 	// PROBLEM: you can use shift to insert symbols (in the digit keys)
-	$( "#register_form input[name=weight]" ).keydown(function (key) {
+	$( "#registerForm input[name=weight]" ).keydown(function (key) {
 		var isDigit = (key.which >= 48 && key.which <= 57);
 		var isDot = (key.which == 190);
 		var isBackspace = (key.which == 8);
@@ -129,47 +129,47 @@ $(document).ready(function() {
 	});
 
 	//Automatically compute age
-	$( "#register_form input[name=birth_date]" ).focusout( function() {
+	$( "#registerForm input[name=birthDate]" ).focusout( function() {
 		if (isDateValid(this.value)) {
 			var age = computeAge(stringToDate(this.value));
 			
-			$( "#register_form input[name=age]" ).val(age);
+			$( "#registerForm input[name=age]" ).val(age);
 		}
 	});
 	
 	//Enable/disable the castration date field
-	$( "#register_form input[name=castrated]" ).click(function() {
+	$( "#checkboxCastr" ).click(function() {
 		if (this.checked)
-			$( "#register_form input[name=castration_date]" ).prop("disabled", false);
+			$( "#registerForm input[name=castrationDate]" ).prop("disabled", false);
 		else {
-			$( "#register_form input[name=castration_date]" ).prop("disabled", true);
-			$( "#register_form input[name=castration_date]" ).val("");
+			$( "#registerForm input[name=castrationDate]" ).prop("disabled", true);
+			$( "#registerForm input[name=castrationDate]" ).val("");
 		}
 	});
 	
 	//Enable/disable the disease description field
-	$( "#register_form input[name=disease]" ).click(function() {
+	$( "#checkboxDis" ).click(function() {
 		if (this.checked)
-			$( "#register_form input[name=disease_description]" ).prop("disabled", false);
+			$( "#registerForm input[name=diseaseDescription]" ).prop("disabled", false);
 		else {
-			$( "#register_form input[name=disease_description]" ).prop("disabled", true);
-			$( "#register_form input[name=disease_description]" ).val("");
+			$( "#registerForm input[name=diseaseDescription]" ).prop("disabled", true);
+			$( "#registerForm input[name=diseaseDescription]" ).val("");
 		}
 	});
 	
 	// Set the submit configuration for the form
-	$( "#register_form" ).submit(function(event) {
+	$( "#registerForm" ).submit(function(event) {
 		event.preventDefault();
 		
 		// Convert form to json
 		var jsonData = formToJson(this);
 		
 		// Fix the checkbox values within the json
-		if ( document.getElementById("checkbox_dis").checked )
+		if ( document.getElementById("checkboxDis").checked )
 			jsonData["disease"] = true;
 		else jsonData["disease"] = false;
 		
-		if ( document.getElementById("checkbox_castr").checked )
+		if ( document.getElementById("checkboxCastr").checked )
 			jsonData["castrated"] = true;
 		else jsonData["castrated"] = false;
 		
