@@ -9,159 +9,197 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "dog")
 public class Dog {
-	 
+	
+	public enum Availability{
+		DISPONIVEL,INDISPONIVEL,ADOTADO,MORREU,LARREPOUSO,DESAPARECIDO;
+	}
+	
 	@Id 
 	@GeneratedValue
 	private Long id;
 	private String name;
 	private Double weight;
-	private String gender;
+	private String sex;
 	private String size;
-	private String pelageColor;
-	private Date dateBirth;
+	private String furColor;
+	private Date birthDate;
 	private Integer age;
 	private Date arrivalDate;
 	private Boolean castrated;
 	private Date castrationDate;
-	private Availability availability;
+	private Availability status;
 	private Boolean disease;
 	private String diseaseDescription;
-	private String godfathers;
+	private String sponsors;
 	
-	
+
     public Dog() {
     }
     
-	public enum Availability{
-		DISPONIVEL,INDISPONIVEL,ADOTADO,MORREU,LARREPOUSO,DESAPARECIDO;
-	}
-
-	public Dog(String name, Double weight, String gender, String size,
-			String pelageColor, Date dateBirth, Integer age, Date arrivalDate,
-			Boolean castrated, Date castrationDate, Availability availability,
-			Boolean disease, String diseaseDescription, String godfathers) {
+	public Dog(Long id, String name, Double weight, String sex, String size,
+			String furColor, Date birthDate, Integer age, Date arrivalDate,
+			Boolean castrated, Date castrationDate, Availability status,
+			Boolean disease, String diseaseDescription, String sponsors) {
 		super();
+		this.id = id;
 		this.name = name;
 		this.weight = weight;
-		this.gender = gender;
+		this.sex = sex; 
 		this.size = size;
-		this.pelageColor = pelageColor;
-		this.dateBirth = dateBirth;
+		this.furColor = furColor;
+		this.birthDate = birthDate;
 		this.age = age;
 		this.arrivalDate = arrivalDate;
 		this.castrated = castrated;
 		this.castrationDate = castrationDate;
-		this.availability = availability;
+		this.status = status;
 		this.disease = disease;
 		this.diseaseDescription = diseaseDescription;
-		this.godfathers = godfathers;
+		this.sponsors = sponsors;
 	}
-	
-	
+
+
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
 
-
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public Double getWeight() {
 		return weight;
 	}
+
 	public void setWeight(Double weight) {
 		this.weight = weight;
 	}
-	public String getGender() {
-		return gender;
+
+	public String getSex() {
+		return sex;
 	}
-	public void setGender(String gender) {
-		this.gender = gender;
+
+	public void setSex(String sex) {
+		this.sex = sex;
 	}
+
 	public String getSize() {
 		return size;
 	}
+
 	public void setSize(String size) {
 		this.size = size;
 	}
-	public String getPelageColor() {
-		return pelageColor;
+
+	public String getFurColor() {
+		return furColor;
 	}
-	public void setPelageColor(String pelageColor) {
-		this.pelageColor = pelageColor;
+
+	public void setFurColor(String furColor) {
+		this.furColor = furColor;
 	}
-	public Date getDateBirth() {
-		return dateBirth;
+
+	public Date getBirthDate() {
+		return birthDate;
 	}
-	public void setDateBirth(Date dateBirth) {
-		this.dateBirth = dateBirth;
+
+	public void setBirthDate(Date birthDate) {
+		this.birthDate = birthDate;
 	}
+
 	public Integer getAge() {
 		return age;
 	}
+
 	public void setAge(Integer age) {
 		this.age = age;
 	}
+
 	public Date getArrivalDate() {
 		return arrivalDate;
 	}
+
 	public void setArrivalDate(Date arrivalDate) {
 		this.arrivalDate = arrivalDate;
 	}
+
 	public Boolean getCastrated() {
 		return castrated;
 	}
+
 	public void setCastrated(Boolean castrated) {
 		this.castrated = castrated;
 	}
+
 	public Date getCastrationDate() {
 		return castrationDate;
 	}
+
 	public void setCastrationDate(Date castrationDate) {
 		this.castrationDate = castrationDate;
 	}
-	public Availability getAvailability() {
-		return availability;
+
+	public Availability getStatus() {
+		return status;
 	}
-	public void setAvailability(Availability availability) {
-		this.availability = availability;
+
+	public void setStatus(Availability status) {
+		this.status = status;
 	}
+
 	public Boolean getDisease() {
 		return disease;
 	}
+
 	public void setDisease(Boolean disease) {
 		this.disease = disease;
 	}
+
 	public String getDiseaseDescription() {
 		return diseaseDescription;
 	}
+
 	public void setDiseaseDescription(String diseaseDescription) {
 		this.diseaseDescription = diseaseDescription;
 	}
-	public String getGodfathers() {
-		return godfathers;
+
+	public String getSponsors() {
+		return sponsors;
 	}
-	public void setGodfathers(String godfathers) {
-		this.godfathers = godfathers;
+
+	public void setSponsors(String sponsors) {
+		this.sponsors = sponsors;
 	}
 
 	@Override
 	public String toString() {
-		return "Dog [name=" + name + ", weight=" + weight + ", gender="
-				+ gender + ", size=" + size + ", pelageColor=" + pelageColor
-				+ ", dateBirth=" + dateBirth + ", age=" + age
+		return "Dog [id=" + id + ", name=" + name + ", weight=" + weight
+				+ ", sex=" + sex + ", size=" + size + ", furColor=" + furColor
+				+ ", birthDate=" + birthDate + ", age=" + age
 				+ ", arrivalDate=" + arrivalDate + ", castrated=" + castrated
-				+ ", castrationDate=" + castrationDate + ", availability="
-				+ availability + ", disease=" + disease
-				+ ", diseaseDescription=" + diseaseDescription
-				+ ", godfathers=" + godfathers + "]";
+				+ ", castrationDate=" + castrationDate + ", status=" + status
+				+ ", disease=" + disease + ", diseaseDescription="
+				+ diseaseDescription + ", sponsors=" + sponsors + ", getId()="
+				+ getId() + ", getName()=" + getName() + ", getWeight()="
+				+ getWeight() + ", getSex()=" + getSex() + ", getSize()="
+				+ getSize() + ", getFurColor()=" + getFurColor()
+				+ ", getBirthDate()=" + getBirthDate() + ", getAge()="
+				+ getAge() + ", getArrivalDate()=" + getArrivalDate()
+				+ ", getCastrated()=" + getCastrated()
+				+ ", getCastrationDate()=" + getCastrationDate()
+				+ ", getStatus()=" + getStatus() + ", getDisease()="
+				+ getDisease() + ", getDiseaseDescription()="
+				+ getDiseaseDescription() + ", getSponsors()=" + getSponsors()
+				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+				+ ", toString()=" + super.toString() + "]";
 	}
-	
-	
+
 }
