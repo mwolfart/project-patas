@@ -114,46 +114,84 @@ function computeAge(datee) {
 	else return diff_year - 1;
 }
 
+// protectNumericField := Object -> Boolean
+// function used to prevent invalid characters being inserted inside the numeric fields
+function protectNumericField(key) {
+	var isDigit = (key.which >= 48 && key.which <= 57);
+	var isSlash = (key.which == 191);
+	var isBackspace = (key.which == 8);
+	var isTab = (key.which == 9);
+	var isArrow = (key.which >= 37 && key.which <= 40);
+	var isDot = (key.which == 190);
+
+	if (key.shiftKey || key.altKey)
+		return false;
+	else if (key.ctrlKey)
+		return;
+	else if (!isDigit && !isSlash && !isBackspace && !isTab && !isArrow && !isDot)
+		return false;
+}
+
 // Document load script
 $(document).ready(function() {
-	// Prevent from user typing letters and other symbols to "weight" field
-	// PROBLEM: you can use shift to insert symbols (in the digit keys)
-	$( "#registerForm input[name=weight]" ).keydown(function (key) {
-		var isDigit = (key.which >= 48 && key.which <= 57);
-		var isDot = (key.which == 190);
-		var isBackspace = (key.which == 8);
-		var isTab = (key.which == 9);
-
-		if (!isDigit && !isDot && !isBackspace && !isTab)
-			return false;
+	// Prevent user from typing letters and other symbols into numeric fields
+	$( "#weight" ).keydown(protectNumericField);
+	$( "#birthDate" ).keydown(protectNumericField);
+	$( "#castrationDate" ).keydown(protectNumericField);
+	$( "#arrivalDate" ).keydown(protectNumericField);
+	
+	// Validate weight field
+	$( "#weight" ).focusout(function () {
+		if (!isFinite(this.value))
+			$(this).addClass("error_input");
+		else $(this).removeClass("error_input");
 	});
-
-	//Automatically compute age
-	$( "#registerForm input[name=birthDate]" ).focusout( function() {
+	
+	// Validate castration date field
+	$( "#castrationDate" ).focusout(function() {
+		if (!isDateValid(this.value) && this.value != "")
+			$(this).addClass("error_input");
+		else $(this).removeClass("error_input");
+	});
+	
+	// Validate arrival date field
+	$( "#arrivalDate" ).focusout(function() {
+		if (!isDateValid(this.value))
+			$(this).addClass("error_input");
+		else $(this).removeClass("error_input");
+	});
+	
+	// Validate birth and automatically compute age
+	$( "#birthDate" ).focusout( function() {
 		if (isDateValid(this.value)) {
 			var age = computeAge(stringToDate(this.value));
 			
-			$( "#registerForm input[name=age]" ).val(age);
+			$(this).removeClass("error_input");
+			$( "#age" ).val(age);
 		}
+		else if (this.value == "") 
+			$(this).removeClass("error_input");
+		else 
+			$(this).addClass("error_input");
 	});
 	
 	//Enable/disable the castration date field
 	$( "#checkboxCastr" ).click(function() {
 		if (this.checked)
-			$( "#registerForm input[name=castrationDate]" ).prop("disabled", false);
+			$( "#castrationDate" ).prop("disabled", false);
 		else {
-			$( "#registerForm input[name=castrationDate]" ).prop("disabled", true);
-			$( "#registerForm input[name=castrationDate]" ).val("");
+			$( "#castrationDate" ).prop("disabled", true);
+			$( "#castrationDate" ).val("");
 		}
 	});
 	
 	//Enable/disable the disease description field
 	$( "#checkboxDis" ).click(function() {
 		if (this.checked)
-			$( "#registerForm input[name=diseaseDescription]" ).prop("disabled", false);
+			$( "diseaseDescription" ).prop("disabled", false);
 		else {
-			$( "#registerForm input[name=diseaseDescription]" ).prop("disabled", true);
-			$( "#registerForm input[name=diseaseDescription]" ).val("");
+			$( "diseaseDescription" ).prop("disabled", true);
+			$( "diseaseDescription" ).val("");
 		}
 	});
 	
@@ -161,30 +199,41 @@ $(document).ready(function() {
 	$( "#registerForm" ).submit(function(event) {
 		event.preventDefault();
 		
-		// Convert form to json
-		var jsonData = formToJson(this);
-		
-		// Fix the checkbox values within the json
-		if ( document.getElementById("checkboxDis").checked )
-			jsonData["disease"] = true;
-		else jsonData["disease"] = false;
-		
-		if ( document.getElementById("checkboxCastr").checked )
-			jsonData["castrated"] = true;
-		else jsonData["castrated"] = false;
-		
-		// Fix JSON so it's in the right format
-		jsonData = JSON.stringify(jsonData);
-		
-		console.log(jsonData);
-
-		// Post the data
-		$.ajax({
-			url: "http://localhost:8080/dog/register",
-			type: "POST",
-			dataType: "json",
-			data: jsonData,
-			contentType: "application/json; charset=UTF-8",
-		});
+		// Form validation
+		if ( $( "#name" ).val() == "" )
+			alert("Preencha o nome do cachorro!");
+		else if ( $( "#birthDate" ).hasClass("error_input") )
+			alert("Data de nascimento inválida!");
+		else if ( $( "#weight" ).hasClass("error_input") )
+			alert("Peso inválido!");
+		else if ( $( "#arrivalDate" ).hasClass("error_input") )
+			alert("Data de chegada inválida!");
+		else if ( $( "#arrivalDate" ).val() == "" )
+			alert("Preencha a data de chegada!");
+		else {
+			// Convert form to json
+			var jsonData = formToJson(this);
+			
+			// Fix the checkbox values within the json
+			if ( document.getElementById("checkboxDis").checked )
+				jsonData["disease"] = true;
+			else jsonData["disease"] = false;
+			
+			if ( document.getElementById("checkboxCastr").checked )
+				jsonData["castrated"] = true;
+			else jsonData["castrated"] = false;
+			
+			// Fix JSON so it's in the right format
+			jsonData = JSON.stringify(jsonData);
+	
+			// Post the data
+			$.ajax({
+				url: "http://localhost:8080/dog/register",
+				type: "POST",
+				dataType: "json",
+				data: jsonData,
+				contentType: "application/json; charset=UTF-8",
+			});
+		}
 	});
 });

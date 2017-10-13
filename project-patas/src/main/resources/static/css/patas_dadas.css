@@ -7,7 +7,7 @@
 
 #header>h1{
 	color: #372821;
-	font-family: serif, "Times New Roman", Times;
+	font-family: "Helvetica", "Verdana", Times;
 	display: inline;
 	margin-left:10%;
     vertical-align:middle;
@@ -19,4 +19,8 @@
 	width: 200px;
 	display: inline;
 	margin: 10px 10px 10px 30px;
+}
+
+.error_input {
+    border: solid 2px #FF0000;  
 }

@@ -20,33 +20,33 @@
 			<form action="/dog/dog_register.html" id="registerForm" method="post">
 				<div class="form-group">
 					<label for="name" class="col-form-label">Nome</label>
-					<input type="text" name="name" class="form-control" placeholder="Nome do cachorro">
+					<input type="text" id="name" name="name" class="form-control" maxlength="80" placeholder="Nome do cachorro">
 				</div>
 				<div class="form-row">
 					<div class="form-group col-md-4">
 						<label for="birthDate" class="col-form-label">Data de nascimento</label>
-						<input type="text" name="birthDate" class="form-control datepicker" placeholder="">
+						<input type="text" id="birthDate" name="birthDate" class="form-control" maxlength="10" placeholder="dd/mm/aaaa">
 					</div>
 					<div class="form-group col-md-4">
 						<label for="age" class="col-form-label">Idade</label>
-						<input type="text" name="age" value="" class="form-control" readonly>
+						<input type="text" id="age" name="age" value="" class="form-control" readonly>
 					</div>
 					<div class="form-group col-md-4">
 						<label for="weight" class="col-form-label">Peso</label>
-						<input type="text" name="weight" class="form-control" placeholder="Peso do cachorro">
+						<input type="text" id="weight" name="weight" class="form-control" maxlength="6" placeholder="Peso do cachorro">
 					</div>
 				</div>
 				<div class="form-row">
 					<div class="form-group col-md-4">
 						<label for="sex" class="col-form-label">Sexo</label>
-						<select name="sex" class="form-control" placeholder="Sexo do cachorro">
+						<select id="sex" name="sex" class="form-control" placeholder="Sexo do cachorro">
 							<option value="F">Fêmea</option>
 							<option value="M">Macho</option>
 						</select>				
 					</div>
 					<div class="form-group col-md-4">
 						<label for="size" class="col-form-label">Porte</label>
-						<select name="size" class="form-control" placeholder="Sexo do cachorro">
+						<select id="size" name="size" class="form-control" placeholder="Sexo do cachorro">
 							<option value="P">Pequeno</option>
 							<option value="M">Médio</option>
 							<option value="G">Grande</option>
@@ -54,17 +54,17 @@
 					</div>
 					<div class="form-group col-md-4">
 						<label for="furColor" class="col-form-label">Cor do pelo</label>
-						<input type="text" name="furColor" class="form-control" placeholder="Cor do pelo do cachorro">
+						<input type="text" id="furColor" name="furColor" class="form-control" maxlength="30" placeholder="Cor do pelo do cachorro">
 					</div>
 				</div>
 				<div class="form-row">
 					<div class="form-group col-md-6">
 						<label for="arrivalDate" class="col-form-label">Data de chegada</label>
-						<input type="text" name="arrivalDate" class="form-control">
+						<input type="text" id="arrivalDate" name="arrivalDate" class="form-control" maxlength="10" placeholder="dd/mm/aaaa">
 					</div>
 					<div class="form-group col-md-6">
 						<label for="status" class="col-form-label">Disponibilidade</label>
-						<select name="status" class="form-control">
+						<select id="status" name="status" class="form-control">
 							<option value="DISPONIVEL">Disponível</option>
 							<option value="INDISPONIVEL">Indisponível</option>
 							<option value="ADOTADO">Adotado</option>
@@ -81,7 +81,7 @@
 					</div>
 					<div class="form-group col-md-10">
 						<label for="castrationDate" class="col-form-label">Data de castração</label>
-						<input type="text" name="castrationDate" class="form-control" disabled>
+						<input type="text" id="castrationDate" name="castrationDate" class="form-control" maxlength="10" placeholder="dd/mm/aaaa" disabled>
 					</div>
 				</div>
 				<div class="form-row">
@@ -91,12 +91,12 @@
 					</div>
 					<div class="form-group col-md-10">
 						<label for="diseaseDescription" class="col-form-label">Descrição</label>
-						<input type="text" name="diseaseDescription" class="form-control" placeholder="Doença do cachorro" disabled>
+						<input type="text" id="diseaseDescription" name="diseaseDescription" class="form-control" maxlength="80" placeholder="Doença do cachorro" disabled>
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="sponsors" class="col-form-label">Padrinhos</label>
-					<input type="text" name="sponsors" class="form-control" placeholder="Padrinho do cachorro">
+					<input type="text" id="sponsors" name="sponsors" class="form-control" maxlength="80" placeholder="Padrinho(s) do cachorro">
 				</div>	
 				<div class="form-group">			
 					<input type="submit" name="register" value="Cadastrar" class="btn">
