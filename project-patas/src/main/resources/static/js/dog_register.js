@@ -26,26 +26,10 @@ $(document).ready(function() {
 	$( "#castrationDate" ).keydown(protectNumericField);
 	$( "#arrivalDate" ).keydown(protectNumericField);
 	
-	// Validate weight field
-	$( "#weight" ).focusout(function () {
-		if (!isFinite(this.value))
-			$(this).addClass("error_input");
-		else $(this).removeClass("error_input");
-	});
-	
-	// Validate castration date field
-	$( "#castrationDate" ).focusout(function() {
-		if (!isDateValid(this.value) && this.value != "")
-			$(this).addClass("error_input");
-		else $(this).removeClass("error_input");
-	});
-	
-	// Validate arrival date field
-	$( "#arrivalDate" ).focusout(function() {
-		if (!isDateValid(this.value))
-			$(this).addClass("error_input");
-		else $(this).removeClass("error_input");
-	});
+	// Validate numeric and date fields
+	$( "#weight" ).focusout(function () { validateRealNumberField(this) });
+	$( "#castrationDate" ).focusout(function() { validateDateField(this) });
+	$( "#arrivalDate" ).focusout(function() { validateDateField(this) });
 	
 	// Validate birth and automatically compute age
 	$( "#birthDate" ).focusout( function() {

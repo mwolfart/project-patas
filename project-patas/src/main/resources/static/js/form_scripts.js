@@ -103,11 +103,44 @@ function protectNumericField(key) {
 	var isTab = (key.which == 9);
 	var isArrow = (key.which >= 37 && key.which <= 40);
 	var isDot = (key.which == 190);
+	var isDel = (key.which == 46);
 
 	if (key.shiftKey || key.altKey)
 		return false;
 	else if (key.ctrlKey)
 		return;
-	else if (!isDigit && !isSlash && !isBackspace && !isTab && !isArrow && !isDot)
+	else if (!isDigit && !isSlash && !isBackspace && !isTab && !isArrow && !isDot && !isDel)
 		return false;
+}
+
+// isNatural := String -> Boolean
+// checks if a given number (as string) is natural
+function isNatural(numStr) {
+	number = parseInt(numStr, 10);
+	
+	return (number >= 0 && number.toString() === numStr);
+}
+
+// validateIntegerField := Object -> Void
+// if a given form object (edit box) is not a valid integer, an error class is added to it
+function validateNatNumberField(field) {
+	if (!isNatural(field.value) && field.value != "")
+		$(field).addClass("error_input");
+	else $(field).removeClass("error_input");
+}
+
+//validateFloatField := Object -> Void
+//if a given form object (edit box) is not a valid real number, an error class is added to it
+function validateRealNumberField(field) {
+	if (!isFinite(field.value))
+		$(field).addClass("error_input");
+	else $(field).removeClass("error_input");
+}
+
+//validateDateField := Object -> Void
+//if a given form object (edit box) is not a valid date, an error class is added to it
+function validateDateField(field) {
+	if (!isDateValid(field.value) && field.value != "")
+		$(field).addClass("error_input");
+	else $(field).removeClass("error_input");
 }

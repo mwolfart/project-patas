@@ -1,13 +1,16 @@
 package controller;
 
 import model.Dog;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import repository.DogRepository;
 
 
@@ -43,7 +46,7 @@ public class DogController {
 	
 	//Must rework this
 	@RequestMapping(value = "/dog/search", method = RequestMethod.GET)
-	 public ResponseEntity<String> dogSearch(@RequestBody Dog dogCriteria) {
+	public ResponseEntity<String> dogSearch(@RequestParam(value = "searchTerm", required = false) String pSearchTerm) {
 		
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}

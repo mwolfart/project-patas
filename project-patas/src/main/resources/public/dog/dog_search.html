@@ -10,174 +10,239 @@
     	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
     	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
 		<script type="text/javascript" src="../js/form_scripts.js"></script>
+		<script type="text/javascript" src="../js/dog_search.js"></script>
 	</head>
 	<body>
-		<form action="" id="dogSearchForm" method="get">
-			<label for="name">Nome</label>
-			<input type="text" id="name" name="name" class="form-control" maxlength="80" placeholder="Nome do cachorro">
-			<label for="birthMonth">Mês de nascimento</label>
-			<select id="birthMonth" name="birthMonth" class="form-control" placeholder="Mês de nascimento">
-				<option value=""></option>
-				<option value="1">01</option>
-				<option value="2">02</option>
-				<option value="3">03</option>
-				<option value="4">04</option>
-				<option value="5">05</option>
-				<option value="6">06</option>
-				<option value="7">07</option>
-				<option value="8">08</option>
-				<option value="9">09</option>
-				<option value="10">10</option>
-				<option value="11">11</option>
-				<option value="12">12</option>
-			</select>
-			<label for="birthYear">Ano de nascimento</label>
-			<input type="text" id="birthYear" name="birthYear" class="form-control" maxlength="80" placeholder="Ano de nascimento">
-			<label for="ageSup">Idade acima de</label>
-			<input type="text" id="ageSup" name="ageSup" class="form-control" maxlength="3" placeholder="Limite superior da idade">
-			<label for="ageInf">Idade abaixo de</label>
-			<input type="text" id="ageInf" name="ageInf" class="form-control" maxlength="3" placeholder="Limite inferior da idade">
-			<label for="sex" class="col-form-label">Sexo</label>
-			<select id="sex" name="sex" class="form-control" placeholder="Sexo do cachorro">
-				<option value="F">Fêmea</option>
-				<option value="M">Macho</option>
-			</select>		
-			<label for="weightSup">Peso acima de</label>
-			<input type="text" id="weightSup" name="weightSup" class="form-control" maxlength="6" placeholder="Limite superior do peso">
-			<label for="weightInf">Peso abaixo de</label>
-			<input type="text" id="weightInf" name="weightInf" class="form-control" maxlength="6" placeholder="Limite inferior do peso">
-			<label for="size" class="col-form-label">Porte</label>
-			<select id="size" name="size" class="form-control" placeholder="Porte do cachorro">
-				<option value="P">Pequeno</option>
-				<option value="M">Médio</option>
-				<option value="G">Grande</option>
-			</select>
-			<label for="furColor">Cor do pelo</label>
-			<input type="text" id="furColor" name="furColor" class="form-control" maxlength="30" placeholder="Cor do pelo">
-			<label for="arrivalDay">Dia de chegada</label>
-			<select id="arrivalDay" name="arrivalDay" class="form-control" placeholder="Dia de chegada">
-				<option value=""></option>
-				<option value="1">01</option>
-				<option value="2">02</option>
-				<option value="3">03</option>
-				<option value="4">04</option>
-				<option value="5">05</option>
-				<option value="6">06</option>
-				<option value="7">07</option>
-				<option value="8">08</option>
-				<option value="9">09</option>
-				<option value="10">10</option>
-				<option value="11">11</option>
-				<option value="12">12</option>
-				<option value="13">13</option>
-				<option value="14">14</option>
-				<option value="15">15</option>
-				<option value="16">16</option>
-				<option value="17">17</option>
-				<option value="18">18</option>
-				<option value="19">19</option>
-				<option value="20">20</option>
-				<option value="21">21</option>
-				<option value="22">22</option>
-				<option value="23">23</option>
-				<option value="24">24</option>
-				<option value="25">25</option>
-				<option value="26">26</option>
-				<option value="27">27</option>
-				<option value="28">28</option>
-				<option value="29">29</option>
-				<option value="30">30</option>
-				<option value="31">31</option>
-			</select>
-			<label for="arrivalMonth">Mês de chegada</label>
-			<select id="arrivalMonth" name="arrivalMonth" class="form-control" placeholder="Mês de chegada">
-				<option value=""></option>
-				<option value="1">01</option>
-				<option value="2">02</option>
-				<option value="3">03</option>
-				<option value="4">04</option>
-				<option value="5">05</option>
-				<option value="6">06</option>
-				<option value="7">07</option>
-				<option value="8">08</option>
-				<option value="9">09</option>
-				<option value="10">10</option>
-				<option value="11">11</option>
-				<option value="12">12</option>
-			</select>
-			<label for="arrivalYear">Ano de chegada</label>
-			<input type="text" id="arrivalYear" name="arrivalYear" class="form-control" maxlength="4" placeholder="Ano de chegada">
-			<label for="checkboxCastr">Castrado</label>
-			<input type="checkbox" id="checkboxCastr" name="castrated" value="True" class="form-control">
-			<label for="castrationDay">Dia de castração</label>
-			<select id="castrationDay" name="castrationDay" class="form-control" placeholder="Dia de castração" disabled>
-				<option value=""></option>
-				<option value="1">01</option>
-				<option value="2">02</option>
-				<option value="3">03</option>
-				<option value="4">04</option>
-				<option value="5">05</option>
-				<option value="6">06</option>
-				<option value="7">07</option>
-				<option value="8">08</option>
-				<option value="9">09</option>
-				<option value="10">10</option>
-				<option value="11">11</option>
-				<option value="12">12</option>
-				<option value="13">13</option>
-				<option value="14">14</option>
-				<option value="15">15</option>
-				<option value="16">16</option>
-				<option value="17">17</option>
-				<option value="18">18</option>
-				<option value="19">19</option>
-				<option value="20">20</option>
-				<option value="21">21</option>
-				<option value="22">22</option>
-				<option value="23">23</option>
-				<option value="24">24</option>
-				<option value="25">25</option>
-				<option value="26">26</option>
-				<option value="27">27</option>
-				<option value="28">28</option>
-				<option value="29">29</option>
-				<option value="30">30</option>
-				<option value="31">31</option>
-			</select>
-			<label for="castrationMonth">Mês de castração</label>
-			<select id="castrationMonth" name="castrationMonth" class="form-control" placeholder="Mês de castração" disabled>
-				<option value=""></option>
-				<option value="1">01</option>
-				<option value="2">02</option>
-				<option value="3">03</option>
-				<option value="4">04</option>
-				<option value="5">05</option>
-				<option value="6">06</option>
-				<option value="7">07</option>
-				<option value="8">08</option>
-				<option value="9">09</option>
-				<option value="10">10</option>
-				<option value="11">11</option>
-				<option value="12">12</option>
-			</select>
-			<label for="castrationYear">Ano de castração</label>
-			<input type="text" id="castrationYear" name="castrationYear" class="form-control" maxlength="4" placeholder="Ano de castração" disabled> 
-			<label for="status" class="col-form-label">Disponibilidade</label>
-			<select id="status" name="status" class="form-control">
-				<option value="DISPONIVEL">Disponível</option>
-				<option value="INDISPONIVEL">Indisponível</option>
-				<option value="ADOTADO">Adotado</option>
-				<option value="FALECIDO">Falecido</option>
-				<option value="REPOUSO">Em lar de repouso</option>
-				<option value="DESAPARECIDO">Desaparecido</option>
-			</select>
-			<label for="checkboxDis">Doenças</label>
-			<input type="checkbox" id="checkboxDis" name="disease" value="True" class="form-control">
-			<label for="diseaseDescription">Descrição de doenças</label>
-			<input type="text" id="diseaseDescription" name="diseaseDescription" class="form-control" maxlength="80" placeholder="Doenças" disabled>
-			<label for="sponsors">Padrinho(s)</label>
-			<input type="text" id="sponsors" name="sponsors" class="form-control" maxlength="200" placeholder="Padrinho(s) do cachorro">
-			<input type="submit" name="search" value="Pesquisar" class="btn">
-		</form>
+		<div id="header" class="jumbotron jumbotron-fluid">
+			<img id="logo" src="../images/patasdadas_logo.png" alt="Patas Dadas"/>
+			<h1 class="display-2">Pesquisa de Cachorro</h1>
+		</div>
+		<div class="container">
+			<form action="" id="dogSearchForm" method="get">
+				<div class="form-group">
+					<label for="name">Nome</label>
+					<input type="text" id="name" name="name" class="form-control" maxlength="80" placeholder="Nome do cachorro">
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-4">
+						<label for="birthMonth">Mês de nascimento</label>
+						<select id="birthMonth" name="birthMonth" class="form-control">
+							<option value=""></option>
+							<option value="1">01</option>
+							<option value="2">02</option>
+							<option value="3">03</option>
+							<option value="4">04</option>
+							<option value="5">05</option>
+							<option value="6">06</option>
+							<option value="7">07</option>
+							<option value="8">08</option>
+							<option value="9">09</option>
+							<option value="10">10</option>
+							<option value="11">11</option>
+							<option value="12">12</option>
+						</select>
+					</div>
+					<div class="form-group col-md-4">
+						<label for="birthYear">Ano de nascimento</label>
+						<input type="text" id="birthYear" name="birthYear" class="form-control" maxlength="80" placeholder="Ano de nascimento">
+					</div>
+					<div class="form-group col-md-2">
+						<label for="ageSup">Idade acima de</label>
+						<input type="text" id="ageSup" name="ageSup" class="form-control" maxlength="3" placeholder="Limite superior da idade">
+					</div>
+					<div class="form-group col-md-2">
+						<label for="ageInf">Idade abaixo de</label>
+						<input type="text" id="ageInf" name="ageInf" class="form-control" maxlength="3" placeholder="Limite inferior da idade">
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-4">
+						<label for="sex" class="col-form-label">Sexo</label>
+						<select id="sex" name="sex" class="form-control">
+							<option value=""></option>
+							<option value="F">Fêmea</option>
+							<option value="M">Macho</option>
+						</select>		
+					</div>
+					<div class="form-group col-md-4">
+						<label for="weightSup">Peso acima de</label>
+						<input type="text" id="weightSup" name="weightSup" class="form-control" maxlength="6" placeholder="Limite superior do peso">
+					</div>
+					<div class="form-group col-md-4">
+						<label for="weightInf">Peso abaixo de</label>
+						<input type="text" id="weightInf" name="weightInf" class="form-control" maxlength="6" placeholder="Limite inferior do peso">
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-3">
+						<label for="size" class="col-form-label">Porte</label>
+						<select id="size" name="size" class="form-control">
+							<option value=""></option>
+							<option value="P">Pequeno</option>
+							<option value="M">Médio</option>
+							<option value="G">Grande</option>
+						</select>
+					</div>
+					<div class="form-group col-md-3">
+						<label for="furColor">Cor do pelo</label>
+						<input type="text" id="furColor" name="furColor" class="form-control" maxlength="30" placeholder="Cor do pelo">
+					</div>
+					<div class="form-group col-md-2">
+						<label for="arrivalDay">Dia de chegada</label>
+						<select id="arrivalDay" name="arrivalDay" class="form-control">
+							<option value=""></option>
+							<option value="1">01</option>
+							<option value="2">02</option>
+							<option value="3">03</option>
+							<option value="4">04</option>
+							<option value="5">05</option>
+							<option value="6">06</option>
+							<option value="7">07</option>
+							<option value="8">08</option>
+							<option value="9">09</option>
+							<option value="10">10</option>
+							<option value="11">11</option>
+							<option value="12">12</option>
+							<option value="13">13</option>
+							<option value="14">14</option>
+							<option value="15">15</option>
+							<option value="16">16</option>
+							<option value="17">17</option>
+							<option value="18">18</option>
+							<option value="19">19</option>
+							<option value="20">20</option>
+							<option value="21">21</option>
+							<option value="22">22</option>
+							<option value="23">23</option>
+							<option value="24">24</option>
+							<option value="25">25</option>
+							<option value="26">26</option>
+							<option value="27">27</option>
+							<option value="28">28</option>
+							<option value="29">29</option>
+							<option value="30">30</option>
+							<option value="31">31</option>
+						</select>
+					</div>
+					<div class="form-group col-md-2">
+						<label for="arrivalMonth">Mês de chegada</label>
+						<select id="arrivalMonth" name="arrivalMonth" class="form-control">
+							<option value=""></option>
+							<option value="1">01</option>
+							<option value="2">02</option>
+							<option value="3">03</option>
+							<option value="4">04</option>
+							<option value="5">05</option>
+							<option value="6">06</option>
+							<option value="7">07</option>
+							<option value="8">08</option>
+							<option value="9">09</option>
+							<option value="10">10</option>
+							<option value="11">11</option>
+							<option value="12">12</option>
+						</select>
+					</div>
+					<div class="form-group col-md-2">
+						<label for="arrivalYear">Ano de chegada</label>
+						<input type="text" id="arrivalYear" name="arrivalYear" class="form-control" maxlength="4" placeholder="Ano de chegada">
+					</div>
+				</div>
+				<div class="form-row">	
+					<div class="form-group col-md-1">
+						<label for="checkboxCastr">Castrado</label>
+						<input type="checkbox" id="checkboxCastr" name="castrated" value="True" class="form-control">
+					</div>
+					<div class="form-group col-md-2">
+						<label for="castrationDay">Dia de castração</label>
+						<select id="castrationDay" name="castrationDay" class="form-control" disabled>
+							<option value=""></option>
+							<option value="1">01</option>
+							<option value="2">02</option>
+							<option value="3">03</option>
+							<option value="4">04</option>
+							<option value="5">05</option>
+							<option value="6">06</option>
+							<option value="7">07</option>
+							<option value="8">08</option>
+							<option value="9">09</option>
+							<option value="10">10</option>
+							<option value="11">11</option>
+							<option value="12">12</option>
+							<option value="13">13</option>
+							<option value="14">14</option>
+							<option value="15">15</option>
+							<option value="16">16</option>
+							<option value="17">17</option>
+							<option value="18">18</option>
+							<option value="19">19</option>
+							<option value="20">20</option>
+							<option value="21">21</option>
+							<option value="22">22</option>
+							<option value="23">23</option>
+							<option value="24">24</option>
+							<option value="25">25</option>
+							<option value="26">26</option>
+							<option value="27">27</option>
+							<option value="28">28</option>
+							<option value="29">29</option>
+							<option value="30">30</option>
+							<option value="31">31</option>
+						</select>
+					</div>
+					<div class="form-group col-md-2">
+						<label for="castrationMonth">Mês de castração</label>
+						<select id="castrationMonth" name="castrationMonth" class="form-control" disabled>
+							<option value=""></option>
+							<option value="1">01</option>
+							<option value="2">02</option>
+							<option value="3">03</option>
+							<option value="4">04</option>
+							<option value="5">05</option>
+							<option value="6">06</option>
+							<option value="7">07</option>
+							<option value="8">08</option>
+							<option value="9">09</option>
+							<option value="10">10</option>
+							<option value="11">11</option>
+							<option value="12">12</option>
+						</select>
+					</div>
+					<div class="form-group col-md-2">
+						<label for="castrationYear">Ano de castração</label>
+						<input type="text" id="castrationYear" name="castrationYear" class="form-control" maxlength="4" placeholder="Ano de castração" disabled> 
+					</div>
+					<div class="form-group col-md-5">
+						<label for="status" class="col-form-label">Disponibilidade</label>
+						<select id="status" name="status" class="form-control">
+							<option value="DISPONIVEL">Disponível</option>
+							<option value="INDISPONIVEL">Indisponível</option>
+							<option value="ADOTADO">Adotado</option>
+							<option value="FALECIDO">Falecido</option>
+							<option value="REPOUSO">Em lar de repouso</option>
+							<option value="DESAPARECIDO">Desaparecido</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-1">
+						<label for="checkboxDis">Doenças</label>
+						<input type="checkbox" id="checkboxDis" name="disease" value="True" class="form-control">
+					</div>
+					<div class="form-group col-md-11">
+						<label for="diseaseDescription">Descrição de doenças</label>
+						<input type="text" id="diseaseDescription" name="diseaseDescription" class="form-control" maxlength="80" placeholder="Doenças" disabled>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="sponsors">Padrinho(s)</label>
+					<input type="text" id="sponsors" name="sponsors" class="form-control" maxlength="200" placeholder="Padrinho(s) do cachorro">
+				</div>
+				<div class="form-group">
+					<input type="submit" name="search" value="Pesquisar" class="btn">
+				</div>
+			</form>
+		</div>
+		<div id="footer">
+		</div>
 	</body>
 </html>
