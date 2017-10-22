@@ -16,8 +16,7 @@ public class DogController {
 	
 	@Autowired 
 	private DogRepository dogRepository;
-	
-	
+		
 	@RequestMapping(value = "/dog/register", method = RequestMethod.POST)
     public ResponseEntity<String> dogRegister(@RequestBody Dog dog) {
 		
@@ -39,6 +38,13 @@ public class DogController {
 		}
 		
 		dogRepository.saveAndFlush(dog);  
+		return new ResponseEntity<String>(HttpStatus.OK);
+	}
+	
+	//Must rework this
+	@RequestMapping(value = "/dog/search", method = RequestMethod.GET)
+	 public ResponseEntity<String> dogSearch(@RequestBody Dog dogCriteria) {
+		
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 }
