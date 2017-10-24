@@ -22,9 +22,9 @@ function computeAge(datee) {
 $(document).ready(function() {
 	// Prevent user from typing letters and other symbols into numeric fields
 	$( "#weight" ).keydown(protectNumericField);
-	$( "#birthDate" ).keydown(protectNumericField);
-	$( "#castrationDate" ).keydown(protectNumericField);
-	$( "#arrivalDate" ).keydown(protectNumericField);
+	$( "#birthDate" ).keydown(protectDateField);
+	$( "#castrationDate" ).keydown(protectDateField);
+	$( "#arrivalDate" ).keydown(protectDateField);
 	
 	// Validate numeric and date fields
 	$( "#weight" ).focusout(function () { validateRealNumberField(this) });
@@ -74,11 +74,11 @@ $(document).ready(function() {
 		if ( $( "#name" ).val() == "" )
 			alert("Preencha o nome do cachorro!");
 		else if ( $( "#birthDate" ).hasClass("error_input") )
-			alert("Data de nascimento inv·lida!");
+			alert("Data de nascimento inv√°lida!");
 		else if ( $( "#weight" ).hasClass("error_input") )
-			alert("Peso inv·lido!");
+			alert("Peso inv√°lido!");
 		else if ( $( "#arrivalDate" ).hasClass("error_input") )
-			alert("Data de chegada inv·lida!");
+			alert("Data de chegada inv√°lida!");
 		else if ( $( "#arrivalDate" ).val() == "" )
 			alert("Preencha a data de chegada!");
 		else {

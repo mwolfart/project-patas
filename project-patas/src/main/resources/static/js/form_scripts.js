@@ -113,6 +113,12 @@ function protectNumericField(key) {
 		return false;
 }
 
+function protectDateField(key){
+	var isBar = (key.wich == 193);
+	if (protectNumericField(key) || isBar)
+		return false;
+}
+
 // isNatural := String -> Boolean
 // checks if a given number (as string) is natural
 function isNatural(numStr) {
