@@ -52,6 +52,7 @@ $(document).ready(function() {
 		else {
 			$( "#castrationDate" ).prop("disabled", true);
 			$( "#castrationDate" ).val("");
+			$( "#castrationDate" ).removeClass("error_input");
 		}
 	});
 	
