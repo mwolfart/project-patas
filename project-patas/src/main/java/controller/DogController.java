@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +30,120 @@ public class DogController {
 	
 	@Autowired 
 	private DogRepository dogRepository;
+	
+	// DogMatchesCriteria: Dog, Map<String, String> returns Boolean
+	// Given a Dog class and a map of criteria the class has to obey
+	// (name must be "Lilica", sex must be "F", etc), check if
+	// the class obeys these criteria.
+	/* THIS FUNCTION MIGHT/SHOULD BE REFACTORED */
+	private Boolean dogMatchesCriteria(Dog dog, Map<String, String> criteria) {
+		// Process each available criterion
+		for (Map.Entry<String, String> crit : criteria.entrySet()) {
+			
+			// Stores key (field) and value (what it has to obey)
+			String key = crit.getKey();
+			String value = crit.getValue();
+			
+			// Calendar variable so we can work with dates
+			Calendar cal = Calendar.getInstance();
+			
+			// Process each given criterion
+			switch(key) {
+			case "arrivalDay":
+				// If the date is null, return false
+				if (dog.getArrivalDate() == null)
+					return false;
+				
+				cal.setTime(dog.getArrivalDate());
+				
+				if (cal.get(Calendar.DAY_OF_MONTH) != Integer.parseInt(value))
+					return false;
+				break;
+			case "arrivalMonth":
+				if (dog.getArrivalDate() == null)
+					return false;
+				
+				cal.setTime(dog.getArrivalDate());
+				
+				if (cal.get(Calendar.MONTH) + 1 != Integer.parseInt(value))
+					return false;
+				break;
+			case "arrivalYear":
+				if (dog.getArrivalDate() == null)
+					return false;
+				
+				cal.setTime(dog.getArrivalDate());
+				
+				if (cal.get(Calendar.YEAR) != Integer.parseInt(value))
+					return false;
+				break;
+			case "birthDay":
+				if (dog.getBirthDate() == null)
+					return false;
+				
+				cal.setTime(dog.getBirthDate());
+				
+				if (cal.get(Calendar.DAY_OF_MONTH) != Integer.parseInt(value))
+					return false;
+				break;
+			case "birthMonth":
+				if (dog.getBirthDate() == null)
+					return false;
+				
+				cal.setTime(dog.getBirthDate());
+				
+				if (cal.get(Calendar.MONTH) + 1 != Integer.parseInt(value))
+					return false;
+				break;
+			case "birthYear":
+				if (dog.getBirthDate() == null)
+					return false;
+				
+				cal.setTime(dog.getBirthDate());
+				
+				if (cal.get(Calendar.YEAR) != Integer.parseInt(value))
+					return false;
+				break;
+			case "sex":
+				if (!dog.getSex().equals(value))
+					return false;
+				break;
+			case "name":
+				if (!dog.getName().equals(value))
+					return false;
+				break;
+			case "castrated":
+				if (dog.getCastrated() != Boolean.valueOf(value))
+					return false;
+				break;
+			case "vermifuged":
+				// TODO (needs vermifugation table)
+			case "vacinated":
+				// TODO (needs vacination table)
+				break;
+			}
+		}	
 		
+		return true;
+	}
+	
+	// filterDogs: List<Dog>, Map<String, String> returns List<Dog>
+	// given a List object of Dog classes, checks which of these classes
+	// obey the given criteria, and return them.
+	private List<Dog> filterDogs(List<Dog> dogList, Map<String, String> criteria) {
+		List<Dog> filteredList = new ArrayList<Dog>();
+		
+		for (Dog dog : dogList) {
+			if (dogMatchesCriteria(dog, criteria))
+				filteredList.add(dog);
+		}
+		
+		return filteredList;
+	}
+	
+	/* SERVICE METHODS */
+	
+	// Register dog
 	@RequestMapping(value = "/dog/register", method = RequestMethod.POST)
     public ResponseEntity<String> dogRegister(@RequestBody Dog dog) {
 		
@@ -53,52 +168,38 @@ public class DogController {
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 	
-	//Must rework this
+	// Search dog
 	@RequestMapping(value = "/dog/search", method = RequestMethod.POST, produces = {"application/json"})
 	public ResponseEntity<String> dogSearch(@RequestBody String searchQuery) {
-		System.out.println(searchQuery);
 		
-		// TRIED TO USE ENTITY MANAGER. FAILED.
-		/*
-		EntityManagerFactory fac = Persistence.createEntityManagerFactory("testP");
-		EntityManager em = fac.createEntityManager();
+		// Save the given criteria in a Map object
+		Map<String, String> criteria = new HashMap<String, String>();
 		
-		Query q = em.createNativeQuery(searchQuery);
-		
-		List<Dog> dogs = q.getResultList();
-		
-		System.out.println(dogs);
-		*/
-		
-		// IF THE QUERY IS BUILT IN THE BACKEND, WE NEED THIS (not completed; query being built in frontend)
-		/*
-		Map<String, String> queryMap = new HashMap<String, String>();
+		// We are going to split the JSON so we get each criteria separately
+		//  in the map. First we split the criteria, one from each other
 		String[] pairs = searchQuery.split("\\{|,|\\}");
 
-		for (int i=1; i < pairs.length - 1; i++) {
+		// And then we save each criterion in the map,
+		//  splitting value from key
+		for (int i=1; i < pairs.length; i++) {
 		    String pair = pairs[i];
 		    String[] keyValue = pair.split("\"|:|\"");
-		    if (keyValue[3] != "")
-		    	queryMap.put(keyValue[1], keyValue[3]);
-		    else queryMap.put(keyValue[1], keyValue[4]);
+		    
+		    if (keyValue.length == 4)
+		    	criteria.put(keyValue[1], keyValue[3]);
+		    else criteria.put(keyValue[1], keyValue[4]);
 		}
 		
-		System.out.println(queryMap);
+		// Find all the dogs in the table and filter them.
+		/* TODO: MAYBE WE CAN INJECT A SQL STATEMENT HERE SO */
+		/* WE DON'T HAVE TO FILTER THE CLASSES INSIDE THE    */
+		/* BACKEND                                           */
+		List<Dog> dogList = dogRepository.findAll();
+		List<Dog> filteredList = filterDogs(dogList, criteria);
+				
+		System.out.println(filteredList);
 		
-		String sqlQuery = "SELECT name, sex, arrivalDate FROM Dog WHERE ";
-
-		for (Map.Entry<String, String> entry : queryMap.entrySet()) {
-			String key = entry.getKey();
-			String value = entry.getValue();
-			
-			sqlQuery += key + " = " + value + " AND ";
-			
-		}
-		
-		sqlQuery += "1 = 1";
-		
-		System.out.println(sqlQuery);
-		*/
+		/* TODO: RETURN DATA TO FRONTEND */
 		
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}

@@ -96,26 +96,41 @@ function formToJson(form){
 
 // protectNumericField := Object -> Boolean
 // function used to prevent invalid characters being inserted inside the numeric fields
-function protectNumericField(key) {
-	var isDigit = (key.which >= 48 && key.which <= 57);
-	var isSlash = (key.which == 191);
+function protectNumericField(key) {	
+	var keyAsString = String.fromCharCode(key.which);
+	var isSymbolValid = ("1234567890./".indexOf(keyAsString) > -1)
+	
 	var isBackspace = (key.which == 8);
 	var isTab = (key.which == 9);
 	var isArrow = (key.which >= 37 && key.which <= 40);
-	var isDot = (key.which == 190);
 	var isDel = (key.which == 46);
 
 	if (key.shiftKey || key.altKey)
 		return false;
 	else if (key.ctrlKey)
 		return;
-	else if (!isDigit && !isSlash && !isBackspace && !isTab && !isArrow && !isDot && !isDel)
+	else if (!isBackspace && !isTab && !isArrow && !isDel && !isSymbolValid)
 		return false;
 }
 
+//protectStringField := Object -> Boolean
+//function used to prevent invalid characters being inserted inside the string fields
+//these invalid characters are characters that might break a JSON object
+//for instance: { } : " '
+function protectStringField(key) {
+	var isBraces = (key.shiftKey && ((key.which == 219) || (key.which == 221)));
+	var isQuotes = (key.shiftKey && key.which == 222);
+	var isTwoDots = (key.shiftKey && key.which == 59);
+	var isSlash = (key.which == 191);	// used to replace commas
+
+	if (isBraces || isQuotes || isTwoDots || isSlash)
+		return false;
+}
+
+//protectDateField := Object -> Boolean
+//function used to prevent invalid characters being inserted inside the date fields
 function protectDateField(key){
-	var isBar = (key.wich == 193);
-	if (protectNumericField(key) || isBar)
+	if (protectNumericField(key))
 		return false;
 }
 
