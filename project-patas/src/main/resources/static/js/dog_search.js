@@ -1,6 +1,8 @@
 // Document load script
 $(document).ready(function() {
 	// Prevent user from typing letters and other symbols into numeric fields	
+	$( "#name" ).keydown(protectStringField);
+	
 	$( "#birthYear" ).keydown(protectNumericField);
 	$( "#arrivalYear" ).keydown(protectNumericField);
 	
