@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.gson.Gson;
+
 import repository.DogRepository;
 
 
@@ -141,6 +143,22 @@ public class DogController {
 		return filteredList;
 	}
 	
+	// getDogRequiredInfo: List<Dog> returns List<List<String>>
+	// used so we can filter only the fields we want to, and then return them
+	private List<List<String>> getDogRequiredInfo(List<Dog> dogList) {
+		List<List<String>> filteredDogList = new ArrayList<List<String>>();
+		/*
+		for (Dog dog : dogList) {
+			List<String> filteredInfo = new ArrayList<String>();
+			
+			filteredInfo.add(Long.toString(dog.getId()));
+			filteredInfo.add(dog.getName());
+			filteredInfo.add(dog.getSex());
+		}
+		*/
+		return filteredDogList;
+	}
+	
 	/* SERVICE METHODS */
 	
 	// Register dog
@@ -195,12 +213,17 @@ public class DogController {
 		/* WE DON'T HAVE TO FILTER THE CLASSES INSIDE THE    */
 		/* BACKEND                                           */
 		List<Dog> dogList = dogRepository.findAll();
-		List<Dog> filteredList = filterDogs(dogList, criteria);
+		List<Dog> filteredList = filterDogs(dogList, criteria);	
+		
+		// Maybe we don't need this at all
+		//List<List<String>> filteredDogInfo = getDogRequiredInfo(filteredList);
+		
+		//System.out.println(filteredList);
+		
+		Gson gson = new Gson();
+		String filteredDogJson = gson.toJson(filteredList);
+		System.out.println(filteredDogJson);
 				
-		System.out.println(filteredList);
-		
-		/* TODO: RETURN DATA TO FRONTEND */
-		
-		return new ResponseEntity<String>(HttpStatus.OK);
+		return new ResponseEntity<String>(filteredDogJson, HttpStatus.OK);
 	}
 }

@@ -1,5 +1,5 @@
 
-//arrayContains := Array -> Boolean
+//arrayContains := Array, Object -> Boolean
 // checks if a given array contains a given value
 function arrayContains(array, value) {
 	var len = array.length;

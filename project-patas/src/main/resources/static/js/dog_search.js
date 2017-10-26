@@ -1,3 +1,21 @@
+//filterFields := Object -> Object
+//given a Dog json, return only the fields we are interested in.
+function filterFields(object) {
+	return {"id": object.id, "name": object.name, "sex": object.sex, "arrivalDate": object.arrivalDate};
+}
+
+//processResponseJson := Object -> Object
+//function used to filter the json returned by the query
+//returns another json, containing only the fields we are interested in.
+function processResponseJson(response) {
+	var filteredFieldsJson = [];
+	
+	for (i in response)
+		filteredFieldsJson += filterFields(response[i]);
+	
+	return filteredFieldsJson;
+}
+
 // Document load script
 $(document).ready(function() {
 	// Prevent user from typing letters and other symbols into numeric fields	
@@ -20,14 +38,15 @@ $(document).ready(function() {
 			jsonData = formToJson(this);
 			jsonData = JSON.stringify(jsonData);
 			
-			console.log(jsonData);
-			
 			$.ajax({
 				url: "http://localhost:8080/dog/search",
 				type: "POST",
 				dataType: "json",
 				data: jsonData,
-				contentType: "application/json; charset=UTF-8"
+				contentType: "application/json; charset=UTF-8",
+				success: function(response) {
+					console.log(processResponseJson(response));
+				}
 			});			
 		}
 	});
