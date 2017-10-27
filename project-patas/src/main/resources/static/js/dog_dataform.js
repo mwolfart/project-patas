@@ -11,13 +11,40 @@ $(document).ready(function() {
 	$( "#sponsors" ).keydown(protectStringField);
 	
 	// Validate numeric and date fields
-	$( "#name" ).focusout(function () { validateStringField(this) });
-	$( "#weight" ).focusout(function () { validateRealNumberField(this) });
-	$( "#furColor" ).focusout(function () { validateStringField(this) });
-	$( "#castrationDate" ).focusout(function() { validateDateField(this) });
-	$( "#arrivalDate" ).focusout(function() { validateDateField(this) });
-	$( "#diseaseDescription" ).focusout(function () { validateStringField(this) });
-	$( "#sponsors" ).focusout(function () { validateStringField(this) });
+	$( "#name" ).focusout(function () { 
+		validateStringField(this);
+		hideAlert($( "#errorName" ));
+	});
+	
+	$( "#weight" ).focusout(function () { 
+		validateRealNumberField(this);
+		hideAlert($( "#errorWeight" )); 
+	});
+	
+	$( "#furColor" ).focusout(function () { 
+		validateStringField(this);
+		hideAlert($( "#errorFurColor" )); 
+	});
+	
+	$( "#castrationDate" ).focusout(function() { 
+		validateDateField(this);
+		hideAlert($( "#errorCastrationDate" )); 
+	});
+	
+	$( "#arrivalDate" ).focusout(function() { 
+		validateDateField(this);
+		hideAlert($( "#errorArrivalDate" )); 
+	});
+	
+	$( "#diseaseDescription" ).focusout(function () { 
+		validateStringField(this);
+		hideAlert($( "#errorDisease" )); 
+	});
+	
+	$( "#sponsors" ).focusout(function () { 
+		validateStringField(this);
+		hideAlert($( "#errorSponsors" )); 
+	});
 	
 	// Validate birth and automatically compute age
 	$( "#birthDate" ).focusout( function() {
@@ -31,6 +58,8 @@ $(document).ready(function() {
 				$( "#age" ).val(age);
 			}
 		}
+		
+		hideAlert($( "#errorBirthDate" ));
 	});
 	
 	//Enable/disable the castration date field

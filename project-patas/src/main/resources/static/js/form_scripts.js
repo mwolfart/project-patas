@@ -4,14 +4,14 @@
 // If it's present but has no value, returns true.
 function getUrlParameter(param) {
     var URL = decodeURIComponent(window.location.search.substring(1));
-    var URLVariables = URL.split("&");
-    var paramName;
+    var URL_variables = URL.split("&");
+    var param_name;
 
-    for (var i = 0; i < URLVariables.length; i++) {
-    	paramName = URLVariables[i].split("=");
+    for (var i = 0; i < URL_variables.length; i++) {
+    	param_name = URL_variables[i].split("=");
 
-        if (paramName[0] === param) {
-            return paramName[1] === undefined ? 0 : paramName[1];
+        if (param_name[0] === param) {
+            return param_name[1] === undefined ? 0 : param_name[1];
         }
     }
     
@@ -64,8 +64,8 @@ function isDateValid(date_as_string) {
 }
 
 // fixDateFormat := String -> String
-// receives a date in a specific format and converts it to a string, in universal format for this project
-// potentially unused. Only used if we use datepicker.
+// receives a date in a specific format (yyyy-mm-dd) and converts it to a string, in universal format for this project
+// Potentially unused. Only used if we use datepicker.
 function fixDateFormat(date) {
 	var parts = date.split("-");
 	
@@ -103,9 +103,17 @@ function dateToString(date_as_date) {
 	return day + "/" + month + "/" + year;
 }
 
-//computeAge := Date -> Integer
-//given an arbitrary date, computes the age (difference between this date and the current one).
-//If the given date is greater (more recent) than the current date, it uses the given date as "current date"
+// integerToDate := Integer -> Date
+// given an integer, return its corresponding date value
+function integerToDate(date_as_int) {
+	var date = new Date();
+	date.setTime(date_as_int);
+	return date;
+}
+
+// computeAge := Date -> Integer
+// given an arbitrary date, computes the age (difference between this date and the current one).
+// If the given date is greater (more recent) than the current date, it uses the given date as "current date"
 function computeAge(datee) {
 	var cur_date = new Date();
 	
@@ -149,42 +157,51 @@ function formToJson(form){
 // protectNumericField := Object -> Boolean
 // function used to prevent invalid characters being inserted inside the numeric fields
 function protectNumericField(key) {
-	var isDigit = (key.which >= 48 && key.which <= 57);
-	var isSlash = (key.which == 191) || (key.which == 193);
-	var isBackspace = (key.which == 8);
-	var isTab = (key.which == 9);
-	var isArrow = (key.which >= 37 && key.which <= 40);
-	var isDot = (key.which == 190);
-	var isDel = (key.which == 46);
+	var is_digit = (key.which >= 48 && key.which <= 57);
+	var is_slash = (key.which == 191) || (key.which == 193);
+	var is_backspace = (key.which == 8);
+	var is_tab = (key.which == 9);
+	var is_arrow = (key.which >= 37 && key.which <= 40);
+	var is_dot = (key.which == 190);
+	var is_del = (key.which == 46);
 
 	if (key.shiftKey || key.altKey)
 		return false;
 	else if (key.ctrlKey)
 		return;
-	else if (!isDigit && !isSlash && !isBackspace && !isTab && !isArrow && !isDot && !isDel)
+	else if (!is_digit && !is_slash && !is_backspace && !is_tab && !is_arrow && !is_dot && !is_del)
 		return false;
 }
 
-//protectStringField := Object -> Boolean
-//function used to prevent invalid characters being inserted inside the string fields
-//these invalid characters are characters that might break a JSON object
-//for instance: { } : " '
+// protectStringField := Object -> Boolean
+// function used to prevent invalid characters being inserted inside the string fields
+// these invalid characters are characters that might break a JSON object
+// for instance: { } : " '
 function protectStringField(key) {
-	var isBraces = (key.shiftKey && ((key.which >= 219) && (key.which <= 221)));
-	var isQuotes = (key.shiftKey && (key.which == 222 || key.which == 192));
-	var isSemicolon = (key.which == 59);
-	var isSlash = (key.which == 191) || (key.which == 193);	// used to replace commas
+	var is_braces = (key.shiftKey && ((key.which >= 219) && (key.which <= 221)));
+	var is_quotes = (key.shiftKey && (key.which == 222 || key.which == 192));
+	var is_semicolon = (key.which == 59);
+	var is_slash = (key.which == 191) || (key.which == 193);	// used to replace commas
 
-	if (isBraces || isQuotes || isSemicolon || isSlash)
+	if (is_braces || is_quotes || is_semicolon || is_slash)
 		return false;
+	else return true;
+}
+
+// protectSearchStringField := Object -> Boolean
+// also prevents commas
+function protectSearchStringField(key) {
+	if (!protectStringField(key) || key.which == 188)
+		return false;
+	else return true;
 }
 
 // isNatural := String -> Boolean
 // checks if a given number (as string) is natural
-function isNatural(numStr) {
-	number = parseInt(numStr, 10);
+function isNatural(num_str) {
+	number = parseInt(num_str, 10);
 	
-	return (number >= 0 && number.toString() === numStr);
+	return (number >= 0 && number.toString() === num_str);
 }
 
 // validateNatNumberField := Object -> Integer
@@ -204,8 +221,8 @@ function validateNatNumberField(field) {
 	}
 }
 
-//validateFloatField := Object -> Integer
-//if a given form object (edit box) is not a valid real number, an error class is added to it
+// validateFloatField := Object -> Integer
+// if a given form object (edit box) is not a valid real number, an error class is added to it
 function validateRealNumberField(field) {
 	if (field.value == "") {
 		$(field).removeClass("error_input");
@@ -221,8 +238,8 @@ function validateRealNumberField(field) {
 	}
 }
 
-//validateDateField := Object -> Integer
-//if a given form object (edit box) is not a valid date, an error class is added to it
+// validateDateField := Object -> Integer
+// if a given form object (edit box) is not a valid date, an error class is added to it
 function validateDateField(field) {
 	if (field.value == "") {
 		$(field).removeClass("error_input");
@@ -238,9 +255,9 @@ function validateDateField(field) {
 	}
 }
 
-//validateStringField := Object -> Integer
-//if a given form object (edit box) is not a valid string, an error class is added to it
-//a valid string has only some set of characters in it.
+// validateStringField := Object -> Integer
+// if a given form object (edit box) is not a valid string, an error class is added to it
+// a valid string has only some set of characters in it.
 function validateStringField(field) {	
 	var value = field.value;
 	
@@ -249,10 +266,10 @@ function validateStringField(field) {
 		return 0;
 	}
 	
-	var restrictedChars = ":/\\;\'\"{}";
+	var restricted_chars = ":/\\;\'\"{}";
 	
 	for (char in value) {
-		if (restrictedChars.indexOf(value[char]) > -1) {
+		if (restricted_chars.indexOf(value[char]) > -1) {
 			$(field).addClass("error_input");
 			return -1;
 		}
@@ -262,9 +279,35 @@ function validateStringField(field) {
 	return 1;
 }
 
-//showAlert : Object, String -> Void
-//Show an error alert 
-function showAlert(element, msg){	
+// validateSearchStringField := Object -> Integer
+// also prevents commas
+function validateSearchStringField(field) {
+	var validation = validateStringField(field);
+	var value = field.value
+	
+	if (validation == 1) {
+		for (char in value) {
+			if (value[char] == ',') {
+				$(field).addClass("error_input");
+				return -1;
+			}
+		}
+	}
+	
+	return validation;
+	
+}
+
+// showAlert : Object, String -> Void
+// Show an error alert 
+function showAlert(element, msg) {	
 	element.text(msg);
 	element.removeClass("disabled-alert");	
+}
+
+// hideAlert : Object -> Void
+// Remove the error alert
+function hideAlert(element) {	
+	element.text("");
+	element.addClass("disabled-alert");	
 }

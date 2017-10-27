@@ -10,9 +10,11 @@ function filterFields(object) {
 function processResponseJson(response) {
 	$("tbody > tr").remove();
 	
+	console.log(response[0]);
+	
 	$('#dogs').append(
 			$.map(response, function (dog) {
-				return '<tr><td>' +dog.name+ '</td><td>'+dog.sex+'</td><td>'+dog.arrivalDate+'</td><td>'
+				return '<tr><td>' +dog.name+ '</td><td>'+dog.sex+'</td><td>'+dateToString(integerToDate(dog.arrivalDate))+'</td><td>'
 				+'<a href="dog_view.html?id='+dog.id+'" class="btn btn-info" role="button">Visualizar</a></td></tr>';
 			}).join());
 	$( "#dogs" ).removeClass("disabled-table");
@@ -22,21 +24,35 @@ function processResponseJson(response) {
 // Document load script
 $(document).ready(function() {
 	// Prevent user from typing letters and other symbols into numeric fields	
-	$( "#name" ).keydown(protectStringField);
-	
+	$( "#name" ).keydown(protectSearchStringField);
 	$( "#birthYear" ).keydown(protectNumericField);
 	$( "#arrivalYear" ).keydown(protectNumericField);
 	
-	$( "#birthYear" ).focusout( function() { validateNatNumberField(this) });
-	$( "#arrivalYear" ).focusout( function() { validateNatNumberField(this) });
+	$( "#name" ).focusout( function() { 
+		validateSearchStringField(this);
+		hideAlert($("#errorName"));
+	});
+	
+	$( "#birthYear" ).focusout( function() { 
+		validateNatNumberField(this);
+		hideAlert($("#errorBirthYear"));
+	});
+	
+	$( "#arrivalYear" ).focusout( function() { 
+		validateNatNumberField(this);
+		hideAlert($("#errorArrivalYear"));
+	});
 
 	// Set the submit configuration for the form
 	$( "#dogSearchForm" ).submit(function(event) {
 		event.preventDefault();
 		
-		if ( $("#birthYear").hasClass("error_input") || 
-				$("#arrivalYear").hasClass("error_input") )
-			alert("Há erros nos dados preenchidos!");
+		if ( validateSearchStringField( $("#name")[0] ) == -1 )
+			showAlert($( "#errorName" ), "Nome inválido!");
+		else if ( validateNatNumberField( $("#birthYear")[0] ) == -1 )
+			showAlert($( "#errorBirthYear" ), "Ano de nascimento inválido!");
+		else if ( validateNatNumberField( $("#arrivalYear")[0] ) == -1 )
+			showAlert($( "#errorArrivalYear" ), "Ano de chegada inválido!");
 		else {
 			jsonData = formToJson(this);
 			jsonData = JSON.stringify(jsonData);
@@ -48,7 +64,7 @@ $(document).ready(function() {
 				data: jsonData,
 				contentType: "application/json; charset=UTF-8",
 				success: function(response) {
-					console.log(processResponseJson(response));
+					processResponseJson(response);
 				}
 			});			
 		}

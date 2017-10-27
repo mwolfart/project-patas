@@ -168,7 +168,7 @@ public class DogController {
 	
 	// Search dog
 	@RequestMapping(value = "/dog/search", method = RequestMethod.POST, produces = {"application/json"})
-	public ResponseEntity<String> dogSearch(@RequestBody String searchQuery) {
+	public ResponseEntity<List<Dog>> dogSearch(@RequestBody String searchQuery) {
 		
 		// Save the given criteria in a Map object
 		Map<String, String> criteria = new HashMap<String, String>();
@@ -198,10 +198,10 @@ public class DogController {
 		// Maybe we don't need this at all
 		//List<List<String>> filteredDogInfo = getDogRequiredInfo(filteredList);
 
-		Gson gson = new Gson();
-		String filteredDogJson = gson.toJson(filteredList);
+		//Gson gson = new Gson();
+		//String filteredDogJson = gson.toJson(filteredList);
 				
-		return new ResponseEntity<String>(filteredDogJson, HttpStatus.OK);
+		return new ResponseEntity<List<Dog>>(filteredList, HttpStatus.OK);
 	}
 	
 	// View dog
