@@ -15,7 +15,7 @@ function processResponseJson(response) {
 				return '<tr><td>' +dog.name+ '</td><td>'+dog.sex+'</td><td>'+dog.arrivalDate+'</td><td>'
 				+'<a href="dog/view?id='+dog.id+'" class="btn btn-info" role="button">Visualizar</a></td></tr>';
 			}).join());
-	$( "#dogs" ).removeClass("disable-table");
+	$( "#dogs" ).removeClass("disabled-table");
 
 }
 

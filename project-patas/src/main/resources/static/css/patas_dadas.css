@@ -25,6 +25,6 @@
     border: solid 2px #FF0000;  
 }
 
-.disable-table{
+.disabled-table, .disabled-alert{
 	display: none;
 }

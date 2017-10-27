@@ -158,3 +158,10 @@ function validateDateField(field) {
 		$(field).addClass("error_input");
 	else $(field).removeClass("error_input");
 }
+
+//showAlert : Object, String -> Void
+//Show an error alert 
+function showAlert(element, msg){	
+	element.text(msg);
+	element.removeClass("disabled-alert");	
+}
