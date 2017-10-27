@@ -1,22 +1,3 @@
-// computeAge := Date -> Integer
-// given an arbitrary date, computes the age (difference between this date and the current one).
-// If the given date is greater (more recent) than the current date, it uses the given date as "current date"
-function computeAge(datee) {
-	var cur_date = new Date();
-	
-	if (datee > cur_date) {
-		cur_date = datee;
-		datee = new Date();
-	}
-	
-	var diff_year = cur_date.getFullYear() - datee.getFullYear();
-	var diff_month = cur_date.getMonth() - datee.getMonth();
-	var diff_days = cur_date.getDate() - datee.getDate();
-	
-	if (diff_month > 0 || (diff_month == 0 && diff_days >= 0))
-		return diff_year;
-	else return diff_year - 1;
-}
 
 // Document load script
 $(document).ready(function() {

@@ -226,4 +226,15 @@ public class DogController {
 				
 		return new ResponseEntity<String>(filteredDogJson, HttpStatus.OK);
 	}
+	
+	// View dog
+	@RequestMapping(value = "/dog/view", method = RequestMethod.POST)
+	public ResponseEntity dogView(@RequestBody String dogId) {		
+		Dog dog = dogRepository.findById(Long.parseLong(dogId));
+		
+		if (dog == null)
+			return new ResponseEntity("Cachorro não encontrado.", HttpStatus.BAD_REQUEST);
+		
+		return new ResponseEntity(dog, HttpStatus.OK);
+	}
 }

@@ -1,5 +1,24 @@
 
-//arrayContains := Array, Object -> Boolean
+// getUrlParameter := String -> String or Integer
+// gets an URL parameter. If it's absent, returns false.
+// If it's present but has no value, returns true.
+function getUrlParameter(param) {
+    var URL = decodeURIComponent(window.location.search.substring(1));
+    var URLVariables = URL.split("&");
+    var paramName;
+
+    for (var i = 0; i < URLVariables.length; i++) {
+    	paramName = URLVariables[i].split("=");
+
+        if (paramName[0] === param) {
+            return paramName[1] === undefined ? 0 : paramName[1];
+        }
+    }
+    
+    return 0;
+}
+
+// arrayContains := Array, Object -> Boolean
 // checks if a given array contains a given value
 function arrayContains(array, value) {
 	var len = array.length;
@@ -69,6 +88,36 @@ function stringToDate(date_as_string) {
 	new_date.setFullYear(date_str_parts[2]);
 	
 	return new_date;	
+}
+
+// dateToString := Date -> String
+// given a date object, return it as string, in dd/mm/yyyy format
+function dateToString(date_as_date) {
+	var day = date_as_date.getDate();
+	var month = date_as_date.getMonth() + 1;
+	var year = date_as_date.getFullYear();
+	
+	return day + "/" + month + "/" + year;
+}
+
+//computeAge := Date -> Integer
+//given an arbitrary date, computes the age (difference between this date and the current one).
+//If the given date is greater (more recent) than the current date, it uses the given date as "current date"
+function computeAge(datee) {
+	var cur_date = new Date();
+	
+	if (datee > cur_date) {
+		cur_date = datee;
+		datee = new Date();
+	}
+	
+	var diff_year = cur_date.getFullYear() - datee.getFullYear();
+	var diff_month = cur_date.getMonth() - datee.getMonth();
+	var diff_days = cur_date.getDate() - datee.getDate();
+	
+	if (diff_month > 0 || (diff_month == 0 && diff_days >= 0))
+		return diff_year;
+	else return diff_year - 1;
 }
 
 // formToJson := Object -> Object
