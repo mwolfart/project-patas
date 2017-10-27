@@ -32,8 +32,8 @@ function arrayContains(array, value) {
 
 // isDateValid := String -> Boolean
 // checks if a given date (by string) is valid or not.
-function isDateValid(date_as_string) {	
-	if (date_as_string.indexOf(".") > -1)
+function isDateValid(date_as_string) {
+	if (date_as_string == undefined || date_as_string == "" || date_as_string.indexOf(".") > -1)
 		return false;
 	
 	var parts = date_as_string.split("/");
@@ -138,7 +138,7 @@ function formToJson(form){
 		//Test if value is a date
 		else if (isDateValid(input.value) && input.value != "")
 			JSON_data[input.name] = stringToDate(input.value).getTime();
-		//Else, if not empty, it's a string or boolean
+		//Else, if not empty, it's a string
 		else if (input.value != "")
 			JSON_data[input.name] = input.value;
 	});
@@ -172,10 +172,10 @@ function protectNumericField(key) {
 function protectStringField(key) {
 	var isBraces = (key.shiftKey && ((key.which >= 219) && (key.which <= 221)));
 	var isQuotes = (key.shiftKey && (key.which == 222 || key.which == 192));
-	var isTwoDots = (key.shiftKey && key.which == 59);
+	var isSemicolon = (key.which == 59);
 	var isSlash = (key.which == 191) || (key.which == 193);	// used to replace commas
 
-	if (isBraces || isQuotes || isTwoDots || isSlash)
+	if (isBraces || isQuotes || isSemicolon || isSlash)
 		return false;
 }
 
@@ -187,28 +187,79 @@ function isNatural(numStr) {
 	return (number >= 0 && number.toString() === numStr);
 }
 
-// validateIntegerField := Object -> Void
+// validateNatNumberField := Object -> Integer
 // if a given form object (edit box) is not a valid integer, an error class is added to it
 function validateNatNumberField(field) {
-	if (!isNatural(field.value) && field.value != "")
+	if (field.value == "") {
+		$(field).removeClass("error_input");
+		return 0;
+	}
+	else if (!isNatural(field.value)) {
 		$(field).addClass("error_input");
-	else $(field).removeClass("error_input");
+		return -1;
+	}
+	else { 
+		$(field).removeClass("error_input");
+		return 1;
+	}
 }
 
-//validateFloatField := Object -> Void
+//validateFloatField := Object -> Integer
 //if a given form object (edit box) is not a valid real number, an error class is added to it
 function validateRealNumberField(field) {
-	if (!isFinite(field.value))
+	if (field.value == "") {
+		$(field).removeClass("error_input");
+		return 0;
+	}
+	else if (!isFinite(field.value)) {
 		$(field).addClass("error_input");
-	else $(field).removeClass("error_input");
+		return -1;
+	}
+	else {
+		$(field).removeClass("error_input");
+		return 1;
+	}
 }
 
-//validateDateField := Object -> Void
+//validateDateField := Object -> Integer
 //if a given form object (edit box) is not a valid date, an error class is added to it
 function validateDateField(field) {
-	if (!isDateValid(field.value) && field.value != "")
+	if (field.value == "") {
+		$(field).removeClass("error_input");
+		return 0;
+	}
+	else if (!isDateValid(field.value)) {
 		$(field).addClass("error_input");
-	else $(field).removeClass("error_input");
+		return -1;
+	}
+	else {
+		$(field).removeClass("error_input");
+		return 1;
+	}
+}
+
+//validateStringField := Object -> Integer
+//if a given form object (edit box) is not a valid string, an error class is added to it
+//a valid string has only some set of characters in it.
+function validateStringField(field) {	
+	var value = field.value;
+	
+	if (value == "") {
+		$(field).removeClass("error_input");
+		return 0;
+	}
+	
+	var restrictedChars = ":/\\;\'\"{}";
+	
+	for (char in value) {
+		if (restrictedChars.indexOf(value[char]) > -1) {
+			$(field).addClass("error_input");
+			return -1;
+		}
+	}
+	
+	$(field).removeClass("error_input");
+	return 1;
 }
 
 //showAlert : Object, String -> Void

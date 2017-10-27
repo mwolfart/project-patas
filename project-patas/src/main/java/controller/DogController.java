@@ -143,44 +143,24 @@ public class DogController {
 		return filteredList;
 	}
 	
-	// getDogRequiredInfo: List<Dog> returns List<List<String>>
-	// used so we can filter only the fields we want to, and then return them
-	private List<List<String>> getDogRequiredInfo(List<Dog> dogList) {
-		List<List<String>> filteredDogList = new ArrayList<List<String>>();
-		/*
-		for (Dog dog : dogList) {
-			List<String> filteredInfo = new ArrayList<String>();
-			
-			filteredInfo.add(Long.toString(dog.getId()));
-			filteredInfo.add(dog.getName());
-			filteredInfo.add(dog.getSex());
-		}
-		*/
-		return filteredDogList;
-	}
-	
 	/* SERVICE METHODS */
 	
 	// Register dog
 	@RequestMapping(value = "/dog/register", method = RequestMethod.POST)
     public ResponseEntity<String> dogRegister(@RequestBody Dog dog) {
 		
-		if(dog.getName() == null){
-			return new ResponseEntity<String>("Nome está em branco",HttpStatus.BAD_REQUEST);
-		}
+		if(dog.getName() == null)
+			return new ResponseEntity<String>("Nome está em branco", HttpStatus.BAD_REQUEST);
 		
 		Dog dogWithSameName = dogRepository.findByName(dog.getName());
-		if(dogWithSameName != null){
-			return new ResponseEntity<String>("Já existe um cachorro com este nome",HttpStatus.BAD_REQUEST);
-		}
+		if(dogWithSameName != null)
+			return new ResponseEntity<String>("Já existe um cachorro com este nome", HttpStatus.BAD_REQUEST);
 		
-		if(dog.getArrivalDate() == null){
-			return new ResponseEntity<String>("Data de chegada está em branco",HttpStatus.BAD_REQUEST);
-		}
+		if(dog.getArrivalDate() == null)
+			return new ResponseEntity<String>("Data de chegada está em branco", HttpStatus.BAD_REQUEST);
 		
-		if(dog.getCastrated() == null){
-			return new ResponseEntity<String>("Flag de castrado está em branco",HttpStatus.BAD_REQUEST);
-		}
+		if(dog.getCastrated() == null)
+			return new ResponseEntity<String>("Flag de castrado está em branco", HttpStatus.BAD_REQUEST);
 		
 		dogRepository.saveAndFlush(dog);
 		return new ResponseEntity<String>(HttpStatus.OK);
@@ -238,24 +218,20 @@ public class DogController {
 	// Update dog
 	@RequestMapping(value = "/dog/update", method = RequestMethod.POST)
     public ResponseEntity<String> dogUpdate(@RequestBody Dog dog) {
+		System.out.println(dog);
 		
-		if(dog.getName() == null){
-			return new ResponseEntity<String>("Nome está em branco",HttpStatus.BAD_REQUEST);
-		}
+		if(dog.getName() == null)
+			return new ResponseEntity<String>("Nome está em branco", HttpStatus.BAD_REQUEST);
 		
 		Dog dogWithSameName = dogRepository.findByName(dog.getName());
+		if(dogWithSameName != null && dogWithSameName.getId() != dog.getId())
+			return new ResponseEntity<String>("Já existe um cachorro com este nome", HttpStatus.BAD_REQUEST);
 		
-		if(dogWithSameName != null && dogWithSameName.getId() != dog.getId()){
-			return new ResponseEntity<String>("Já existe um cachorro com este nome",HttpStatus.BAD_REQUEST);
-		}
+		if(dog.getArrivalDate() == null)
+			return new ResponseEntity<String>("Data de chegada está em branco", HttpStatus.BAD_REQUEST);
 		
-		if(dog.getArrivalDate() == null){
-			return new ResponseEntity<String>("Data de chegada está em branco",HttpStatus.BAD_REQUEST);
-		}
-		
-		if(dog.getCastrated() == null){
-			return new ResponseEntity<String>("Flag de castrado está em branco",HttpStatus.BAD_REQUEST);
-		}
+		if(dog.getCastrated() == null)
+			return new ResponseEntity<String>("Flag de castrado está em branco", HttpStatus.BAD_REQUEST);
 		
 		dogRepository.saveAndFlush(dog);
 		return new ResponseEntity<String>(HttpStatus.OK);

@@ -62,6 +62,7 @@
 					<div class="form-group col-md-4">
 						<label for="furColor" class="col-form-label">Cor do pelo</label>
 						<input type="text" id="furColor" name="furColor" class="form-control" maxlength="30" placeholder="Cor do pelo do cachorro">
+						<div id="errorFurColor" class="alert alert-danger disabled-alert"></div>
 					</div>
 				</div>
 				<div class="form-row">
@@ -102,11 +103,13 @@
 					<div class="form-group col-md-11">
 						<label for="diseaseDescription" class="col-form-label">Descrição</label>
 						<input type="text" id="diseaseDescription" name="diseaseDescription" class="form-control" maxlength="80" placeholder="Doença do cachorro" disabled>
+						<div id="errorDisease" class="alert alert-danger disabled-alert"></div>
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="sponsors" class="col-form-label">Padrinhos</label>
 					<input type="text" id="sponsors" name="sponsors" class="form-control" maxlength="200" placeholder="Padrinho(s) do cachorro">
+					<div id="errorSponsors" class="alert alert-danger disabled-alert"></div>
 				</div>	
 				<div class="form-group">			
 					<input type="submit" name="register" value="Cadastrar" class="btn">

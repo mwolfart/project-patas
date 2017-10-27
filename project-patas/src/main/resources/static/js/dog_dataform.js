@@ -1,28 +1,36 @@
 // Document load script
 $(document).ready(function() {
 	// Prevent user from typing letters and other symbols into numeric fields
+	$( "#name" ).keydown(protectStringField);
 	$( "#weight" ).keydown(protectNumericField);
 	$( "#birthDate" ).keydown(protectNumericField);
+	$( "#furColor" ).keydown(protectStringField);
 	$( "#castrationDate" ).keydown(protectNumericField);
 	$( "#arrivalDate" ).keydown(protectNumericField);
+	$( "#diseaseDescription" ).keydown(protectStringField);
+	$( "#sponsors" ).keydown(protectStringField);
 	
 	// Validate numeric and date fields
+	$( "#name" ).focusout(function () { validateStringField(this) });
 	$( "#weight" ).focusout(function () { validateRealNumberField(this) });
+	$( "#furColor" ).focusout(function () { validateStringField(this) });
 	$( "#castrationDate" ).focusout(function() { validateDateField(this) });
 	$( "#arrivalDate" ).focusout(function() { validateDateField(this) });
+	$( "#diseaseDescription" ).focusout(function () { validateStringField(this) });
+	$( "#sponsors" ).focusout(function () { validateStringField(this) });
 	
 	// Validate birth and automatically compute age
 	$( "#birthDate" ).focusout( function() {
-		if (isDateValid(this.value)) {
-			var age = computeAge(stringToDate(this.value));
+		var validation = validateDateField(this);
+		
+		if (validation >= 0) {
+			$( "#age" ).val("");
 			
-			$(this).removeClass("error_input");
-			$( "#age" ).val(age);
+			if (validation > 0) {
+				var age = computeAge(stringToDate(this.value));
+				$( "#age" ).val(age);
+			}
 		}
-		else if (this.value == "") 
-			$(this).removeClass("error_input");
-		else 
-			$(this).addClass("error_input");
 	});
 	
 	//Enable/disable the castration date field

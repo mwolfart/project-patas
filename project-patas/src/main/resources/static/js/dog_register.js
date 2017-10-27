@@ -6,19 +6,27 @@ $(document).ready(function() {
 		event.preventDefault();
 		
 		// Form validation
-		if ( $( "#name" ).val() == "" ) {
+		if ( validateStringField( $( "#name" )[0] ) == 0 )
 			showAlert($( "#errorName" ), "Preencha o nome do cachorro!");
-		} else if ( $( "#birthDate" ).hasClass("error_input") ) {
-			showAlert($( "#errorBirthDate" ), "Data de nascimento inv√°lida!");
-		} else if ( $( "#weight" ).hasClass("error_input") ) {
-			showAlert($( "#errorWeight" ), "Peso inv√°lido!");
-		} else if ( $( "#arrivalDate" ).hasClass("error_input") ) {
-			showAlert($( "#errorArrivalDate" ), "Data de chegada inv√°lida!");
-		} else if ( $( "#arrivalDate" ).val() == "" ) {
+		else if ( validateStringField( $( "#name" )[0] ) == -1 ) 
+			showAlert($( "#errorName" ), "Nome do cachorro inv·lido!");
+		else if ( validateDateField( $( "#birthDate" )[0] ) == -1 ) 
+			showAlert($( "#errorBirthDate" ), "Data de nascimento inv·lida!");
+		else if ( validateRealNumberField( $( "#weight" )[0] ) == -1 ) 
+			showAlert($( "#errorWeight" ), "Peso inv·lido!");
+		else if ( validateStringField( $( "#furColor" )[0] ) == -1 ) 
+			showAlert($( "#errorFurColor" ), "Cor de pelo inv·lida!");
+		else if ( validateDateField( $( "#arrivalDate" )[0] ) == -1 ) 
+			showAlert($( "#errorArrivalDate" ), "Data de chegada inv·lida!");
+		else if ( validateDateField( $( "#arrivalDate" )[0] ) == 0 ) 
 			showAlert($( "#errorArrivalDate" ), "Preencha a data de chegada!");
-		} else if ( $( "#castrationDate" ).hasClass("error_input") ) {
-			showAlert($( "#errorCastrationDate" ), "Data de chegada inv√°lida!");
-		} else {
+		else if ( validateDateField( $( "#castrationDate" )[0] ) == -1 ) 
+			showAlert($( "#errorCastrationDate" ), "Data de chegada inv·lida!");
+		else if ( validateStringField( $( "#diseaseDescription" )[0] ) == -1 ) 
+			showAlert($( "#errorDisease" ), "DescriÁ„o de doenÁa inv·lida!");
+		else if ( validateStringField( $( "#sponsors" )[0] ) == -1 ) 
+			showAlert($( "#errorSponsors" ), "Nome de padrinho(s) inv·lida!");
+		else {
 			// Convert form to json
 			var jsonData = formToJson(this);
 			
@@ -42,7 +50,7 @@ $(document).ready(function() {
 				data: jsonData,
 				contentType: "application/json; charset=UTF-8",
 				error: function(response) {
-					showAlert($( "#errorName" ), "Nome j· existente!");
+					alert(response);
 				}
 			});
 		}
