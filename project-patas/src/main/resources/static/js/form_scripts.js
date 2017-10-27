@@ -33,6 +33,9 @@ function arrayContains(array, value) {
 // isDateValid := String -> Boolean
 // checks if a given date (by string) is valid or not.
 function isDateValid(date_as_string) {	
+	if (date_as_string.indexOf(".") > -1)
+		return false;
+	
 	var parts = date_as_string.split("/");
 
 	var year = parseInt(parts[2]);

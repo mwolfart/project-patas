@@ -13,7 +13,7 @@ function processResponseJson(response) {
 	$('#dogs').append(
 			$.map(response, function (dog) {
 				return '<tr><td>' +dog.name+ '</td><td>'+dog.sex+'</td><td>'+dog.arrivalDate+'</td><td>'
-				+'<a href="dog/view?id='+dog.id+'" class="btn btn-info" role="button">Visualizar</a></td></tr>';
+				+'<a href="dog_view.html?id='+dog.id+'" class="btn btn-info" role="button">Visualizar</a></td></tr>';
 			}).join());
 	$( "#dogs" ).removeClass("disabled-table");
 

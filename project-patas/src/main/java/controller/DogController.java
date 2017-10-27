@@ -217,12 +217,9 @@ public class DogController {
 		
 		// Maybe we don't need this at all
 		//List<List<String>> filteredDogInfo = getDogRequiredInfo(filteredList);
-		
-		//System.out.println(filteredList);
-		
+
 		Gson gson = new Gson();
 		String filteredDogJson = gson.toJson(filteredList);
-		System.out.println(filteredDogJson);
 				
 		return new ResponseEntity<String>(filteredDogJson, HttpStatus.OK);
 	}

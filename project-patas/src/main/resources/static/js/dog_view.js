@@ -76,17 +76,19 @@ $(document).ready(function() {
 		event.preventDefault();
 		
 		// Form validation
-		if ( $( "#name" ).val() == "" )
-			alert("Preencha o nome do cachorro!");
-		else if ( $( "#birthDate" ).hasClass("error_input") )
-			alert("Data de nascimento inv�lida!");
-		else if ( $( "#weight" ).hasClass("error_input") )
-			alert("Peso inv�lido!");
-		else if ( $( "#arrivalDate" ).hasClass("error_input") )
-			alert("Data de chegada inv�lida!");
-		else if ( $( "#arrivalDate" ).val() == "" )
-			alert("Preencha a data de chegada!");
-		else {
+		if ( $( "#name" ).val() == "" ) {
+			showAlert($( "#errorName" ), "Preencha o nome do cachorro!");
+		} else if ( $( "#birthDate" ).hasClass("error_input") ) {
+			showAlert($( "#errorBirthDate" ), "Data de nascimento inválida!");
+		} else if ( $( "#weight" ).hasClass("error_input") ) {
+			showAlert($( "#errorWeight" ), "Peso inválido!");
+		} else if ( $( "#arrivalDate" ).hasClass("error_input") ) {
+			showAlert($( "#errorArrivalDate" ), "Data de chegada inválida!");
+		} else if ( $( "#arrivalDate" ).val() == "" ) {
+			showAlert($( "#errorArrivalDate" ), "Preencha a data de chegada!");
+		} else if ( $( "#castrationDate" ).hasClass("error_input") ) {
+			showAlert($( "#errorCastrationDate" ), "Data de chegada inválida!");
+		} else {
 			// Convert form to json
 			var jsonData = formToJson(this);
 			
