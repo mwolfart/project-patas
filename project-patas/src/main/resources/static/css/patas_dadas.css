@@ -24,3 +24,7 @@
 .error_input {
     border: solid 2px #FF0000;  
 }
+
+.disable-table{
+	display: none;
+}

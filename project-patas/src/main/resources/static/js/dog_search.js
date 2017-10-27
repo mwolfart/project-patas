@@ -8,12 +8,15 @@ function filterFields(object) {
 //function used to filter the json returned by the query
 //returns another json, containing only the fields we are interested in.
 function processResponseJson(response) {
-	var filteredFieldsJson = [];
+	$("tbody > tr").remove();
 	
-	for (i in response)
-		filteredFieldsJson += filterFields(response[i]);
-	
-	return filteredFieldsJson;
+	$('#dogs').append(
+			$.map(response, function (dog) {
+				return '<tr><td>' +dog.name+ '</td><td>'+dog.sex+'</td><td>'+dog.arrivalDate+'</td><td>'
+				+'<a href="dog/view?id='+dog.id+'" class="btn btn-info" role="button">Visualizar</a></td></tr>';
+			}).join());
+	$( "#dogs" ).removeClass("disable-table");
+
 }
 
 // Document load script
