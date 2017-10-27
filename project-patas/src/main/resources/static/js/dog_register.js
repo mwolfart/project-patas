@@ -39,6 +39,9 @@ $(document).ready(function() {
 				dataType: "json",
 				data: jsonData,
 				contentType: "application/json; charset=UTF-8",
+				error: function(response) {
+					alert(response);
+				}
 			});
 		}
 	});

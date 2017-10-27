@@ -260,7 +260,7 @@ public class DogController {
 			return new ResponseEntity<String>("Flag de castrado está em branco",HttpStatus.BAD_REQUEST);
 		}
 		
-		dogRepository.save(dog);
+		dogRepository.saveAndFlush(dog);
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 }
