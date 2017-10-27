@@ -169,8 +169,8 @@ public class DogController {
 			return new ResponseEntity<String>("Nome está em branco",HttpStatus.BAD_REQUEST);
 		}
 		
-		Dog dogExist = dogRepository.findByName(dog.getName());
-		if(dogExist != null){
+		Dog dogWithSameName = dogRepository.findByName(dog.getName());
+		if(dogWithSameName != null){
 			return new ResponseEntity<String>("Já existe um cachorro com este nome",HttpStatus.BAD_REQUEST);
 		}
 		
@@ -182,7 +182,7 @@ public class DogController {
 			return new ResponseEntity<String>("Flag de castrado está em branco",HttpStatus.BAD_REQUEST);
 		}
 		
-		dogRepository.saveAndFlush(dog);  
+		dogRepository.saveAndFlush(dog);
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 	
@@ -236,5 +236,31 @@ public class DogController {
 			return new ResponseEntity("Cachorro não encontrado.", HttpStatus.BAD_REQUEST);
 		
 		return new ResponseEntity(dog, HttpStatus.OK);
+	}
+	
+	// Update dog
+	@RequestMapping(value = "/dog/update", method = RequestMethod.POST)
+    public ResponseEntity<String> dogUpdate(@RequestBody Dog dog) {
+		
+		if(dog.getName() == null){
+			return new ResponseEntity<String>("Nome está em branco",HttpStatus.BAD_REQUEST);
+		}
+		
+		Dog dogWithSameName = dogRepository.findByName(dog.getName());
+		
+		if(dogWithSameName != null && dogWithSameName.getId() != dog.getId()){
+			return new ResponseEntity<String>("Já existe um cachorro com este nome",HttpStatus.BAD_REQUEST);
+		}
+		
+		if(dog.getArrivalDate() == null){
+			return new ResponseEntity<String>("Data de chegada está em branco",HttpStatus.BAD_REQUEST);
+		}
+		
+		if(dog.getCastrated() == null){
+			return new ResponseEntity<String>("Flag de castrado está em branco",HttpStatus.BAD_REQUEST);
+		}
+		
+		dogRepository.save(dog);
+		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 }

@@ -10,31 +10,32 @@
     	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
     	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
 		<script type="text/javascript" src="../js/form_scripts.js"></script>
+		<script type="text/javascript" src="../js/dog_dataform.js"></script> 
 		<script type="text/javascript" src="../js/dog_view.js"></script>
 	</head>
 	<body>
 		<div id="header" class="jumbotron jumbotron-fluid">
 			<img id="logo" src="../images/patasdadas_logo.png" alt="Patas Dadas"/>
-			<h1 class="display-2">SILVIO SANTOS</h1>
+			<h1 class="display-2">Dados de cachorro</h1>
 		</div>
 		<div class="container">
 			<form action="/dog/dog_view.html" id="editForm" method="post">
 				<div class="form-group">
 					<label for="name" class="col-form-label">Nome</label>
-					<input type="text" id="name" name="name" class="form-control" maxlength="80" readonly>
+					<input type="text" id="name" name="name" class="form-control" maxlength="80" disabled>
 				</div>
 				<div class="form-row">
 					<div class="form-group col-md-4">
 						<label for="birthDate" class="col-form-label">Data de nascimento</label>
-						<input type="text" id="birthDate" name="birthDate" class="form-control" maxlength="10" placeholder="dd/mm/aaaa" readonly>
+						<input type="text" id="birthDate" name="birthDate" class="form-control" maxlength="10" placeholder="dd/mm/aaaa" disabled>
 					</div>
 					<div class="form-group col-md-4">
 						<label for="age" class="col-form-label">Idade</label>
-						<input type="text" id="age" name="age" value="" class="form-control" readonly>
+						<input type="text" id="age" name="age" value="" class="form-control" disabled>
 					</div>
 					<div class="form-group col-md-4">
 						<label for="weight" class="col-form-label">Peso</label>
-						<input type="text" id="weight" name="weight" class="form-control" maxlength="6" readonly>
+						<input type="text" id="weight" name="weight" class="form-control" maxlength="6" disabled>
 					</div>
 				</div>
 				<div class="form-row">
@@ -57,13 +58,13 @@
 					</div>
 					<div class="form-group col-md-4">
 						<label for="furColor" class="col-form-label">Cor do pelo</label>
-						<input type="text" id="furColor" name="furColor" class="form-control" maxlength="30" readonly>
+						<input type="text" id="furColor" name="furColor" class="form-control" maxlength="30" disabled>
 					</div>
 				</div>
 				<div class="form-row">
 					<div class="form-group col-md-6">
 						<label for="arrivalDate" class="col-form-label">Data de chegada</label>
-						<input type="text" id="arrivalDate" name="arrivalDate" class="form-control" maxlength="10" placeholder="dd/mm/aaaa" readonly>
+						<input type="text" id="arrivalDate" name="arrivalDate" class="form-control" maxlength="10" placeholder="dd/mm/aaaa" disabled>
 					</div>
 					<div class="form-group col-md-6">
 						<label for="status" class="col-form-label">Disponibilidade</label>
@@ -100,13 +101,13 @@
 				</div>
 				<div class="form-group">
 					<label for="sponsors" class="col-form-label">Padrinhos</label>
-					<input type="text" id="sponsors" name="sponsors" class="form-control" maxlength="200" readonly>
+					<input type="text" id="sponsors" name="sponsors" class="form-control" maxlength="200" disabled>
 				</div>	
 				<div class="form-group">	
-					<input type="button" name="edit" value="Editar" class="btn">
-					<input type="button" name="vacination" value="Ver vacinas" class="btn">
-					<input type="button" name="vermifugation" value="Ver vermífugos" class="btn">
-					<input type="submit" name="save" value="Salvar" class="btn" disabled>
+					<input type="button" id="editBtn" name="edit" value="Editar" class="btn">
+					<input type="button" id="vacinationBtn" name="vacination" value="Ver vacinas" class="btn">
+					<input type="button" id="vermifugationBtn" name="vermifugation" value="Ver vermífugos" class="btn">
+					<input type="submit" id="saveBtn" name="save" value="Salvar" class="btn" disabled>
 				</div>
 			</form>
 		</div>
