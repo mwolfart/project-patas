@@ -66,7 +66,7 @@ $(document).ready(function() {
 				success: function(response) {
 					processResponseJson(response);
 				}
-			});			
+			});
 		}
 	});
 	

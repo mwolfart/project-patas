@@ -28,6 +28,9 @@ public class Dog {
 	private Boolean castrated;
 	private Date castrationDate;
 	private Availability status;
+	private String ration;
+	private String rationOther;
+	private Double rationPortions;
 	private Boolean disease;
 	private String diseaseDescription;
 	private String sponsors;
@@ -39,6 +42,7 @@ public class Dog {
 	public Dog(Long id, String name, Double weight, String sex, String size,
 			String furColor, Date birthDate, Integer age, Date arrivalDate,
 			Boolean castrated, Date castrationDate, Availability status,
+			String ration, String rationOther, Double rationPortions, 
 			Boolean disease, String diseaseDescription, String sponsors) {
 		super();
 		this.id = id;
@@ -53,6 +57,9 @@ public class Dog {
 		this.castrated = castrated;
 		this.castrationDate = castrationDate;
 		this.status = status;
+		this.ration = ration;
+		this.rationOther = rationOther;
+		this.rationPortions = rationPortions;
 		this.disease = disease;
 		this.diseaseDescription = diseaseDescription;
 		this.sponsors = sponsors;
@@ -154,6 +161,30 @@ public class Dog {
 	public void setStatus(Availability status) {
 		this.status = status;
 	}
+	
+	public String getRation() {
+		return this.ration;
+	}
+	
+	public void setRation(String ration) {
+		this.ration = ration;
+	}
+	
+	public String getRationOther() {
+		return this.rationOther;
+	}
+	
+	public void setRationOther(String rationOther) {
+		this.rationOther = rationOther;
+	}
+	
+	public Double getRationPortions() {
+		return this.rationPortions;
+	}
+	
+	public void setRationPortions(Double rationPortions) {
+		this.rationPortions = rationPortions;
+	}
 
 	public Boolean getDisease() {
 		return disease;
@@ -186,6 +217,8 @@ public class Dog {
 				+ ", birthDate=" + birthDate + ", age=" + age
 				+ ", arrivalDate=" + arrivalDate + ", castrated=" + castrated
 				+ ", castrationDate=" + castrationDate + ", status=" + status
+				+ ", rationId=" + ration + ", rationOther=" + rationOther
+				+ ", rationPortions=" + rationPortions
 				+ ", disease=" + disease + ", diseaseDescription="
 				+ diseaseDescription + ", sponsors=" + sponsors + ", getId()="
 				+ getId() + ", getName()=" + getName() + ", getWeight()="
@@ -195,8 +228,10 @@ public class Dog {
 				+ getAge() + ", getArrivalDate()=" + getArrivalDate()
 				+ ", getCastrated()=" + getCastrated()
 				+ ", getCastrationDate()=" + getCastrationDate()
-				+ ", getStatus()=" + getStatus() + ", getDisease()="
-				+ getDisease() + ", getDiseaseDescription()="
+				+ ", getStatus()=" + getStatus() + ", getRation()="
+				+ getRation() + ", getRationOther()=" + getRationOther() 
+				+ ", getRationPortions()=" + getRationPortions()
+				+ ", getDisease()=" + getDisease() + ", getDiseaseDescription()="
 				+ getDiseaseDescription() + ", getSponsors()=" + getSponsors()
 				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
 				+ ", toString()=" + super.toString() + "]";

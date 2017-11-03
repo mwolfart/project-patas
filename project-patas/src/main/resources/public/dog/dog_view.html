@@ -85,6 +85,39 @@
 					</div>
 				</div>
 				<div class="form-row">
+					<div class="form-group col-md-4">
+						<label for="ration" class="col-form-label">Ração</label>
+						<select id="ration" name="ration" class="form-control" disabled>
+							<option value=""></option>
+							<option value="ADULTO">Adulto</option>
+							<option value="SENIOR">Sênior</option>
+							<option value="FILHOTE">Filhote</option>
+							<option value="OUTRO">Outro</option>
+						</select>
+					</div>
+					<div class="form-group col-md-5">
+						<label for="rationOther" class="col-form-label">.</label>
+						<input type="text" id="rationOther" name="rationOther" class="form-control" maxlength="50" placeholder="Descrição da ração" disabled>
+						<div id="errorRation" class="alert alert-danger disabled-alert"></div>
+					</div>
+					<div class="form-group col-md-3">
+						<label for="ration" class="col-form-label">Porções</label>
+						<select id="rationPortions" name="rationPortions" class="form-control" disabled>
+							<option value=""></option>
+							<option value="0.5">1/2</option>
+							<option value="1">1</option>
+							<option value="1.5">1 1/2</option>
+							<option value="2">2</option>
+							<option value="2.5">2 1/2</option>
+							<option value="3">3</option>
+							<option value="3.5">3 1/2</option>
+							<option value="4">4</option>
+							<option value="4.5">4 1/2</option>
+							<option value="5">5</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row">
 					<div class="form-group col-md-1">
 						<label for="castrated" class="col-form-label">Castrado</label>
 						<input type="checkbox" id="checkboxCastr" name="castrated" value=true class="form-control" disabled>

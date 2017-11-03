@@ -15,6 +15,9 @@ function jsonToForm(json) {
 	$(" #size ").val(json.size);
 	$(" #furColor ").val(json.furColor);
 	$(" #arrivalDate ").val(dateToString(arrivalDate));
+	$(" #ration ").val(json.ration);
+	$(" #rationPortions ").val(json.rationPortions);
+	$(" #amount ").val(json.amount);
 	$(" #sponsors ").val(json.sponsors);
 	
 	if (json.castrated == true) {
@@ -30,6 +33,10 @@ function jsonToForm(json) {
 	if (json.disease == true) {
 		$(" #checkboxDis ").prop('checked', true);
 		(json.diseaseDescription ? $(" #diseaseDescription ").val(json.diseaseDescription) : false );
+	}
+	
+	if (json.ration == "OUTRO") {
+		(json.rationOther ? $(" #rationOther ").val(json.rationOther) : false );
 	}
 }
 
@@ -50,15 +57,20 @@ $(document).ready(function() {
 		$(" #furColor ").prop('disabled', false);
 		$(" #status ").prop('disabled', false);
 		$(" #arrivalDate ").prop('disabled', false);
+		$(" #ration ").prop('disabled', false);
+		$(" #rationPortions ").prop('disabled', false);
 		$(" #checkboxCastr ").prop('disabled', false);
 		$(" #checkboxDis ").prop('disabled', false);
 		$(" #sponsors ").prop('disabled', false);
 		
-		if( $(" #checkboxCastr ").prop("checked") )
+		if ( $(" #checkboxCastr ").prop("checked") )
 			$(" #castrationDate ").prop('disabled', false);
 		
-		if( $(" #checkboxDis ").prop("checked") )
+		if ( $(" #checkboxDis ").prop("checked") )
 			$(" #diseaseDescription ").prop('disabled', false);
+		
+		if ( $(" #ration ").value == "OUTRO" )
+			$(" #rationOther ").prop('disabled', false);
 		
 		$(" #editBtn ").prop('disabled', true);
 		$(" #examBtn ").prop('disabled', false);
@@ -92,6 +104,8 @@ $(document).ready(function() {
 			showAlert($( "#errorArrivalDate" ), "Data de chegada inválida!");
 		else if ( validateDateField( $( "#arrivalDate" )[0] ) == 0 ) 
 			showAlert($( "#errorArrivalDate" ), "Preencha a data de chegada!");
+		else if ( validateStringField( $( "#rationOther" )[0] ) == -1 ) 
+			showAlert($( "#errorRation" ), "Tipo de ração inválido!");
 		else if ( validateDateField( $( "#castrationDate" )[0] ) == -1 ) 
 			showAlert($( "#errorCastrationDate" ), "Data de chegada inválida!");
 		else if ( validateStringField( $( "#diseaseDescription" )[0] ) == -1 ) 
@@ -117,8 +131,6 @@ $(document).ready(function() {
 			
 			// Fix JSON so it's in the right format
 			jsonData = JSON.stringify(jsonData);
-	
-			console.log(jsonData);
 			
 			// Post the data
 			$.ajax({
@@ -128,7 +140,7 @@ $(document).ready(function() {
 				data: jsonData,
 				contentType: "application/json; charset=UTF-8",
 				error: function(response) {
-					alert(response);
+					console.log(response);
 				}
 			});
 			
@@ -142,6 +154,9 @@ $(document).ready(function() {
 			$(" #furColor ").prop('disabled', true);
 			$(" #status ").prop('disabled', true);
 			$(" #arrivalDate ").prop('disabled', true);
+			$(" #ration ").prop('disabled', true);
+			$(" #rationPortions ").prop('disabled', true);
+			$(" #rationOther ").prop('disabled', true);
 			$(" #checkboxCastr ").prop('disabled', true);
 			$(" #checkboxDis ").prop('disabled', true);
 			$(" #sponsors ").prop('disabled', true);
@@ -182,5 +197,5 @@ $(document).ready(function() {
 			$(" #vacinationBtn ").prop("disabled", true);
 			$(" #vermifugationBtn ").prop("disabled", true);
 		}
-	});		
+	});
 });

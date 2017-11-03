@@ -83,4 +83,13 @@ $(document).ready(function() {
 		}
 	});
 	
+	$( "#ration" ).change(function() {
+		if (this.value == "OUTRO") 
+			$( "#rationOther" ).prop("disabled", false);
+		else {
+			$( "#rationOther" ).prop("disabled", true);
+			$( "#rationOther" ).val("");
+		}
+	});
+	
 })
