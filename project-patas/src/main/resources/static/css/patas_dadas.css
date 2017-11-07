@@ -15,10 +15,14 @@
 }
 
 #header>img{
-	height: 200x;
-	width: 200px;
+    max-height: 80%;
+    width: 10%;
 	display: inline;
 	margin: 10px 10px 10px 30px;
+}
+
+#body-home{
+	background-color: #FFD700;
 }
 
 .error_input {
@@ -28,3 +32,9 @@
 .disabled-table, .disabled-alert{
 	display: none;
 }
+
+.menu {
+	background-color: #372821;
+}
+
+
