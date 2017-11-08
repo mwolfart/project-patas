@@ -105,6 +105,24 @@ public class DogController {
 		return result_spec;
 	}
 	
+	// filterDogInfo
+	// given a list of dog classes, filter the information we want
+	//   and return it in a list.
+	private List<List<Object>> filterDogInfo(List<Dog> dog_list) {
+		List<List<Object>> filtered_list = new ArrayList<List<Object>>();
+		
+		for(Dog dog : dog_list) {
+			List<Object> desired_info = new ArrayList<Object>();
+			desired_info.add(dog.getId());
+			desired_info.add(dog.getName());
+			desired_info.add(dog.getArrivalDate());
+			desired_info.add(dog.getSex());
+			filtered_list.add(desired_info);
+		}
+		
+		return filtered_list;
+	}
+	
 	/* SERVICE METHODS */
 	
 	// Register dog
@@ -159,8 +177,6 @@ public class DogController {
 	// Update dog
 	@RequestMapping(value = "/dog/update", method = RequestMethod.POST)
     public ResponseEntity<String> dogUpdate(@RequestBody Dog dog) {
-		System.out.println(dog);
-		
 		if(dog.getName() == null)
 			return new ResponseEntity<String>("Nome está em branco", HttpStatus.BAD_REQUEST);
 		
@@ -176,5 +192,14 @@ public class DogController {
 		
 		dogRepository.saveAndFlush(dog);
 		return new ResponseEntity<String>(HttpStatus.OK);
+	}
+	
+	// Get all dogs
+	@RequestMapping(value = "/dog/get", method = RequestMethod.GET)
+	public ResponseEntity<List<List<Object>>> dogGetAll() {
+		List<Dog> dog_list = dogRepository.findAll();
+		List<List<Object>> filtered_info_list = filterDogInfo(dog_list);
+		
+		return new ResponseEntity<List<List<Object>>>(filtered_info_list, HttpStatus.OK);
 	}
 }
