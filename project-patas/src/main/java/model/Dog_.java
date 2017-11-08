@@ -8,7 +8,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 import model.Dog.Availability;
 
 @StaticMetamodel(Dog.class)
-public class Dog_ {
+public abstract class Dog_ {
 	public static volatile SingularAttribute<Dog, Long> id;
 	public static volatile SingularAttribute<Dog, String> name;
 	public static volatile SingularAttribute<Dog, Double> weight;

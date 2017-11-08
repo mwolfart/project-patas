@@ -1,32 +1,25 @@
 package controller;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
+import java.util.Map.Entry;
 
 import model.Dog;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.google.gson.Gson;
 
 import repository.DogRepository;
 import repository.DogSpecifications;
-import repository.Specification;
 
 
 @RestController
@@ -35,114 +28,81 @@ public class DogController {
 	@Autowired 
 	private DogRepository dogRepository;
 	
-	// DogMatchesCriteria: Dog, Map<String, String> returns Boolean
-	// Given a Dog class and a map of criteria the class has to obey
-	// (name must be "Lilica", sex must be "F", etc), check if
-	// the class obeys these criteria.
-	/* THIS FUNCTION MIGHT/SHOULD BE REFACTORED */
-	private Boolean dogMatchesCriteria(Dog dog, Map<String, String> criteria) {
-		// Process each available criterion
-		for (Map.Entry<String, String> crit : criteria.entrySet()) {
-			
-			// Stores key (field) and value (what it has to obey)
-			String key = crit.getKey();
-			String value = crit.getValue();
-			
-			// Calendar variable so we can work with dates
-			Calendar cal = Calendar.getInstance();
-			
-			// Process each given criterion
-			switch(key) {
-			case "arrivalDay":
-				// If the date is null, return false
-				if (dog.getArrivalDate() == null)
-					return false;
-				
-				cal.setTime(dog.getArrivalDate());
-				
-				if (cal.get(Calendar.DAY_OF_MONTH) != Integer.parseInt(value))
-					return false;
-				break;
-			case "arrivalMonth":
-				if (dog.getArrivalDate() == null)
-					return false;
-				
-				cal.setTime(dog.getArrivalDate());
-				
-				if (cal.get(Calendar.MONTH) + 1 != Integer.parseInt(value))
-					return false;
-				break;
-			case "arrivalYear":
-				if (dog.getArrivalDate() == null)
-					return false;
-				
-				cal.setTime(dog.getArrivalDate());
-				
-				if (cal.get(Calendar.YEAR) != Integer.parseInt(value))
-					return false;
-				break;
-			case "birthDay":
-				if (dog.getBirthDate() == null)
-					return false;
-				
-				cal.setTime(dog.getBirthDate());
-				
-				if (cal.get(Calendar.DAY_OF_MONTH) != Integer.parseInt(value))
-					return false;
-				break;
-			case "birthMonth":
-				if (dog.getBirthDate() == null)
-					return false;
-				
-				cal.setTime(dog.getBirthDate());
-				
-				if (cal.get(Calendar.MONTH) + 1 != Integer.parseInt(value))
-					return false;
-				break;
-			case "birthYear":
-				if (dog.getBirthDate() == null)
-					return false;
-				
-				cal.setTime(dog.getBirthDate());
-				
-				if (cal.get(Calendar.YEAR) != Integer.parseInt(value))
-					return false;
-				break;
-			case "sex":
-				if (!dog.getSex().equals(value))
-					return false;
-				break;
-			case "name":
-				if (!dog.getName().equals(value))
-					return false;
-				break;
-			case "castrated":
-				if (dog.getCastrated() != Boolean.valueOf(value))
-					return false;
-				break;
-			case "vermifuged":
-				// TODO (needs vermifugation table)
-			case "vacinated":
-				// TODO (needs vacination table)
-				break;
-			}
-		}	
-		
-		return true;
-	}
+	/* HELPER METHODS */
 	
-	// filterDogs: List<Dog>, Map<String, String> returns List<Dog>
-	// given a List object of Dog classes, checks which of these classes
-	// obey the given criteria, and return them.
-	private List<Dog> filterDogs(List<Dog> dogList, Map<String, String> criteria) {
-		List<Dog> filteredList = new ArrayList<Dog>();
+	// splitCriteriaFromKeys
+	// given a list of criteria (strings) in the format "crit":"val",
+	//   split them in a hashmap.
+	private HashMap<String, String> splitCriteriaFromKeys(String[] criteria_pairs) {
+		HashMap<String, String> criteria_list = new HashMap<String, String>();
 		
-		for (Dog dog : dogList) {
-			if (dogMatchesCriteria(dog, criteria))
-				filteredList.add(dog);
+		for (int i=1; i < criteria_pairs.length; i++) {
+		    String pair = criteria_pairs[i];
+		    String[] splitted_pair = pair.split("\"|:|\"");
+		    Boolean value_is_not_string = (splitted_pair.length == 4);
+		    
+		    if (value_is_not_string)
+		    	criteria_list.put(splitted_pair[1], splitted_pair[3]);
+		    else criteria_list.put(splitted_pair[1], splitted_pair[4]);
 		}
 		
-		return filteredList;
+		return criteria_list;
+	}
+	
+	// buildSpecList
+	// given a list of criteria in the format of a hashmap, build a list
+	//   of specifications used for the querying.
+	private List<Specification<Dog>> buildSpecListFromCriteria(Map<String, String> criteria_list) {
+		List<Specification<Dog>> spec_list = new ArrayList<Specification<Dog>>();
+		
+		for(Map.Entry<String, String> criterion : criteria_list.entrySet())
+			spec_list.add(buildSpecFromCriterion(criterion));
+		
+		return spec_list;
+	}
+
+	// buildSpecFromCriterion
+	// given a griterion entry from a hashmap, convert it to a specification
+	// OBS.: the conditional values used in this function are directly related to the 
+	//   fields "name" attribute in the html. Whenever one is changed, the other also has to.
+	private Specification<Dog> buildSpecFromCriterion(Entry<String, String> criterion) {
+		switch(criterion.getKey()) {
+		case "name":
+			return DogSpecifications.dogNameEquals(criterion.getValue());
+		case "birthMonth":
+			return DogSpecifications.dogBirthMonthEquals(Integer.parseInt(criterion.getValue()));
+		case "birthYear":
+			return DogSpecifications.dogBirthYearEquals(Integer.parseInt(criterion.getValue()));
+		case "sex":
+			return DogSpecifications.dogSexEquals(criterion.getValue());
+		case "arrivalDay":
+			return DogSpecifications.dogArrivalDayEquals(Integer.parseInt(criterion.getValue()));
+		case "arrivalMonth":
+			return DogSpecifications.dogArrivalMonthEquals(Integer.parseInt(criterion.getValue()));
+		case "arrivalYear":
+			return DogSpecifications.dogArrivalYearEquals(Integer.parseInt(criterion.getValue()));
+		case "castrated":
+			return DogSpecifications.dogCastratedEquals(Boolean.parseBoolean(criterion.getValue()));
+		case "vacinated":
+			/* TODO */
+		case "vermifuged":
+			/* TODO */
+		default:
+			return null;
+		}
+	}
+
+	// buildSpecFromSpecList
+	// given a list of specification, return one specification containing all the given specs
+	private Specification<Dog> buildSpecFromSpecList(List<Specification<Dog>> spec_list) {
+		if (spec_list.size() < 1)
+			return null;
+		
+		Specification<Dog> result_spec = spec_list.get(0);
+		for (int i=1; i < spec_list.size(); i++)
+			result_spec = Specifications.where(result_spec).and(spec_list.get(i));
+		
+		return result_spec;
 	}
 	
 	/* SERVICE METHODS */
@@ -170,53 +130,30 @@ public class DogController {
 	
 	// Search dog
 	@RequestMapping(value = "/dog/search", method = RequestMethod.POST, produces = {"application/json"})
-	public ResponseEntity<List<Dog>> dogSearch(@RequestBody String searchQuery) {
-		
-		// Save the given criteria in a Map object
-		Map<String, String> criteria = new HashMap<String, String>();
-		
+	public ResponseEntity<List<Dog>> dogSearch(@RequestBody String search_query) {		
 		// We are going to split the JSON so we get each criteria separately
 		//  in the map. First we split the criteria, one from each other
-		String[] pairs = searchQuery.split("\\{|,|\\}");
+		String[] pairs = search_query.split("\\{|,|\\}");
 
-		// And then we save each criterion in the map,
-		//  splitting value from key
-		for (int i=1; i < pairs.length; i++) {
-		    String pair = pairs[i];
-		    String[] keyValue = pair.split("\"|:|\"");
-		    
-		    if (keyValue.length == 4)
-		    	criteria.put(keyValue[1], keyValue[3]);
-		    else criteria.put(keyValue[1], keyValue[4]);
-		}
+		// Then, we split each criterion from its key, and build a list from them.
+		Map<String, String> criteria_list = splitCriteriaFromKeys(pairs);
+		List<Specification<Dog>> spec_list = buildSpecListFromCriteria(criteria_list);
+		Specification<Dog> final_specification = buildSpecFromSpecList(spec_list);
 		
-		// Find all the dogs in the table and filter them.
-		/* TODO: MAYBE WE CAN INJECT A SQL STATEMENT HERE SO */
-		/* WE DON'T HAVE TO FILTER THE CLASSES INSIDE THE    */
-		/* BACKEND                                           */
-		//List<Dog> dogList = dogRepository.findAll();
-		//List<Dog> filteredList = filterDogs(dogList, criteria);	
-		Specification<Dog> spec = DogSpecifications.dogNameEquals("Lilica");
-		List<Dog> filteredList = dogRepository.findAll(spec);
-		
-		// Maybe we don't need this at all
-		//List<List<String>> filteredDogInfo = getDogRequiredInfo(filteredList);
-
-		//Gson gson = new Gson();
-		//String filteredDogJson = gson.toJson(filteredList);
+		List<Dog> filteredList = dogRepository.findAll(final_specification);
 				
 		return new ResponseEntity<List<Dog>>(filteredList, HttpStatus.OK);
 	}
-	
+
 	// View dog
 	@RequestMapping(value = "/dog/view", method = RequestMethod.POST)
-	public ResponseEntity dogView(@RequestBody String dogId) {		
+	public ResponseEntity<?> dogView(@RequestBody String dogId) {		
 		Dog dog = dogRepository.findById(Long.parseLong(dogId));
 		
 		if (dog == null)
-			return new ResponseEntity("Cachorro não encontrado.", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>("Cachorro não encontrado.", HttpStatus.BAD_REQUEST);
 		
-		return new ResponseEntity(dog, HttpStatus.OK);
+		return new ResponseEntity<Dog>(dog, HttpStatus.OK);
 	}
 	
 	// Update dog
