@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 
 import repository.DogRepository;
+import repository.DogSpecifications;
+import repository.Specification;
 
 
 @RestController
@@ -192,8 +194,10 @@ public class DogController {
 		/* TODO: MAYBE WE CAN INJECT A SQL STATEMENT HERE SO */
 		/* WE DON'T HAVE TO FILTER THE CLASSES INSIDE THE    */
 		/* BACKEND                                           */
-		List<Dog> dogList = dogRepository.findAll();
-		List<Dog> filteredList = filterDogs(dogList, criteria);	
+		//List<Dog> dogList = dogRepository.findAll();
+		//List<Dog> filteredList = filterDogs(dogList, criteria);	
+		Specification<Dog> spec = DogSpecifications.dogNameEquals("Lilica");
+		List<Dog> filteredList = dogRepository.findAll(spec);
 		
 		// Maybe we don't need this at all
 		//List<List<String>> filteredDogInfo = getDogRequiredInfo(filteredList);
