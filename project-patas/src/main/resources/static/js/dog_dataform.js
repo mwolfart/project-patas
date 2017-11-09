@@ -12,38 +12,38 @@ $(document).ready(function() {
 	
 	// Validate numeric and date fields
 	$( "#name" ).focusout(function () { 
-		validateStringField(this);
-		hideAlert($( "#errorName" ));
+		if (validateStringField(this) > 0)
+			hideAlert($( "#errorName" ));
 	});
 	
 	$( "#weight" ).focusout(function () { 
-		validateRealNumberField(this);
-		hideAlert($( "#errorWeight" )); 
+		if (validateRealNumberField(this) >= 0)
+			hideAlert($( "#errorWeight" )); 
 	});
 	
 	$( "#furColor" ).focusout(function () { 
-		validateStringField(this);
-		hideAlert($( "#errorFurColor" )); 
+		if (validateStringField(this) >= 0)
+			hideAlert($( "#errorFurColor" )); 
 	});
 	
 	$( "#castrationDate" ).focusout(function() { 
-		validateDateField(this);
-		hideAlert($( "#errorCastrationDate" )); 
+		if (validateDateField(this) >= 0)
+			hideAlert($( "#errorCastrationDate" )); 
 	});
 	
 	$( "#arrivalDate" ).focusout(function() { 
-		validateDateField(this);
-		hideAlert($( "#errorArrivalDate" )); 
+		if (validateDateField(this) > 0)
+			hideAlert($( "#errorArrivalDate" )); 
 	});
 	
 	$( "#diseaseDescription" ).focusout(function () { 
-		validateStringField(this);
-		hideAlert($( "#errorDisease" )); 
+		if (validateStringField(this) >= 0)
+			hideAlert($( "#errorDisease" )); 
 	});
 	
 	$( "#sponsors" ).focusout(function () { 
-		validateStringField(this);
-		hideAlert($( "#errorSponsors" )); 
+		if (validateStringField(this) >= 0)
+			hideAlert($( "#errorSponsors" )); 
 	});
 	
 	// Validate birth and automatically compute age
@@ -52,14 +52,13 @@ $(document).ready(function() {
 		
 		if (validation >= 0) {
 			$( "#age" ).val("");
+			hideAlert($( "#errorBirthDate" ));
 			
 			if (validation > 0) {
 				var age = computeAge(stringToDate(this.value));
 				$( "#age" ).val(age);
 			}
 		}
-		
-		hideAlert($( "#errorBirthDate" ));
 	});
 	
 	//Enable/disable the castration date field

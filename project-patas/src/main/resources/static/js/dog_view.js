@@ -2,31 +2,34 @@
 // jsonToForm := Object -> Void
 // sends all the obtained values to the form.
 function jsonToForm(json) {
-	var birthDate = new Date();
-	var arrivalDate = new Date();
-	birthDate.setTime(json.birthDate);
-	arrivalDate.setTime(json.arrivalDate);
-	
+	var arrival_date = new Date();
+	arrival_date.setTime(json.arrivalDate);
+
 	$(" #name ").val(json.name);
-	$(" #birthDate ").val(dateToString(birthDate));
-	$(" #age ").val(computeAge(birthDate));
 	$(" #weight ").val(json.weight);
 	$(" #sex ").val(json.sex);
 	$(" #size ").val(json.size);
 	$(" #furColor ").val(json.furColor);
-	$(" #arrivalDate ").val(dateToString(arrivalDate));
+	$(" #arrivalDate ").val(dateToString(arrival_date));
 	$(" #ration ").val(json.ration);
 	$(" #rationPortions ").val(json.rationPortions);
 	$(" #amount ").val(json.amount);
 	$(" #sponsors ").val(json.sponsors);
 	
+	if (json.birthDate) {
+		var birth_date = new Date();
+		birth_date.setTime(json.birthDate);
+		$(" #birthDate ").val(dateToString(birth_date));
+		$(" #age ").val(computeAge(birth_date));
+	}
+	
 	if (json.castrated == true) {
 		$(" #checkboxCastr ").prop('checked', true);
 
 		if (json.castrationDate) {
-			var castrationDate = new Date();
-			castrationDate.setTime(json.castrationDate);
-			$(" #castrationDate ").val(dateToString(castrationDate));
+			var castration_date = new Date();
+			castration_date.setTime(json.castrationDate);
+			$(" #castrationDate ").val(dateToString(castration_date));
 		}
 	}
 	
@@ -77,11 +80,11 @@ $(document).ready(function() {
 		$(" #vacinationBtn ").prop('disabled', true);
 		$(" #vermifugationBtn ").prop('disabled', true);
 		$(" #saveBtn ").prop('disabled', false);
-		$(" #deleteBtn ").prop('disabled', false);
+		$(" #deleteBtn ").prop('disabled', true);
 	});
 	
 	// Set the submit configuration for the form
-	$( "#editForm" ).submit(function(event) {
+	$( "#dogEditForm" ).submit(function(event) {
 		
 		/* TODO: THIS PART IS EQUAL TO THE ONE IN dog_register.js
 		 * WITH EXCEPTION OF THE LATTER PART
@@ -196,6 +199,7 @@ $(document).ready(function() {
 			$(" #editBtn ").prop("disabled", true);
 			$(" #vacinationBtn ").prop("disabled", true);
 			$(" #vermifugationBtn ").prop("disabled", true);
+			$(" #examBtn ").prop("disabled", true);
 		}
 	});
 });

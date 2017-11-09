@@ -1,21 +1,4 @@
-// putDogsInComboBox := Object -> Void
-// given a list of dog ids and names, put them into the
-//   dogName combobox
-function putDogsInComboBox(dogs) {
-	$.each(dogs, function(i, dog) {
-		$( "#dogName" ).append($("<option>", {
-			value: dog[0],
-			text: dog[1]
-		}));
-	});
-}
-
 $(document).ready(function() {
-	$( "#vermName" ).keydown(protectStringField);
-	$( "#amount" ).keydown(protectNumericField);
-	$( "#appDate" ).keydown(protectNumericField);
-	$( "#nextAppDate" ).keydown(protectNumericField);
-
 	$( "#vermRegisterForm" ).submit(function(event) {
 		event.preventDefault();
 		
@@ -31,6 +14,8 @@ $(document).ready(function() {
 			showAlert($( "#errorAppDate" ), "Data inválida");
 		else if ( validateDateField( $( "#nextAppDate" )[0] ) == -1 )
 			showAlert($( "#errorNextAppDate" ), "Data inválida");
+		else if ( validateStringField( $( "#obs" )[0] ) == -1 )
+			showAlert($( "#errorObs" ), "Observações contém caracteres inválidos!");
 		else {
 			// Convert form to json and fix its format
 			var jsonData = formToJson(this);	
@@ -49,13 +34,5 @@ $(document).ready(function() {
 			});
 		}
 		
-	});
-	
-	$.ajax({
-		url: "http://localhost:8080/dog/get",
-		type: "GET",
-		success: function(data) {
-			putDogsInComboBox(data);
-		}
 	});
 });
