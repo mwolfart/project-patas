@@ -107,16 +107,30 @@ public class DogController {
 	
 	// filterDogInfo
 	// given a list of dog classes, filter the information we want
-	//   and return it in a list.
-	private List<List<Object>> filterDogInfo(List<Dog> dog_list) {
+	//   (given as a list of strings), and return it in a list.
+	private List<List<Object>> filterDogInfo(List<Dog> dog_list, String[] desired_fields) {
 		List<List<Object>> filtered_list = new ArrayList<List<Object>>();
 		
 		for(Dog dog : dog_list) {
 			List<Object> desired_info = new ArrayList<Object>();
-			desired_info.add(dog.getId());
-			desired_info.add(dog.getName());
-			desired_info.add(dog.getArrivalDate());
-			desired_info.add(dog.getSex());
+			
+			for(String field : desired_fields) {
+				switch(field) {
+				case "id":
+					desired_info.add(dog.getId());
+					break;
+				case "name":
+					desired_info.add(dog.getName());
+					break;
+				case "arrivalDate":
+					desired_info.add(dog.getArrivalDate());
+					break;
+				case "sex":
+					desired_info.add(dog.getSex());
+					break;
+				}
+			}
+			
 			filtered_list.add(desired_info);
 		}
 		
@@ -148,7 +162,7 @@ public class DogController {
 	
 	// Search dog
 	@RequestMapping(value = "/dog/search", method = RequestMethod.POST, produces = {"application/json"})
-	public ResponseEntity<List<Dog>> dogSearch(@RequestBody String search_query) {		
+	public ResponseEntity<List<List<Object>>> dogSearch(@RequestBody String search_query) {		
 		// We are going to split the JSON so we get each criteria separately
 		//  in the map. First we split the criteria, one from each other
 		String[] pairs = search_query.split("\\{|,|\\}");
@@ -158,9 +172,12 @@ public class DogController {
 		List<Specification<Dog>> spec_list = buildSpecListFromCriteria(criteria_list);
 		Specification<Dog> final_specification = buildSpecFromSpecList(spec_list);
 		
-		List<Dog> filteredList = dogRepository.findAll(final_specification);
-				
-		return new ResponseEntity<List<Dog>>(filteredList, HttpStatus.OK);
+		List<Dog> filtered_dog_list = dogRepository.findAll(final_specification);
+		List<List<Object>> filtered_info_list = filterDogInfo(filtered_dog_list, new String[] {"id", "name", "sex", "arrivalDate"});
+		
+		System.out.println(filtered_info_list);
+		
+		return new ResponseEntity<List<List<Object>>>(filtered_info_list, HttpStatus.OK);
 	}
 
 	// View dog
@@ -198,7 +215,7 @@ public class DogController {
 	@RequestMapping(value = "/dog/get", method = RequestMethod.GET)
 	public ResponseEntity<List<List<Object>>> dogGetAll() {
 		List<Dog> dog_list = dogRepository.findAll();
-		List<List<Object>> filtered_info_list = filterDogInfo(dog_list);
+		List<List<Object>> filtered_info_list = filterDogInfo(dog_list, new String[] {"id", "name"});
 		
 		return new ResponseEntity<List<List<Object>>>(filtered_info_list, HttpStatus.OK);
 	}
