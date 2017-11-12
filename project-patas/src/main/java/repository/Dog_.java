@@ -1,10 +1,11 @@
-package model;
+package repository;
 
 import java.util.Date;
 
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
+import model.Dog;
 import model.Dog.Availability;
 
 @StaticMetamodel(Dog.class)

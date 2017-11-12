@@ -5,7 +5,6 @@ import javax.persistence.criteria.Expression;
 import org.springframework.data.jpa.domain.Specification;
 
 import model.Dog;
-import model.Dog_;
 
 final public class DogSpecifications {
 	private DogSpecifications() {}

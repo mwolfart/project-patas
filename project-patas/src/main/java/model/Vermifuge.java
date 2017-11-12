@@ -5,106 +5,101 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "vermifuge")
 public class Vermifuge {
-	
-	@Id 
+
+	@Id
 	@GeneratedValue
 	private Long id;
-	private Long dogId;
+	@ManyToOne 
+	private Dog dog;
 	private String vermifugeName;
-	private Double amount;
-	private Date appDate;
-	private Date nextAppDate;
+	private Double dosage;
+	private Date applicationDate;
+	private Date nextapplicationDate;
 	private String obs;
-	
+
 	public Vermifuge() {
 	}
-	
-	public Vermifuge(Long id, Long dogId, String vermifugeName, double amount,
-			Date appDate, Date nextAppDate, String obs) {
+
+	public Vermifuge(Long id, Dog dog, String vermifugeName, Double dosage,
+			Date applicationDate, Date nextapplicationDate, String obs) {
 		super();
 		this.id = id;
-		this.dogId = dogId;
+		this.dog = dog;
 		this.vermifugeName = vermifugeName;
-		this.amount = amount;
-		this.appDate = appDate;
-		this.nextAppDate = nextAppDate;
+		this.dosage = dosage;
+		this.applicationDate = applicationDate;
+		this.nextapplicationDate = nextapplicationDate;
 		this.obs = obs;
 	}
-	
+
 	public Long getId() {
 		return this.id;
 	}
-	
+
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
-	public Long getDogId() {
-		return this.dogId;
+
+	public Dog getDog() {
+		return dog;
 	}
-	
-	public void setDogId(Long dogId) {
-		this.dogId = dogId;
+
+	public void setDog(Dog dog) {
+		this.dog = dog;
 	}
-	
+
 	public String getVermifugeName() {
 		return this.vermifugeName;
 	}
-	
+
 	public void setVermifugeName(String vermifugeName) {
 		this.vermifugeName = vermifugeName;
 	}
-	
-	public Double getAmount() {
-		return this.amount;
+
+	public Double getDosage() {
+		return dosage;
 	}
-	
-	public void setAmount(Double amount) {
-		this.amount = amount;
+
+	public void setDosage(Double dosage) {
+		this.dosage = dosage;
 	}
-	
-	public Date getAppDate() {
-		return this.appDate;
+
+	public Date getApplicationDate() {
+		return applicationDate;
 	}
-	
-	public void setAppDate(Date appDate) {
-		this.appDate = appDate;
+
+	public void setApplicationDate(Date applicationDate) {
+		this.applicationDate = applicationDate;
 	}
-	
-	public Date getNextAppDate() {
-		return this.nextAppDate;
+
+	public Date getNextapplicationDate() {
+		return nextapplicationDate;
 	}
-	
-	public void setNextAppDate(Date nextAppDate) {
-		this.nextAppDate = nextAppDate;
+
+	public void setNextapplicationDate(Date nextapplicationDate) {
+		this.nextapplicationDate = nextapplicationDate;
 	}
-	
+
 	public String getObs() {
 		return this.obs;
 	}
-	
+
 	public void setObs(String obs) {
 		this.obs = obs;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Vermifuge [id=" + id + ", dogId=" + dogId 
-				+ ", vermifugeName=" + vermifugeName 
-				+ ", amount=" + amount + ", appDate=" 
-				+ appDate + ", nextAppDate=" + nextAppDate
-				+ ", obs=" + obs + ", getId()=" + getId()
-				+ ", getDogId()=" + getDogId() 
-				+ ", getVermifugeName()=" + getVermifugeName()
-				+ ", getAmount()=" + getAmount() + ", getAppDate()="
-				+ getAppDate() + ", getNextAppDate()"
-				+ getNextAppDate() + ", obs=" + getObs()
-				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
-				+ ", toString()=" + super.toString() + "]";
+		return "Vermifuge [id=" + id + ", dog=" + dog + ", vermifugeName="
+				+ vermifugeName + ", dosage=" + dosage + ", applicationDate="
+				+ applicationDate + ", nextapplicationDate="
+				+ nextapplicationDate + ", obs=" + obs + "]";
 	}
+
 }

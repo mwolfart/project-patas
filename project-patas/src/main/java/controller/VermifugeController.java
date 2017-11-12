@@ -3,12 +3,12 @@ package controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
-import repository.VermRepository;
+import repository.VermifugeRepository;
 
 @RestController
-public class VermController {
+public class VermifugeController {
 
 	@Autowired
-	private VermRepository vermRepository;
+	private VermifugeRepository vermifugeRepository;
 	
 }
