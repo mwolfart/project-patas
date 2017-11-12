@@ -13,20 +13,12 @@ nav ul {
   color: #FFD700; 
   text-decoration: none;
   padding: 0.8em 1.8em;
-  /* text-transform: uppercase; */
   font-size: 80%;
-  /* letter-spacing: 2px;
-  text-shadow: 0 -1px 0 #000; */
   position: relative;
 }
 .nav{  
   vertical-align: center; 
   display: inline-block;
-  /* box-shadow: 
-    1px -1px -1px 1px #000, 
-    -1px 1px -1px 1px #fff, 
-    0 0 6px 3px #fff; */
-  /* border-radius:6px; */
 }
 .nav li {
   position: relative;
@@ -37,8 +29,7 @@ nav ul {
   margin-right: 1px; 
 } 
 .nav > li > a { 
-  margin-bottom: 1px;
-  /*box-shadow: inset 0 2em .33em -0.5em #555;*/ 
+  margin-bottom: 1px; 
   text-decoration: none;
 }
 
