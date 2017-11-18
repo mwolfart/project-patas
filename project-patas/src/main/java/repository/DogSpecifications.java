@@ -9,7 +9,7 @@ import model.Dog;
 final public class DogSpecifications {
 	private DogSpecifications() {}
 	
-	// Filter name
+	//Filter name
 	public static Specification<Dog> dogNameEquals(String name) {
 		return (root, query, cb) -> {
 			return cb.equal(root.get(Dog_.name), name);
