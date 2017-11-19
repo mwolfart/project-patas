@@ -10,7 +10,7 @@ function jsonToForm(json) {
 	$(" #vermName ").val(json.vermName);
 	$(" #amount ").val(json.amount);
 	$(" #appDate ").val(dateToString(app_date));
-	$(" #nextAppDAte ").val(dateToString(next_app_date));
+	$(" #nextAppDate ").val(dateToString(next_app_date));
 	$(" #obs ").val(json.obs);
 }
 
@@ -33,15 +33,19 @@ $(document).ready(function() {
 		event.preventDefault();
 		
 		if ( validateStringField( $( "#dogName" )[0] ) == 0 )
-			showAlert($( "#errorDogName" ), "Preencha o nome do cachorro");
+			showAlert($( "#errorDogName" ), "Campo obrigatório!");
 		else if ( validateStringField( $( "#vermName" )[0] ) == 0 )
-			showAlert($( "#errorVermName" ), "Preencha o nome do vermífugo");
+			showAlert($( "#errorVermName" ), "Campo obrigatório!");
+		else if ( validateDateField( $( "#appDate" )[0] ) == 0 )
+			showAlert($( "#errorAppDate" ), "Campo obrigatório!");
+		else if ( validateNumericField( $( "#amount" )[0] ) == 0 )
+			showAlert($( "#errorAmount" ), "Campo obrigatório!");
 		else if ( validateStringField( $( "#vermName" )[0] ) == -1 )
-			showAlert($( "#errorVermName" ), "Nome de vermífugo contém caracteres inválidos");
+			showAlert($( "#errorVermName" ), "Nome inválido!");
+		else if ( validateDateField( $( "#appDate" )[0] ) == -1 )
+			showAlert($( "#errorAppDate" ), "Data inválida!");
 		else if ( validateNumericField( $( "#amount" )[0] ) == -1 )
 			showAlert($( "#errorAmount" ), "Dosagem inválida");
-		else if ( validateDateField( $( "#appDate" )[0] ) == -1 )
-			showAlert($( "#errorAppDate" ), "Data inválida");
 		else if ( validateDateField( $( "#nextAppDate" )[0] ) == -1 )
 			showAlert($( "#errorNextAppDate" ), "Data inválida");
 		else if ( validateStringField( $( "#obs" )[0] ) == -1 )
@@ -57,28 +61,29 @@ $(document).ready(function() {
 			
 			// Post the data
 			$.ajax({
-				url: "http://localhost:8080/verm/register",
+				url: "http://localhost:8080/vermifuge/register",
 				type: "POST",
 				dataType: "json",
 				data: jsonData,
 				contentType: "application/json; charset=UTF-8",
 				error: function(response) {
 					alert(response);
+				},
+				success: function() {
+					/* UNIQUE PART */
+					// Reset the form to previous state
+					$(" #dogName ").prop('disabled', true);
+					$(" #vermName ").prop('disabled', true);
+					$(" #amount ").prop('disabled', true);
+					$(" #appDate ").prop('disabled', true);
+					$(" #nextAppDate ").prop('disabled', true);
+					$(" #obs ").prop('disabled', true);
+					
+					$(" #editBtn ").prop('disabled', false);
+					$(" #saveBtn ").prop('disabled', true);
+					$(" #deleteBtn ").prop('disabled', false);
 				}
-			});
-			
-			/* UNIQUE PART */
-			// Reset the form to previous state
-			$(" #dogName ").prop('disabled', true);
-			$(" #vermName ").prop('disabled', true);
-			$(" #amount ").prop('disabled', true);
-			$(" #appDate ").prop('disabled', true);
-			$(" #nextAppDate ").prop('disabled', true);
-			$(" #obs ").prop('disabled', true);
-			
-			$(" #editBtn ").prop('disabled', false);
-			$(" #saveBtn ").prop('disabled', true);
-			$(" #deleteBtn ").prop('disabled', false);
+			});			
 		}
 	});
 	
@@ -90,7 +95,7 @@ $(document).ready(function() {
 		verm_id = "1";
 	
 	$.ajax({
-		url: "http://localhost:8080/verm/view",
+		url: "http://localhost:8080/vermifuge/view",
 		type: "POST",
 		data: verm_id,
 		contentType: "application/json; charset=UTF-8",

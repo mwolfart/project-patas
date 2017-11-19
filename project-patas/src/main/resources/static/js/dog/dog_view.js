@@ -144,34 +144,35 @@ $(document).ready(function() {
 				contentType: "application/json; charset=UTF-8",
 				error: function(response) {
 					console.log(response);
+				},
+				success: function() {
+					/* UNIQUE PART */
+					// Reset the form to previous state
+					$(" #name ").prop('disabled', true);
+					$(" #birthDate ").prop('disabled', true);
+					$(" #weight ").prop('disabled', true);
+					$(" #sex ").prop('disabled', true);
+					$(" #size ").prop('disabled', true);
+					$(" #furColor ").prop('disabled', true);
+					$(" #status ").prop('disabled', true);
+					$(" #arrivalDate ").prop('disabled', true);
+					$(" #ration ").prop('disabled', true);
+					$(" #rationPortions ").prop('disabled', true);
+					$(" #rationOther ").prop('disabled', true);
+					$(" #checkboxCastr ").prop('disabled', true);
+					$(" #checkboxDis ").prop('disabled', true);
+					$(" #sponsors ").prop('disabled', true);
+					$(" #castrationDate ").prop('disabled', true);
+					$(" #diseaseDescription ").prop('disabled', true);
+					
+					$(" #editBtn ").prop('disabled', false);
+					$(" #examBtn ").prop('disabled', false);
+					$(" #vacinationBtn ").prop('disabled', false);
+					$(" #vermifugationBtn ").prop('disabled', false);
+					$(" #saveBtn ").prop('disabled', true);
+					$(" #deleteBtn ").prop('disabled', false);
 				}
 			});
-			
-			/* UNIQUE PART */
-			// Reset the form to previous state
-			$(" #name ").prop('disabled', true);
-			$(" #birthDate ").prop('disabled', true);
-			$(" #weight ").prop('disabled', true);
-			$(" #sex ").prop('disabled', true);
-			$(" #size ").prop('disabled', true);
-			$(" #furColor ").prop('disabled', true);
-			$(" #status ").prop('disabled', true);
-			$(" #arrivalDate ").prop('disabled', true);
-			$(" #ration ").prop('disabled', true);
-			$(" #rationPortions ").prop('disabled', true);
-			$(" #rationOther ").prop('disabled', true);
-			$(" #checkboxCastr ").prop('disabled', true);
-			$(" #checkboxDis ").prop('disabled', true);
-			$(" #sponsors ").prop('disabled', true);
-			$(" #castrationDate ").prop('disabled', true);
-			$(" #diseaseDescription ").prop('disabled', true);
-			
-			$(" #editBtn ").prop('disabled', false);
-			$(" #examBtn ").prop('disabled', false);
-			$(" #vacinationBtn ").prop('disabled', false);
-			$(" #vermifugationBtn ").prop('disabled', false);
-			$(" #saveBtn ").prop('disabled', true);
-			$(" #deleteBtn ").prop('disabled', false);
 		}
 	});
 	
