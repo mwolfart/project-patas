@@ -1,3 +1,12 @@
+.fa-camera{
+    font-size: 50px !important;
+    color: #4c4c4c !important;
+}
+
+fa-pencil-square-o{
+	font-size: 15px !important;
+}
+
 #header{
 	background-color: #FFD700;
 	height: 25%;
@@ -99,11 +108,98 @@
     padding: 0 0 0 0;
 }
 
+.img-circle{
+	border-radius: 50%;
+}
+
 /** Overwrite **/
 .carousel-control.left, .carousel-control.right {
 	background-image: none !important;
 }
 
+/** Overwrite **/
 .container{
 	padding-top: 1%;
+	background: #ffffff;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/** Overwrite **/
+.form-control{
+	padding: 10px 50px;
+}
+
+/** Overwrite **/
+.form-input{
+	height:50px;
+	border-radius: 0px;
+	margin-top: 20px;
+}
+
+.profile-input-file{
+    height:180px;
+    width:180px;
+    left:33%;
+    position: absolute;
+    top: 0px;
+    z-index: 999;
+    opacity: 0 !important;
+}
+
+.bg-form{
+    float:left;
+    width:100%;
+    position:relative;
+    background: #ffffff;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-top: 0px;
+}
+
+.custom-form{
+	float: left;
+	width:75%;
+	border-radius: 20px;
+	box-shadow: 0 0 16px #fff;
+	overflow: hidden;
+	background: rgba(255,255,255,0.6);
+}
+
+.img-section{
+    float: left;
+    width: 100%;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    background: rgba(0,0,0,0.7);
+    position: relative;
+}
+
+.img-section h6{
+	color:#fff;
+}
+
+#picup-load{
+    color: #ffffff;
+    width: 180px;
+    height: 180px;
+    background: rgba(255,255,255,0.4);
+    padding: 100px;
+    position: absolute;
+    left: 9.5%;
+    border-radius: 50%;
+    display: none;
+    top:15px;
+}
+
+#checker{
+    opacity: 0;
+    position: absolute;
+    top: 0px;
+    cursor: pointer;
+}
+
+.required:after {
+  content:" *"; 
+  color: red;
 }

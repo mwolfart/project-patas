@@ -91,4 +91,15 @@ $(document).ready(function() {
 		}
 	});
 	
+	//Enable/disable profile photo to edition
+	$('#checker').click(function() {
+		$("#image-input").prop("disabled", !this.checked);
+	    $("#picup-load").toggle(this.checked);
+	});	
+	
+	// Read image file and show it
+	$("#image-input").change(function() {
+			readURL(this);
+			$("#picup-load").toggle(this.checked);
+	});	
 })
