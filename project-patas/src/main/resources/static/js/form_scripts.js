@@ -293,9 +293,7 @@ function validateSearchStringField(field) {
 			}
 		}
 	}
-	
 	return validation;
-	
 }
 
 // showAlert : Object, String -> Void
@@ -310,4 +308,16 @@ function showAlert(element, msg) {
 function hideAlert(element) {	
 	element.text("");
 	element.addClass("disabled-alert");	
+}
+
+//putDogsInComboBox := Object -> Void
+//given a list of dog ids and names, put them into the
+//dogName combobox (vacination, vermifugation, appointments)
+function putDogsInComboBox(dogs) {
+	$.each(dogs, function(i, dog) {
+		$( "#dogName" ).append($("<option>", {
+			value: dog[0],
+			text: dog[1]
+		}));
+	});
 }

@@ -1,94 +1,79 @@
 // Document load script
 $(document).ready(function() {
 	// Prevent user from typing letters and other symbols into numeric fields
-	$( "#name" ).keydown(protectStringField);
-	$( "#weight" ).keydown(protectNumericField);
-	$( "#birthDate" ).keydown(protectNumericField);
-	$( "#furColor" ).keydown(protectStringField);
-	$( "#castrationDate" ).keydown(protectNumericField);
-	$( "#arrivalDate" ).keydown(protectNumericField);
-	$( "#diseaseDescription" ).keydown(protectStringField);
-	$( "#sponsors" ).keydown(protectStringField);
+	$( "#volName" ).keydown(protectStringField);
+	$( "#appointmentDate" ).keydown(protectNumericField);
+	$( "#location" ).keydown(protectStringField);
+	$( "#vetName" ).keydown(protectStringField);
+	$( "#totalCost" ).keydown(protectStringField);
+	$( "#reason" ).keydown(protectStringField);
+	$( "#examDescription" ).keydown(protectStringField);
+	$( "#description" ).keydown(protectStringField);
 	
 	// Validate numeric and date fields
-	$( "#name" ).focusout(function () { 
+	$( "#dogName" ).focusout(function () { 
 		if (validateStringField(this) > 0)
-			hideAlert($( "#errorName" ));
+			hideAlert($( "#errorDogName" ));
 	});
 	
-	$( "#weight" ).focusout(function () { 
-		if (validateRealNumberField(this) >= 0)
-			hideAlert($( "#errorWeight" )); 
-	});
-	
-	$( "#furColor" ).focusout(function () { 
+	$( "#volName" ).focusout(function () { 
 		if (validateStringField(this) >= 0)
-			hideAlert($( "#errorFurColor" )); 
+			hideAlert($( "#errorVolName" ));
 	});
 	
-	$( "#castrationDate" ).focusout(function() { 
-		if (validateDateField(this) >= 0)
-			hideAlert($( "#errorCastrationDate" )); 
-	});
-	
-	$( "#arrivalDate" ).focusout(function() { 
+	$( "#appointmentDate" ).focusout(function () { 
 		if (validateDateField(this) > 0)
-			hideAlert($( "#errorArrivalDate" )); 
+			hideAlert($( "#errorAppointmentDate" ));
 	});
 	
-	$( "#diseaseDescription" ).focusout(function () { 
+	$( "#location" ).focusout(function () { 
 		if (validateStringField(this) >= 0)
-			hideAlert($( "#errorDisease" )); 
+			hideAlert($( "#errorLocation" ));
 	});
 	
-	$( "#sponsors" ).focusout(function () { 
+	$( "#vetName" ).focusout(function () { 
 		if (validateStringField(this) >= 0)
-			hideAlert($( "#errorSponsors" )); 
+			hideAlert($( "#errorVetName" ));
 	});
 	
-	// Validate birth and automatically compute age
-	$( "#birthDate" ).focusout( function() {
-		var validation = validateDateField(this);
-		
-		if (validation >= 0) {
-			$( "#age" ).val("");
-			hideAlert($( "#errorBirthDate" ));
-			
-			if (validation > 0) {
-				var age = computeAge(stringToDate(this.value));
-				$( "#age" ).val(age);
-			}
-		}
+	$( "#totalCost" ).focusout(function () { 
+		if (validateCurrencyField(this) >= 0)
+			hideAlert($( "#errorTotalCost" ));
 	});
 	
-	//Enable/disable the castration date field
-	$( "#checkboxCastr" ).click(function() {
+	$( "#reason" ).focusout(function () { 
+		if (validateStringField(this) > 0)
+			hideAlert($( "#errorReason" ));
+	});
+	
+	$( "#examDescription" ).focusout(function () { 
+		if (validateStringField(this) >= 0)
+			hideAlert($( "#errorExamDescription" ));
+	});
+	
+	$( "#description" ).focusout(function () { 
+		if (validateStringField(this) >= 0)
+			hideAlert($( "#errorDescription" ));
+	});
+	
+	//Enable/disable the exam field
+	$( "#checkboxExam" ).click(function() {
 		if (this.checked)
-			$( "#castrationDate" ).prop("disabled", false);
+			$( "#examDescription" ).prop("disabled", false);
 		else {
-			$( "#castrationDate" ).prop("disabled", true);
-			$( "#castrationDate" ).val("");
-			$( "#castrationDate" ).removeClass("error_input");
+			$( "#examDescription" ).prop("disabled", true);
+			$( "#examDescription" ).val("");
+			$( "#examDescription" ).removeClass("error_input");
+			hideAlert($( "#errorExamDescription" ));
+		}
+	});	
+	
+	// Configure dog combobox
+	$.ajax({
+		url: "http://localhost:8080/dog/get",
+		type: "GET",
+		success: function(data) {
+			putDogsInComboBox(data);
 		}
 	});
-	
-	//Enable/disable the disease description field
-	$( "#checkboxDis" ).click(function() {
-		if (this.checked)
-			$( "#diseaseDescription" ).prop("disabled", false);
-		else {
-			$( "#diseaseDescription" ).prop("disabled", true);
-			$( "#diseaseDescription" ).val("");
-		}
-	});
-	
-	$( "#ration" ).change(function() {
-		if (this.value == "OUTRO") 
-			$( "#rationOther" ).prop("disabled", false);
-		else {
-			$( "#rationOther" ).prop("disabled", true);
-			$( "#rationOther" ).val("");
-		}
-	});
-	
 })

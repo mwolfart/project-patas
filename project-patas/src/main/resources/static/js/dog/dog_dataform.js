@@ -69,6 +69,7 @@ $(document).ready(function() {
 			$( "#castrationDate" ).prop("disabled", true);
 			$( "#castrationDate" ).val("");
 			$( "#castrationDate" ).removeClass("error_input");
+			hideAlert($( "#errorCastrationDate" ));
 		}
 	});
 	
@@ -79,6 +80,7 @@ $(document).ready(function() {
 		else {
 			$( "#diseaseDescription" ).prop("disabled", true);
 			$( "#diseaseDescription" ).val("");
+			hideAlert($( "#errorDiseaseDescription" ));
 		}
 	});
 	
@@ -88,6 +90,7 @@ $(document).ready(function() {
 		else {
 			$( "#rationOther" ).prop("disabled", true);
 			$( "#rationOther" ).val("");
+			hideAlert($( "#errorRationOther" ));
 		}
 	});
 	

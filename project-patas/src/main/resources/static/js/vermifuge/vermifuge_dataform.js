@@ -1,15 +1,3 @@
-// putDogsInComboBox := Object -> Void
-// given a list of dog ids and names, put them into the
-//   dogName combobox
-function putDogsInComboBox(dogs) {
-	$.each(dogs, function(i, dog) {
-		$( "#dogName" ).append($("<option>", {
-			value: dog[0],
-			text: dog[1]
-		}));
-	});
-}
-
 $(document).ready(function() {
 	// Protect fields
 	$( "#vermName" ).keydown(protectStringField);
@@ -30,7 +18,7 @@ $(document).ready(function() {
 	})
 	
 	$( "#amount" ).focusout(function() {
-		if (validateRealNumberField(this) >= 0)
+		if (validateRealNumberField(this) > 0)
 			hideAlert($( "#errorAmount" ));
 	})
 	

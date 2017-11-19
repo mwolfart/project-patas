@@ -1,52 +1,31 @@
-
 // Document load script
 $(document).ready(function() {
 	// Set the submit configuration for the form
-	$( "#dogRegisterForm" ).submit(function(event) {
+	$( "#vacRegisterForm" ).submit(function(event) {
 		event.preventDefault();
 		
-		// Form validation
-		if ( validateStringField( $( "#name" )[0] ) == 0 )
-			showAlert($( "#errorName" ), "Preencha o nome do cachorro!");
-		else if ( validateStringField( $( "#name" )[0] ) == -1 ) 
-			showAlert($( "#errorName" ), "Nome do cachorro inválido!");
-		else if ( validateDateField( $( "#birthDate" )[0] ) == -1 ) 
-			showAlert($( "#errorBirthDate" ), "Data de nascimento inválida!");
-		else if ( validateRealNumberField( $( "#weight" )[0] ) == -1 ) 
-			showAlert($( "#errorWeight" ), "Peso inválido!");
-		else if ( validateStringField( $( "#furColor" )[0] ) == -1 ) 
-			showAlert($( "#errorFurColor" ), "Cor de pelo inválida!");
-		else if ( validateDateField( $( "#arrivalDate" )[0] ) == -1 ) 
-			showAlert($( "#errorArrivalDate" ), "Data de chegada inválida!");
-		else if ( validateDateField( $( "#arrivalDate" )[0] ) == 0 ) 
-			showAlert($( "#errorArrivalDate" ), "Preencha a data de chegada!");
-		else if ( validateStringField( $( "#rationOther" )[0] ) == -1 ) 
-			showAlert($( "#errorRation" ), "Tipo de ração inválido!");
-		else if ( validateDateField( $( "#castrationDate" )[0] ) == -1 ) 
-			showAlert($( "#errorCastrationDate" ), "Data de chegada inválida!");
-		else if ( validateStringField( $( "#diseaseDescription" )[0] ) == -1 ) 
-			showAlert($( "#errorDisease" ), "Descrição de doença inválida!");
-		else if ( validateStringField( $( "#sponsors" )[0] ) == -1 ) 
-			showAlert($( "#errorSponsors" ), "Nome de padrinho(s) inválida!");
+		if ( validateStringField( $( "#dogName" )[0] ) == 0 )
+			showAlert($( "#errorDogName" ), "Campo obrigatório!");
+		else if ( validateStringField( $( "#vacName" )[0] ) == 0 )
+			showAlert($( "#errorVacName" ), "Campo obrigatório!");
+		else if ( validateDateField( $( "#appDate" )[0] ) == 0 )
+			showAlert($( "#errorAppDate" ), "Campo obrigatório!");
+		else if ( validateStringField( $( "#vacName" )[0] ) == -1 )
+			showAlert($( "#errorVacName" ), "Nome inválido!");
+		else if ( validateDateField( $( "#appDate" )[0] ) == -1 )
+			showAlert($( "#errorAppDate" ), "Data inválida!");
+		else if ( validateDateField( $( "#nextAppDate" )[0] ) == -1 )
+			showAlert($( "#errorNextAppDate" ), "Data inválida");
+		else if ( validateStringField( $( "#obs" )[0] ) == -1 )
+			showAlert($( "#errorObs" ), "Observações contém caracteres inválidos!");
 		else {
-			// Convert form to json
+			// Convert form to json and fix
 			var jsonData = formToJson(this);
-			
-			// Fix the checkbox values within the json
-			if ( $(" #checkboxDis ").prop("checked") )
-				jsonData["disease"] = true;
-			else jsonData["disease"] = false;
-			
-			if ( $(" #checkboxCastr ").prop("checked") )
-				jsonData["castrated"] = true;
-			else jsonData["castrated"] = false;
-			
-			// Fix JSON so it's in the right format
 			jsonData = JSON.stringify(jsonData);
 	
 			// Post the data
 			$.ajax({
-				url: "http://localhost:8080/dog/register",
+				url: "http://localhost:8080/vacination/register",
 				type: "POST",
 				dataType: "json",
 				data: jsonData,
