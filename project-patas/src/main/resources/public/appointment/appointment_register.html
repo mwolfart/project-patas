@@ -23,7 +23,7 @@
 			<form id="appointmentRegisterForm" method="post">
 				<div class="form-row">
 					<div class="form-group col-md-5">
-						<label for="dogName" class="col-form-label">Nome do cachorro</label>
+						<label for="dogName" class="col-form-label required">Nome do cachorro</label>
 						<select id="dogName" name="dogName" class="form-control">
 							<option value=""></option>
 						</select>
@@ -37,7 +37,7 @@
 				</div>
 				<div class="form-row">
 					<div class="form-group col-md-3">
-						<label for="appointmentDate" class="col-form-label">Data da consulta</label>
+						<label for="appointmentDate" class="col-form-label required">Data da consulta</label>
 						<input type="text" id="appointmentDate" name="appointmentDate" class="form-control" maxlength="10" placeholder="dd/mm/aaaa">
 						<div id="errorAppointmentDate" class="alert alert-danger disabled-alert"></div>
 					</div>
@@ -59,7 +59,7 @@
 						<div id="errorTotalCost" class="alert alert-danger disabled-alert"></div>
 					</div>
 					<div class="form-group col-md-10">
-						<label for="reason" class="col-form-label">Motivo</label>
+						<label for="reason" class="col-form-label required">Motivo</label>
 						<input type="text" id="reason" name="reason" class="form-control" maxlength="50" placeholder="Motivo para a consulta">
 						<div id="errorReason" class="alert alert-danger disabled-alert"></div>
 					</div>
