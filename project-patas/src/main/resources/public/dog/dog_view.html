@@ -22,7 +22,7 @@
 		<div class="container">
 			<form action="/dog/dog_view.html" id="dogEditForm" method="post">
 				<div class="form-group">
-					<label for="name" class="col-form-label">Nome</label>
+					<label for="name" class="col-form-label required">Nome</label>
 					<input type="text" id="name" name="name" class="form-control" maxlength="80" disabled>
 					<div id="errorName" class="alert alert-danger disabled-alert"></div>
 				</div>
@@ -68,7 +68,7 @@
 				</div>
 				<div class="form-row">
 					<div class="form-group col-md-6">
-						<label for="arrivalDate" class="col-form-label">Data de chegada</label>
+						<label for="arrivalDate" class="col-form-label required">Data de chegada</label>
 						<input type="text" id="arrivalDate" name="arrivalDate" class="form-control" maxlength="10" placeholder="dd/mm/aaaa" disabled>
 						<div id="errorArrivalDate" class="alert alert-danger disabled-alert"></div>
 					</div>
