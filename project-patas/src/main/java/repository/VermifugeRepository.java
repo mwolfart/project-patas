@@ -14,6 +14,7 @@ public interface VermifugeRepository extends JpaRepository<Vermifuge, Long>,JpaS
 	public Vermifuge findByDog(Dog dog); //provavelmente tq pegar o nome dentro, passando o cao
 	public Vermifuge findByApplicationDate(Date ApplicationDate);
 	public Vermifuge findBynextapplicationDate(Date nextApplicationDate);
+	public Vermifuge findByVermifugeNameAndDosage(String name,Double dosage);
 
 	
 }
