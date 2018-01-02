@@ -7,4 +7,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 public interface DogRepository extends JpaRepository<Dog, Long>, JpaSpecificationExecutor<Dog> {
 	 public Dog findByName(String name);
+	 public Dog findById(Long id);
 }  

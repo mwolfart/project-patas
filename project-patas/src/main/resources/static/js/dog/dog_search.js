@@ -23,17 +23,11 @@ function processResponseJson(response) {
 $(document).ready(function() {
 	// Prevent user from typing letters and other symbols into numeric fields	
 	$( "#name" ).keydown(protectSearchStringField);
-	$( "#birthYear" ).keydown(protectNumericField);
 	$( "#arrivalYear" ).keydown(protectNumericField);
 	
 	$( "#name" ).focusout( function() { 
 		validateSearchStringField(this);
 		hideAlert($("#errorName"));
-	});
-	
-	$( "#birthYear" ).focusout( function() { 
-		validateNatNumberField(this);
-		hideAlert($("#errorBirthYear"));
 	});
 	
 	$( "#arrivalYear" ).focusout( function() { 
@@ -47,8 +41,6 @@ $(document).ready(function() {
 		
 		if ( validateSearchStringField( $("#name")[0] ) == -1 )
 			showAlert($( "#errorName" ), "Nome inválido!");
-		else if ( validateNatNumberField( $("#birthYear")[0] ) == -1 )
-			showAlert($( "#errorBirthYear" ), "Ano de nascimento inválido!");
 		else if ( validateNatNumberField( $("#arrivalYear")[0] ) == -1 )
 			showAlert($( "#errorArrivalYear" ), "Ano de chegada inválido!");
 		else {

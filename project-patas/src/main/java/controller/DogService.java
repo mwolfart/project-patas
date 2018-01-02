@@ -62,8 +62,7 @@ public class DogService {
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 
-	// View dog TENHO QUE ARRUMAR PQ SE PASSA O ID PELA URL! NAO POR BODY!
-	//EH UM GET NA REAL!
+	// View dog
 	@RequestMapping(value = "/dog/view", method = RequestMethod.POST)
 	public ResponseEntity<?> dogView(@RequestBody String dogId) {		
 		Dog dog = dogRepository.findOne(Long.parseLong(dogId));
@@ -86,6 +85,7 @@ public class DogService {
 	// Search dog
 	@RequestMapping(value = "/dog/search", method = RequestMethod.POST, produces = {"application/json"})
 	public ResponseEntity<List<List<Object>>> dogSearch(@RequestBody String search_query) {		
+		System.out.println(search_query);
 		// We are going to split the JSON so we get each criteria separately
 		//  in the map. First we split the criteria, one from each other
 		String[] pairs = search_query.split("\\{|,|\\}");
@@ -94,7 +94,7 @@ public class DogService {
 		Map<String, String> criteria_list = DogSpecifications.splitCriteriaFromKeys(pairs);
 		List<Specification<Dog>> spec_list = DogSpecifications.buildSpecListFromCriteria(criteria_list);
 		Specification<Dog> final_specification = DogSpecifications.buildSpecFromSpecList(spec_list);
-
+		
 		List<Dog> filtered_dog_list = dogRepository.findAll(final_specification);
 		List<List<Object>> filtered_info_list = DogSpecifications.filterDogInfo(filtered_dog_list, new String[] {"id", "name", "sex", "arrivalDate"});
 

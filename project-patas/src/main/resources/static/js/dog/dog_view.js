@@ -139,7 +139,6 @@ $(document).ready(function() {
 			$.ajax({
 				url: "http://localhost:8080/dog/update",
 				type: "POST",
-				dataType: "json",
 				data: jsonData,
 				contentType: "application/json; charset=UTF-8",
 				error: function(response) {

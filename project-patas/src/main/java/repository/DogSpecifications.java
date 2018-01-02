@@ -12,6 +12,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.domain.Specifications;
 
 import model.Dog;
+import model.Dog_;
 
 public final class DogSpecifications {
 	private DogSpecifications() {}

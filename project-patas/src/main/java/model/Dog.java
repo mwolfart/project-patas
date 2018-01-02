@@ -1,12 +1,9 @@
 package model;
 import java.util.Date;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -36,11 +33,7 @@ public class Dog {
 	private Double rationPortions;
 	private Boolean disease;
 	private String diseaseDescription;
-	private String sponsors;
-	@OneToMany(cascade = CascadeType.ALL,mappedBy = "dog")
-	private List<Vermifuge> vermifuges;
-	
-	
+	private String sponsors;	
 
     public Dog() {
     }
@@ -214,14 +207,6 @@ public class Dog {
 
 	public void setSponsors(String sponsors) {
 		this.sponsors = sponsors;
-	}
-
-	public List<Vermifuge> getVermifuges() {
-		return vermifuges;
-	}
-
-	public void setVermifuges(List<Vermifuge> vermifuges) {
-		this.vermifuges = vermifuges;
 	}
 
 	@Override

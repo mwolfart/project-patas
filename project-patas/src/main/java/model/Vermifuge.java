@@ -5,7 +5,6 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -15,8 +14,7 @@ public class Vermifuge {
 	@Id
 	@GeneratedValue
 	private Long id;
-	@ManyToOne 
-	private Dog dog;
+	private Integer dogId;
 	private String vermifugeName;
 	private Double dosage;
 	private Date applicationDate;
@@ -26,11 +24,11 @@ public class Vermifuge {
 	public Vermifuge() {
 	}
 
-	public Vermifuge(Long id, Dog dog, String vermifugeName, Double dosage,
+	public Vermifuge(Long id, Integer dogId, String vermifugeName, Double dosage,
 			Date applicationDate, Date nextapplicationDate, String obs) {
 		super();
 		this.id = id;
-		this.dog = dog;
+		this.dogId = dogId;
 		this.vermifugeName = vermifugeName;
 		this.dosage = dosage;
 		this.applicationDate = applicationDate;
@@ -46,12 +44,12 @@ public class Vermifuge {
 		this.id = id;
 	}
 
-	public Dog getDog() {
-		return dog;
+	public Integer getDogId() {
+		return dogId;
 	}
 
-	public void setDog(Dog dog) {
-		this.dog = dog;
+	public void setDogId(Integer dogId) {
+		this.dogId = dogId;
 	}
 
 	public String getVermifugeName() {
@@ -96,7 +94,7 @@ public class Vermifuge {
 
 	@Override
 	public String toString() {
-		return "Vermifuge [id=" + id + ", dog=" + dog + ", vermifugeName="
+		return "Vermifuge [id=" + id + ", dogId=" + dogId + ", vermifugeName="
 				+ vermifugeName + ", dosage=" + dosage + ", applicationDate="
 				+ applicationDate + ", nextapplicationDate="
 				+ nextapplicationDate + ", obs=" + obs + "]";
