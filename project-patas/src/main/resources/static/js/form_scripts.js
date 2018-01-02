@@ -164,12 +164,13 @@ function protectNumericField(key) {
 	var is_arrow = (key.which >= 37 && key.which <= 40);
 	var is_dot = (key.which == 190);
 	var is_del = (key.which == 46);
+	var is_enter = (key.which == 13);
 
 	if (key.shiftKey || key.altKey)
 		return false;
 	else if (key.ctrlKey)
 		return;
-	else if (!is_digit && !is_slash && !is_backspace && !is_tab && !is_arrow && !is_dot && !is_del)
+	else if (!is_digit && !is_slash && !is_backspace && !is_tab && !is_arrow && !is_dot && !is_del && !is_enter)
 		return false;
 }
 
@@ -182,7 +183,7 @@ function protectStringField(key) {
 	var is_quotes = (key.shiftKey && (key.which == 222 || key.which == 192));
 	var is_semicolon = (key.which == 59);
 	var is_slash = (key.which == 191) || (key.which == 193);	// used to replace commas
-
+	
 	if (is_braces || is_quotes || is_semicolon || is_slash)
 		return false;
 	else return true;

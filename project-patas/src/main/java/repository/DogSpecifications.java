@@ -1,7 +1,6 @@
 package repository;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -78,6 +77,7 @@ public final class DogSpecifications {
 		};
 	}
 
+	/*
 	// splitCriteriaFromKeys
 	// given a list of criteria (strings) in the format "crit":"val",
 	//   split them in a hashmap.
@@ -95,7 +95,7 @@ public final class DogSpecifications {
 		}
 
 		return criteria_list;
-	}
+	} */
 
 	// buildSpecList
 	// given a list of criteria in the format of a hashmap, build a list

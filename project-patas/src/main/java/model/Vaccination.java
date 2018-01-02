@@ -8,29 +8,27 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "vermifuge")
-public class Vermifuge {
+@Table(name = "vaccination")
+public class Vaccination {
 
 	@Id
 	@GeneratedValue
 	private Long id;
 	private Long dogId;
-	private String vermifugeName;
-	private Double dosage;
+	private String vaccineName;
 	private Date applicationDate;
 	private Date nextApplicationDate;
 	private String obs;
 
-	public Vermifuge() {
+	public Vaccination() {
 	}
 
-	public Vermifuge(Long id, Long dogId, String vermifugeName, Double dosage,
+	public Vaccination(Long id, Long dogId, String vaccineName,
 			Date applicationDate, Date nextApplicationDate, String obs) {
 		super();
 		this.id = id;
 		this.dogId = dogId;
-		this.vermifugeName = vermifugeName;
-		this.dosage = dosage;
+		this.vaccineName = vaccineName;
 		this.applicationDate = applicationDate;
 		this.nextApplicationDate = nextApplicationDate;
 		this.obs = obs;
@@ -52,22 +50,14 @@ public class Vermifuge {
 		this.dogId = dogId;
 	}
 
-	public String getVermifugeName() {
-		return this.vermifugeName;
+	public String getVaccineName() {
+		return this.vaccineName;
 	}
 
-	public void setVermifugeName(String vermifugeName) {
-		this.vermifugeName = vermifugeName;
+	public void setVaccineName(String vaccineName) {
+		this.vaccineName = vaccineName;
 	}
-
-	public Double getDosage() {
-		return dosage;
-	}
-
-	public void setDosage(Double dosage) {
-		this.dosage = dosage;
-	}
-
+	
 	public Date getApplicationDate() {
 		return applicationDate;
 	}
@@ -94,8 +84,8 @@ public class Vermifuge {
 
 	@Override
 	public String toString() {
-		return "Vermifuge [id=" + id + ", dogId=" + dogId + ", vermifugeName="
-				+ vermifugeName + ", dosage=" + dosage + ", applicationDate="
+		return "Vermifuge [id=" + id + ", dogId=" + dogId + ", vaccineName="
+				+ vaccineName + ", applicationDate="
 				+ applicationDate + ", nextApplicationDate="
 				+ nextApplicationDate + ", obs=" + obs + "]";
 	}

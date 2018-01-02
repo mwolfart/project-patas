@@ -2,16 +2,19 @@
 // sends all the obtained values to the form.
 function jsonToForm(json) {
 	var app_date = new Date();
-	var next_app_date = new Date();
-	app_date.setTime(json.appDate);
-	next_app_date.setTime(json.nextAppDate);
+	app_date.setTime(json.applicationDate);
 	
-	$(" #dogName ").val(json.dogName);
-	$(" #vermName ").val(json.vermName);
-	$(" #amount ").val(json.amount);
+	$(" #dogName ").val(json.dogId);
+	$(" #vermName ").val(json.vermifugeName);
+	$(" #amount ").val(json.dosage);
 	$(" #appDate ").val(dateToString(app_date));
-	$(" #nextAppDate ").val(dateToString(next_app_date));
 	$(" #obs ").val(json.obs);
+	
+	if (json.nextApplicationDate) {
+		var next_app_date = new Date();
+		next_app_date.setTime(json.nextApplicationDate);
+		$(" #nextAppDate ").val(dateToString(next_app_date));
+	}
 }
 
 $(document).ready(function() {
@@ -29,6 +32,29 @@ $(document).ready(function() {
 		$(" #deleteBtn ").prop('disabled', true);
 	});
 	
+	// Delete button onClick handler
+	$(" #deleteBtn ").click(function(event) {
+		event.preventDefault();
+		
+		if (confirm("Tem certeza que deseja excluir este registro?")) {
+			var verm_id = getUrlParameter('id');
+			
+			$.ajax({
+				url: "http://localhost:8080/vermifuge/delete",
+				type: "POST",
+				data: verm_id,
+				contentType: "application/json; charset=UTF-8",
+				success: function(response) {
+					alert("Registro removido com sucesso!");
+					window.location.replace("/vermifuge/vermifuge_search.html");
+				},
+				error: function(response) {
+					alert(response.responseText);
+				}
+			});
+		}
+	});
+	
 	$( "#vermEditForm" ).submit(function(event) {
 		event.preventDefault();
 		
@@ -38,13 +64,13 @@ $(document).ready(function() {
 			showAlert($( "#errorVermName" ), "Campo obrigatório!");
 		else if ( validateDateField( $( "#appDate" )[0] ) == 0 )
 			showAlert($( "#errorAppDate" ), "Campo obrigatório!");
-		else if ( validateNumericField( $( "#amount" )[0] ) == 0 )
+		else if ( validateNatNumberField( $( "#amount" )[0] ) == 0 )
 			showAlert($( "#errorAmount" ), "Campo obrigatório!");
 		else if ( validateStringField( $( "#vermName" )[0] ) == -1 )
 			showAlert($( "#errorVermName" ), "Nome inválido!");
 		else if ( validateDateField( $( "#appDate" )[0] ) == -1 )
 			showAlert($( "#errorAppDate" ), "Data inválida!");
-		else if ( validateNumericField( $( "#amount" )[0] ) == -1 )
+		else if ( validateNatNumberField( $( "#amount" )[0] ) == -1 )
 			showAlert($( "#errorAmount" ), "Dosagem inválida");
 		else if ( validateDateField( $( "#nextAppDate" )[0] ) == -1 )
 			showAlert($( "#errorNextAppDate" ), "Data inválida");
@@ -63,7 +89,6 @@ $(document).ready(function() {
 			$.ajax({
 				url: "http://localhost:8080/vermifuge/register",
 				type: "POST",
-				dataType: "json",
 				data: jsonData,
 				contentType: "application/json; charset=UTF-8",
 				error: function(response) {
@@ -105,6 +130,7 @@ $(document).ready(function() {
 		error: function(response) {
 			alert(response.responseText);
 			$(" #editBtn ").prop("disabled", true);
+			$(" #deleteBtn ").prop("disabled", true);
 		}
 	});
 });

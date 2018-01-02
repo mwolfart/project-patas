@@ -7,7 +7,7 @@ function processResponseJson(response) {
 	$('#vacinations').append(
 			$.map(response, function (vac_info) {				
 				return '<tr><td>' + vac_info[1] + '</td><td>'+ vac_info[2] +'</td><td>'+ dateToString(integerToDate(vac_info[3])) +'</td><td>'
-				+'<a href="vacination_view.html?id='+ vac_info[0] +'" class="btn btn-info" role="button">Visualizar</a></td></tr>';
+				+'<a href="vaccination_view.html?id='+ vac_info[0] +'" class="btn btn-info" role="button">Visualizar</a></td></tr>';
 			}).join());
 	$( "#vacinations" ).removeClass("disabled-table");
 
@@ -16,7 +16,7 @@ function processResponseJson(response) {
 // Document load script
 $(document).ready(function() {
 	// Prevent user from typing letters and other symbols into numeric fields	
-	$( "#vermName" ).keydown(protectSearchStringField);
+	$( "#vacName" ).keydown(protectSearchStringField);
 	$( "#dogName" ).keydown(protectSearchStringField);
 	$( "#appDate" ).keydown(protectNumericField);
 	$( "#nextAppDate" ).keydown(protectNumericField);
@@ -26,9 +26,9 @@ $(document).ready(function() {
 		hideAlert($("#errorDogName"));
 	});
 	
-	$( "#vermName" ).focusout( function() { 
+	$( "#vacName" ).focusout( function() { 
 		validateSearchStringField(this);
-		hideAlert($("#errorVermName"));
+		hideAlert($("#errorVacName"));
 	});
 	
 	$( "#appDate" ).focusout( function() { 
@@ -42,13 +42,13 @@ $(document).ready(function() {
 	});
 
 	// Set the submit configuration for the form
-	$( "#vermifugeSearchForm" ).submit(function(event) {
+	$( "#vaccinationSearchForm" ).submit(function(event) {
 		event.preventDefault();
 		
 		if ( validateSearchStringField( $("#dogName")[0] ) == -1 )
 			showAlert($( "#errorDogName" ), "Nome inválido!");
-		else if ( validateSearchStringField( $("#vermName")[0] ) == -1 )
-			showAlert($( "#errorVermName" ), "Nome inválido!");
+		else if ( validateSearchStringField( $("#vacName")[0] ) == -1 )
+			showAlert($( "#errorVacName" ), "Nome inválido!");
 		else if ( validateDateField( $("#appDate")[0] ) == -1 )
 			showAlert($( "#errorAppDate" ), "Data inválida!");
 		else if ( validateNatNumberField( $("#nextAppDate")[0] ) == -1 )
@@ -58,7 +58,7 @@ $(document).ready(function() {
 			jsonData = JSON.stringify(jsonData);
 			
 			$.ajax({
-				url: "http://localhost:8080/vermifuge/search",
+				url: "http://localhost:8080/vaccination/search",
 				type: "POST",
 				dataType: "json",
 				data: jsonData,
@@ -68,5 +68,29 @@ $(document).ready(function() {
 				}
 			});
 		}
-	});	
+	});
+	
+	/****************/
+	/** INIT STATE **/
+	/****************/
+	 
+	var dog_name = getUrlParameter("dogName");
+	var jsonData;
+	
+	if (dog_name != 0) {
+		$( "#dogName" ).val(dog_name);
+		jsonData = {"dogName": dog_name};
+		jsonData = JSON.stringify(jsonData);
+	}
+	
+	$.ajax({
+		url: "http://localhost:8080/vaccination/search",
+		type: "POST",
+		dataType: "json",
+		data: jsonData,
+		contentType: "application/json; charset=UTF-8",
+		success: function(response) {
+			processResponseJson(response);
+		}
+	});
 });

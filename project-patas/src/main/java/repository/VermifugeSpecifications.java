@@ -1,12 +1,17 @@
 package repository;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+
 import javax.persistence.criteria.Expression;
+
 import model.Vermifuge;
+import model.Vermifuge_;
+
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.domain.Specifications;
 
@@ -20,14 +25,13 @@ public final class VermifugeSpecifications {
 		};
 	} 
 
-	//VER COMO FAZER
-	//	//Filter name of dog
-	//	public static Specification<Vermifuge> vermifugeNameEquals(Dog dog) {
-	//		return (root, query, cb) -> {
-	//			return cb.equal(root.get(Vermifuge_.dog), dog);
-	//		};
-	//	} 
-
+	//Filter dog id
+	public static Specification<Vermifuge> vermifugeDogIdEquals(Long dogId) {
+		return (root, query, cb) -> {
+			return cb.equal(root.get(Vermifuge_.dogId), dogId);
+		};
+	} 
+	
 	//Filter application day
 	public static Specification<Vermifuge> vermifugeApplicationDayEquals(Integer applicationDay) {
 		return (root, query, cb) -> {
@@ -55,7 +59,7 @@ public final class VermifugeSpecifications {
 	//Filter next application day
 	public static Specification<Vermifuge> vermifugeNextApplicationDayEquals(Integer nextApplicationDay) {
 		return (root, query, cb) -> {
-			Expression<Integer> day = cb.function("day", Integer.class, root.get(Vermifuge_.nextapplicationDate));
+			Expression<Integer> day = cb.function("day", Integer.class, root.get(Vermifuge_.nextApplicationDate));
 			return cb.equal(day, nextApplicationDay);
 		};
 	}
@@ -63,7 +67,7 @@ public final class VermifugeSpecifications {
 	//Filter next application month
 	public static Specification<Vermifuge> vermifugeNextApplicationMonthEquals(Integer applicationMonth) {
 		return (root, query, cb) -> {
-			Expression<Integer> month = cb.function("month", Integer.class, root.get(Vermifuge_.nextapplicationDate));
+			Expression<Integer> month = cb.function("month", Integer.class, root.get(Vermifuge_.nextApplicationDate));
 			return cb.equal(month, applicationMonth);
 		};
 	}
@@ -71,15 +75,17 @@ public final class VermifugeSpecifications {
 	//Filter next application year
 	public static Specification<Vermifuge> vermifugeNextApplicationYearEquals(Integer nextApplicationYear) {
 		return (root, query, cb) -> {
-			Expression<Integer> year = cb.function("year", Integer.class, root.get(Vermifuge_.nextapplicationDate));
+			Expression<Integer> year = cb.function("year", Integer.class, root.get(Vermifuge_.nextApplicationDate));
 			return cb.equal(year, nextApplicationYear);
 		};
 	}
 
+	/*
 	// splitCriteriaFromKeys
 	// given a list of criteria (strings) in the format "crit":"val",
 	//   split them in a hashmap.
 	public static HashMap<String, String> splitCriteriaFromKeys(String[] criteria_pairs) {
+		// REFATORAR (código duplicado)
 		HashMap<String, String> criteria_list = new HashMap<String, String>();
 
 		for (int i=1; i < criteria_pairs.length; i++) {
@@ -94,6 +100,7 @@ public final class VermifugeSpecifications {
 
 		return criteria_list;
 	}
+	*/
 
 	// buildSpecList
 	// given a list of criteria in the format of a hashmap, build a list
@@ -108,27 +115,35 @@ public final class VermifugeSpecifications {
 	}
 
 	// buildSpecFromCriterion
-	// given a griterion entry from a hashmap, convert it to a specification
+	// given a criterion entry from a hashmap, convert it to a specification
 	// OBS.: the conditional values used in this function are directly related to the 
 	//   fields "name" attribute in the html. Whenever one is changed, the other also has to.
 	public static Specification<Vermifuge> buildSpecFromCriterion(Entry<String, String> criterion) {
+		Calendar cal = Calendar.getInstance();
+		
 		switch(criterion.getKey()) {
-		case "name":
+		case "vermifugeName":
 			return vermifugeNameEquals(criterion.getValue());
-		case "dogName":
-			//TODO
-		case "applicationDay":
-			return vermifugeApplicationDayEquals(Integer.parseInt(criterion.getValue()));
-		case "applicationMonth":
-			return vermifugeApplicationMonthEquals(Integer.parseInt(criterion.getValue()));
-		case "applicationYear":
-			return vermifugeApplicationYearEquals(Integer.parseInt(criterion.getValue()));
-		case "nextApplicationDay":
-			return vermifugeNextApplicationDayEquals(Integer.parseInt(criterion.getValue()));
-		case "nextApplicationMonth":
-			return vermifugeNextApplicationMonthEquals(Integer.parseInt(criterion.getValue()));
-		case "nextApplicationYear":
-			return vermifugeNextApplicationYearEquals(Integer.parseInt(criterion.getValue()));
+		case "dogId":
+			return vermifugeDogIdEquals(Long.parseLong(criterion.getValue()));
+		case "applicationDate":
+			Date appDate = new Date(Long.parseLong(criterion.getValue()));
+			cal.setTime(appDate);
+			
+			Specification<Vermifuge> specAppDay = vermifugeApplicationDayEquals(cal.get(Calendar.DAY_OF_MONTH));
+			Specification<Vermifuge> specAppMonth = vermifugeApplicationMonthEquals(cal.get(Calendar.MONTH) + 1);
+			Specification<Vermifuge> specAppYear = vermifugeApplicationYearEquals(cal.get(Calendar.YEAR));
+			
+			return Specifications.where(specAppDay).and(specAppMonth).and(specAppYear);
+		case "nextApplicationDate":
+			Date nextAppDate = new Date(Long.parseLong(criterion.getValue()));
+			cal.setTime(nextAppDate);
+			
+			Specification<Vermifuge> specNextAppDay = vermifugeApplicationDayEquals(cal.get(Calendar.DAY_OF_MONTH));
+			Specification<Vermifuge> specNextAppMonth = vermifugeApplicationMonthEquals(cal.get(Calendar.MONTH) + 1);
+			Specification<Vermifuge> specNextAppYear = vermifugeApplicationYearEquals(cal.get(Calendar.YEAR));
+			
+			return Specifications.where(specNextAppDay).and(specNextAppMonth).and(specNextAppYear);
 		default:
 			return null;
 		}
@@ -164,15 +179,14 @@ public final class VermifugeSpecifications {
 				case "name":
 					desired_info.add(vermifuge.getVermifugeName());
 					break;
-				case "dogName":
-					//TODO
-					//desired_info.add(vermifuge.getVermifugeName());
+				case "dogId":
+					desired_info.add(vermifuge.getDogId());
 					break;
 				case "applicationDate":
 					desired_info.add(vermifuge.getApplicationDate());
 					break;
-				case "NextApplicationDate":
-					desired_info.add(vermifuge.getNextapplicationDate());
+				case "nextApplicationDate":
+					desired_info.add(vermifuge.getNextApplicationDate());
 					break;
 				}
 			}

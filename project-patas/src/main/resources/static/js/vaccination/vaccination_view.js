@@ -2,15 +2,18 @@
 // sends all the obtained values to the form.
 function jsonToForm(json) {
 	var app_date = new Date();
-	var next_app_date = new Date();
-	app_date.setTime(json.appDate);
-	next_app_date.setTime(json.nextAppDate);
+	app_date.setTime(json.applicationDate);
 	
-	$(" #dogName ").val(json.dogName);
-	$(" #vacName ").val(json.vermName);
+	$(" #dogName ").val(json.dogId);
+	$(" #vacName ").val(json.vaccineName);
 	$(" #appDate ").val(dateToString(app_date));
-	$(" #nextAppDate ").val(dateToString(next_app_date));
 	$(" #obs ").val(json.obs);
+	
+	if (json.nextApplicationDate) {
+		var next_app_date = new Date();
+		next_app_date.setTime(json.nextApplicationDate);
+		$(" #nextAppDate ").val(dateToString(next_app_date));
+	}
 }
 
 $(document).ready(function() {
@@ -25,6 +28,29 @@ $(document).ready(function() {
 		$(" #editBtn ").prop('disabled', true);
 		$(" #saveBtn ").prop('disabled', false);
 		$(" #deleteBtn ").prop('disabled', true);
+	});
+	
+	// Delete button onClick handler
+	$(" #deleteBtn ").click(function(event) {
+		event.preventDefault();
+		
+		if (confirm("Tem certeza que deseja excluir este registro?")) {
+			var vac_id = getUrlParameter('id');
+			
+			$.ajax({
+				url: "http://localhost:8080/vaccination/delete",
+				type: "POST",
+				data: vac_id,
+				contentType: "application/json; charset=UTF-8",
+				success: function(response) {
+					alert("Registro removido com sucesso!");
+					window.location.replace("/vaccination/vaccination_search.html");
+				},
+				error: function(response) {
+					alert(response.responseText);
+				}
+			});
+		}
 	});
 	
 	$( "#vacEditForm" ).submit(function(event) {
@@ -54,7 +80,7 @@ $(document).ready(function() {
 			
 			// Post the data
 			$.ajax({
-				url: "http://localhost:8080/vacination/register",
+				url: "http://localhost:8080/vaccination/register",
 				type: "POST",
 				dataType: "json",
 				data: jsonData,
@@ -87,7 +113,7 @@ $(document).ready(function() {
 		vac_id = "1";
 	
 	$.ajax({
-		url: "http://localhost:8080/vacination/view",
+		url: "http://localhost:8080/vaccination/view",
 		type: "POST",
 		data: vac_id,
 		contentType: "application/json; charset=UTF-8",
@@ -97,6 +123,7 @@ $(document).ready(function() {
 		error: function(response) {
 			alert(response.responseText);
 			$(" #editBtn ").prop("disabled", true);
+			$(" #deleteBtn ").prop("disabled", true);
 		}
 	});
 });

@@ -77,10 +77,20 @@ $(document).ready(function() {
 		
 		$(" #editBtn ").prop('disabled', true);
 		$(" #examBtn ").prop('disabled', false);
-		$(" #vacinationBtn ").prop('disabled', true);
+		$(" #vaccinationBtn ").prop('disabled', true);
 		$(" #vermifugationBtn ").prop('disabled', true);
 		$(" #saveBtn ").prop('disabled', false);
 		$(" #deleteBtn ").prop('disabled', true);
+	});
+	
+	// Vermifugation button onClick handler
+	$(" #vermifugationBtn ").click(function() {
+		window.location.replace("/vermifuge/vermifuge_search.html?dogName=" + $("#name").val());
+	});
+	
+	// Vaccination button onClick handler
+	$(" #vaccinationBtn ").click(function() {
+		window.location.replace("/vaccination/vaccination_search.html?dogName=" + $("#name").val());
 	});
 	
 	// Set the submit configuration for the form
@@ -166,7 +176,7 @@ $(document).ready(function() {
 					
 					$(" #editBtn ").prop('disabled', false);
 					$(" #examBtn ").prop('disabled', false);
-					$(" #vacinationBtn ").prop('disabled', false);
+					$(" #vaccinationBtn ").prop('disabled', false);
 					$(" #vermifugationBtn ").prop('disabled', false);
 					$(" #saveBtn ").prop('disabled', true);
 					$(" #deleteBtn ").prop('disabled', false);
@@ -197,9 +207,10 @@ $(document).ready(function() {
 		error: function(response) {
 			alert(response.responseText);
 			$(" #editBtn ").prop("disabled", true);
-			$(" #vacinationBtn ").prop("disabled", true);
+			$(" #vaccinationBtn ").prop("disabled", true);
 			$(" #vermifugationBtn ").prop("disabled", true);
 			$(" #examBtn ").prop("disabled", true);
+			$(" #deleteBtn ").prop("disabled", true);
 		}
 	});
 });

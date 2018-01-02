@@ -22,31 +22,31 @@
 			<form id="vermEditForm" method="post">
 				<div class="form-row">
 					<div class="form-group col-md-6">
-						<label for="dogName" class="col-form-label required">Nome do cachorro</label>
-						<select id="dogName" name="dogName" class="form-control" disabled>
+						<label for="dogId" class="col-form-label required">Nome do cachorro</label>
+						<select id="dogName" name="dogId" class="form-control" disabled>
 							<option value=""></option>
 						</select>
 						<div id="errorDogName" class="alert alert-danger disabled-alert"></div>
 					</div>
 					<div class="form-group col-md-6">
-						<label for="vermName" class="col-form-label required">Nome do vermífugo</label>
-						<input type="text" id="vermName" name="vermName" class="form-control" maxlength="50" placeholder="Nome do vermífugo aplicado" disabled>
+						<label for="vermifugeName" class="col-form-label required">Nome do vermífugo</label>
+						<input type="text" id="vermName" name="vermifugeName" class="form-control" maxlength="50" placeholder="Nome do vermífugo aplicado" disabled>
 						<div id="errorVermName" class="alert alert-danger disabled-alert"></div>
 					</div>
 				</div>
 				<div class="form-row">
 					<div class="form-group col-md-4">
-						<label for="amount" class="col-form-label required">Dosagem</label>
-						<input type="text" id="amount" amount="age" class="form-control" maxlength="6" disabled>			
+						<label for="dosage" class="col-form-label required">Dosagem</label>
+						<input type="text" id="amount" name="dosage" class="form-control" maxlength="6" disabled>			
 					</div>
 					<div class="form-group col-md-4">
-						<label for="appDate" class="col-form-label required">Data da aplicação</label>
-						<input type="text" id="appDate" name="appDate" class="form-control" maxlength="10" placeholder="dd/mm/aaaa" disabled>
+						<label for="applicationDate" class="col-form-label required">Data da aplicação</label>
+						<input type="text" id="appDate" name="applicationDate" class="form-control" maxlength="10" placeholder="dd/mm/aaaa" disabled>
 						<div id="errorAppDate" class="alert alert-danger disabled-alert"></div>
 					</div>
 					<div class="form-group col-md-4">
-						<label for="nextAppDate" class="col-form-label">Data da próxima aplicação</label>
-						<input type="text" id="nextAppDate" name="nextAppDate" class="form-control" maxlength="10" placeholder="dd/mm/aaaa" disabled>
+						<label for="nextApplicationDate" class="col-form-label">Data da próxima aplicação</label>
+						<input type="text" id="nextAppDate" name="nextApplicationDate" class="form-control" maxlength="10" placeholder="dd/mm/aaaa" disabled>
 						<div id="errorNextAppDate" class="alert alert-danger disabled-alert"></div>
 					</div>
 				</div>

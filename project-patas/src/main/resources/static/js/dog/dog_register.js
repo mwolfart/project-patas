@@ -43,7 +43,7 @@ $(document).ready(function() {
 			
 			// Fix JSON so it's in the right format
 			jsonData = JSON.stringify(jsonData);
-	
+
 			// Post the data
 			$.ajax({
 				url: "http://localhost:8080/dog/register",
@@ -51,6 +51,10 @@ $(document).ready(function() {
 				dataType: "json",
 				data: jsonData,
 				contentType: "application/json; charset=UTF-8",
+				success: function(response) {
+					alert("Cachorro cadastrado com sucesso!");
+					window.location.replace("/dog/dog_view.html?id=" + response);
+				},
 				error: function(response) {
 					alert(response);
 				}

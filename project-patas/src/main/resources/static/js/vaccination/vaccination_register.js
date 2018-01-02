@@ -25,11 +25,14 @@ $(document).ready(function() {
 	
 			// Post the data
 			$.ajax({
-				url: "http://localhost:8080/vacination/register",
+				url: "http://localhost:8080/vaccination/register",
 				type: "POST",
-				dataType: "json",
 				data: jsonData,
 				contentType: "application/json; charset=UTF-8",
+				success: function(response) {
+					alert("Registro cadastrado com sucesso!");
+					window.location.replace("/vaccination/vaccination_view.html?id=" + response);
+				},
 				error: function(response) {
 					alert(response);
 				}

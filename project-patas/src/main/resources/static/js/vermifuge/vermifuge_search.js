@@ -6,7 +6,7 @@ function processResponseJson(response) {
 	
 	$('#vermifugations').append(
 			$.map(response, function (verm_info) {				
-				return '<tr><td>' + verm_info[1] + '</td><td>'+ verm_info[2] +'</td><td>'+ dateToString(integerToDate(verm_info[4])) +'</td><td>'
+				return '<tr><td>' + verm_info[1] + '</td><td>'+ verm_info[2] +'</td><td>'+ dateToString(integerToDate(verm_info[3])) +'</td><td>'
 				+'<a href="vermifuge_view.html?id='+ verm_info[0] +'" class="btn btn-info" role="button">Visualizar</a></td></tr>';
 			}).join());
 	$( "#vermifugations" ).removeClass("disabled-table");
@@ -68,5 +68,29 @@ $(document).ready(function() {
 				}
 			});
 		}
-	});	
+	});
+	
+	/****************/
+	/** INIT STATE **/
+	/****************/
+	 
+	var dog_name = getUrlParameter("dogName");
+	var jsonData;
+	
+	if (dog_name != 0) {
+		$( "#dogName" ).val(dog_name);
+		jsonData = {"dogName": dog_name};
+		jsonData = JSON.stringify(jsonData);
+	}
+	
+	$.ajax({
+		url: "http://localhost:8080/vermifuge/search",
+		type: "POST",
+		dataType: "json",
+		data: jsonData,
+		contentType: "application/json; charset=UTF-8",
+		success: function(response) {
+			processResponseJson(response);
+		}
+	});
 });

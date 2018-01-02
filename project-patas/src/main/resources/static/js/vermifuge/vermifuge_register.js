@@ -8,13 +8,13 @@ $(document).ready(function() {
 			showAlert($( "#errorVermName" ), "Campo obrigatório!");
 		else if ( validateDateField( $( "#appDate" )[0] ) == 0 )
 			showAlert($( "#errorAppDate" ), "Campo obrigatório!");
-		else if ( validateNumericField( $( "#amount" )[0] ) == 0 )
+		else if ( validateNatNumberField( $( "#amount" )[0] ) == 0 )
 			showAlert($( "#errorAmount" ), "Campo obrigatório!");
 		else if ( validateStringField( $( "#vermName" )[0] ) == -1 )
 			showAlert($( "#errorVermName" ), "Nome inválido!");
 		else if ( validateDateField( $( "#appDate" )[0] ) == -1 )
 			showAlert($( "#errorAppDate" ), "Data inválida!");
-		else if ( validateNumericField( $( "#amount" )[0] ) == -1 )
+		else if ( validateNatNumberField( $( "#amount" )[0] ) == -1 )
 			showAlert($( "#errorAmount" ), "Dosagem inválida");
 		else if ( validateDateField( $( "#nextAppDate" )[0] ) == -1 )
 			showAlert($( "#errorNextAppDate" ), "Data inválida");
@@ -32,8 +32,12 @@ $(document).ready(function() {
 				dataType: "json",
 				data: jsonData,
 				contentType: "application/json; charset=UTF-8",
+				success: function(response) {
+					alert("Registro cadastrado com sucesso!");
+					window.location.replace("/vermifuge/vermifuge_view.html?id=" + response);
+				},
 				error: function(response) {
-					alert(response);
+					console.log(response);
 				}
 			});
 		}

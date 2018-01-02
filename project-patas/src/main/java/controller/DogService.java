@@ -23,8 +23,7 @@ public class DogService {
 	
 	// Register dog
 	@RequestMapping(value = "/dog/register", method = RequestMethod.POST)
-	public ResponseEntity<String> dogRegister(@RequestBody Dog dog) {
-
+	public ResponseEntity<?> dogRegister(@RequestBody Dog dog) {
 		if(dog.getName() == null)
 			return new ResponseEntity<String>("Nome está em branco", HttpStatus.BAD_REQUEST);
 
@@ -39,10 +38,11 @@ public class DogService {
 			return new ResponseEntity<String>("Flag de castrado está em branco", HttpStatus.BAD_REQUEST);
 
 		dogRepository.saveAndFlush(dog);
-		return new ResponseEntity<String>(HttpStatus.OK);
+		return new ResponseEntity<Long>(dog.getId(), HttpStatus.OK);
 	}
 
 	// Update dog
+	// This is different from register, because we may accept a dog with the same name if unchanged
 	@RequestMapping(value = "/dog/update", method = RequestMethod.POST)
 	public ResponseEntity<String> dogUpdate(@RequestBody Dog dog) {
 		if(dog.getName() == null)
@@ -84,21 +84,18 @@ public class DogService {
 
 	// Search dog
 	@RequestMapping(value = "/dog/search", method = RequestMethod.POST, produces = {"application/json"})
-	public ResponseEntity<List<List<Object>>> dogSearch(@RequestBody String search_query) {		
-		System.out.println(search_query);
+	public ResponseEntity<List<List<Object>>> dogSearch(@RequestBody String search_query) {
 		// We are going to split the JSON so we get each criteria separately
 		//  in the map. First we split the criteria, one from each other
 		String[] pairs = search_query.split("\\{|,|\\}");
 
 		// Then, we split each criterion from its key, and build a list from them.
-		Map<String, String> criteria_list = DogSpecifications.splitCriteriaFromKeys(pairs);
+		Map<String, String> criteria_list = Helper.splitCriteriaFromKeys(pairs);
 		List<Specification<Dog>> spec_list = DogSpecifications.buildSpecListFromCriteria(criteria_list);
 		Specification<Dog> final_specification = DogSpecifications.buildSpecFromSpecList(spec_list);
 		
 		List<Dog> filtered_dog_list = dogRepository.findAll(final_specification);
 		List<List<Object>> filtered_info_list = DogSpecifications.filterDogInfo(filtered_dog_list, new String[] {"id", "name", "sex", "arrivalDate"});
-
-		System.out.println(filtered_info_list);
 
 		return new ResponseEntity<List<List<Object>>>(filtered_info_list, HttpStatus.OK);
 	}

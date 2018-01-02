@@ -21,49 +21,69 @@
 		</div>
 		<div class="container">
 			<form action="/dog/dog_view.html" id="dogEditForm" method="post">
-				<div class="form-group">
-					<label for="name" class="col-form-label required">Nome</label>
-					<input type="text" id="name" name="name" class="form-control" maxlength="80" disabled>
-					<div id="errorName" class="alert alert-danger disabled-alert"></div>
-				</div>
 				<div class="form-row">
 					<div class="form-group col-md-4">
-						<label for="birthDate" class="col-form-label">Data de nascimento</label>
-						<input type="text" id="birthDate" name="birthDate" class="form-control" maxlength="10" placeholder="dd/mm/aaaa" disabled>
-						<div id="errorBirthDate" class="alert alert-danger disabled-alert"></div>
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+							<div class="custom-form">
+								<div class="text-center bg-form">
+									<div class="img-section">
+										<img src="../images/dog_avatar.jpeg" class="img-circle" alt="Foto de perfil"> <span class="fake-icon-edit" id="picup-load"><i class="fa fa-camera"></i></span>
+										<div class="col-lg-12">
+											<h6 class="text-right col-lg-12"> <span class="fa fa-pencil-square-o"></span>Adicione uma fotinho</h6>
+											<input type="checkbox" class="form-control" id="checker" disabled>
+										</div>
+									</div>
+									<input type="file" id="image-input" accept="image/*" disabled class="form-control form-input profile-input-file" disabled>
+								</div>
+							</div>
+						</div>
 					</div>
-					<div class="form-group col-md-4">
-						<label for="age" class="col-form-label">Idade</label>
-						<input type="text" id="age" name="age" value="" class="form-control" disabled>
-					</div>
-					<div class="form-group col-md-4">
-						<label for="weight" class="col-form-label">Peso</label>
-						<input type="text" id="weight" name="weight" class="form-control" maxlength="6" disabled>
-						<div id="errorWeight" class="alert alert-danger disabled-alert"></div>
-					</div>
-				</div>
-				<div class="form-row">
-					<div class="form-group col-md-4">
-						<label for="sex" class="col-form-label">Sexo</label>
-						<select id="sex" name="sex" class="form-control" disabled>
-							<option value=""></option>
-							<option value="F">Fêmea</option>
-							<option value="M">Macho</option>
-						</select>				
-					</div>
-					<div class="form-group col-md-4">
-						<label for="size" class="col-form-label">Porte</label>
-						<select id="size" name="size" class="form-control" disabled>
-							<option value=""></option>
-							<option value="P">Pequeno</option>
-							<option value="M">Médio</option>
-							<option value="G">Grande</option>
-						</select>
-					</div>
-					<div class="form-group col-md-4">
-						<label for="furColor" class="col-form-label">Cor do pelo</label>
-						<input type="text" id="furColor" name="furColor" class="form-control" maxlength="30" disabled>
-						<div id="errorFurColor" class="alert alert-danger disabled-alert"></div>
+					<div class="form-group col-md-8">
+						<div class="form-row">
+							<label for="name" class="col-form-label required">Nome</label>
+							<input type="text" id="name" name="name" class="form-control" maxlength="80" disabled>
+							<div id="errorName" class="alert alert-danger disabled-alert"></div>
+						</div>
+						<div class="form-row">
+							<div class="form-group col-md-4">
+								<label for="birthDate" class="col-form-label">Data de nascimento</label>
+								<input type="text" id="birthDate" name="birthDate" class="form-control" maxlength="10" placeholder="dd/mm/aaaa" disabled>
+								<div id="errorBirthDate" class="alert alert-danger disabled-alert"></div>
+							</div>
+							<div class="form-group col-md-4">
+								<label for="age" class="col-form-label">Idade</label>
+								<input type="text" id="age" name="age" value="" class="form-control" disabled>
+							</div>
+							<div class="form-group col-md-4">
+								<label for="weight" class="col-form-label">Peso</label>
+								<input type="text" id="weight" name="weight" class="form-control" maxlength="6" disabled>
+								<div id="errorWeight" class="alert alert-danger disabled-alert"></div>
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-group col-md-4">
+								<label for="sex" class="col-form-label">Sexo</label>
+								<select id="sex" name="sex" class="form-control" disabled>
+									<option value=""></option>
+									<option value="F">Fêmea</option>
+									<option value="M">Macho</option>
+								</select>				
+							</div>
+							<div class="form-group col-md-4">
+								<label for="size" class="col-form-label">Porte</label>
+								<select id="size" name="size" class="form-control" disabled>
+									<option value=""></option>
+									<option value="P">Pequeno</option>
+									<option value="M">Médio</option>
+									<option value="G">Grande</option>
+								</select>
+							</div>
+							<div class="form-group col-md-4">
+								<label for="furColor" class="col-form-label">Cor do pelo</label>
+								<input type="text" id="furColor" name="furColor" class="form-control" maxlength="30" disabled>
+								<div id="errorFurColor" class="alert alert-danger disabled-alert"></div>
+							</div>
+						</div>
 					</div>
 				</div>
 				<div class="form-row">
@@ -148,7 +168,7 @@
 				<div class="form-group">	
 					<input type="button" id="editBtn" name="edit" value="Editar" class="btn">
 					<input type="button" id="examBtn" name="exam" value="Ver consultas" class="btn">
-					<input type="button" id="vacinationBtn" name="vacination" value="Ver vacinas" class="btn">
+					<input type="button" id="vaccinationBtn" name="vacination" value="Ver vacinas" class="btn">
 					<input type="button" id="vermifugationBtn" name="vermifugation" value="Ver vermífugos" class="btn">
 					<input type="submit" id="saveBtn" name="save" value="Salvar" class="btn" disabled>
 					<input type="button" id="deleteBtn" name="delete" value="Excluir" class="btn">
