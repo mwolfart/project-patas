@@ -2,11 +2,11 @@
 // jsonToForm := Object -> Void
 // sends all the obtained values to the form.
 function jsonToForm(json) {
-	$(" #dogName ").val(json.dogName);
-	$(" #volName ").val(json.volName);
+	$(" #dogName ").val(json.dogId);
+	$(" #volName ").val(json.responsibleName);
 	$(" #location ").val(json.location);
 	$(" #vetName ").val(json.vetName);
-	$(" #totalCost ").val(json.totalCost);
+	$(" #totalCost ").val((json.price).toFixed(2));
 	$(" #reason ").val(json.reason);
 	$(" #examDescription ").val(json.examDescription);
 	$(" #description ").val(json.description);
@@ -24,9 +24,9 @@ function jsonToForm(json) {
 // Document load script
 $(document).ready(function() {
 	
-	/**************/
-	/* EDIT STATE */
-	/**************/
+	/****************/
+	/** EDIT STATE **/
+	/****************/
 	
 	// Edit button onClick handler
 	$(" #editBtn ").click(function() {		
@@ -50,6 +50,29 @@ $(document).ready(function() {
 		$(" #editBtn ").prop('disabled', true);
 		$(" #saveBtn ").prop('disabled', false);
 		$(" #deleteBtn ").prop('disabled', true);
+	});
+	
+	// Delete button onClick handler
+	$(" #deleteBtn ").click(function(event) {
+		event.preventDefault();
+		
+		if (confirm("Tem certeza que deseja excluir este registro?")) {
+			var app_id = getUrlParameter('id');
+			
+			$.ajax({
+				url: "http://localhost:8080/appointment/delete",
+				type: "POST",
+				data: app_id,
+				contentType: "application/json; charset=UTF-8",
+				success: function(response) {
+					alert("Registro removido com sucesso!");
+					window.location.replace("/appointment/appointment_search.html");
+				},
+				error: function(response) {
+					alert(response.responseText);
+				}
+			});
+		}
 	});
 	
 	// Set the submit configuration for the form
@@ -96,9 +119,8 @@ $(document).ready(function() {
 			
 			// Post the data
 			$.ajax({
-				url: "http://localhost:8080/appointment/update",
+				url: "http://localhost:8080/appointment/register",
 				type: "POST",
-				dataType: "json",
 				data: jsonData,
 				contentType: "application/json; charset=UTF-8",
 				error: function(response) {
@@ -129,9 +151,9 @@ $(document).ready(function() {
 		}
 	});
 	
-	/**************/
-	/* INIT STATE */
-	/**************/
+	/****************/
+	/** INIT STATE **/
+	/****************/
 	
 	// Load the data using id (specified in URL)
 	var appointment_id = getUrlParameter('id');

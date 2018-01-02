@@ -239,6 +239,27 @@ function validateRealNumberField(field) {
 	}
 }
 
+//validateCurrencyField := Object -> Integer
+//if a given form object (edit box) is not a valid currency value, an error class is added to it
+function validateCurrencyField(field) {
+	if (field.value == "") {
+		$(field).removeClass("error_input");
+		return 0;
+	}
+	else if (!isFinite(field.value)) {
+		$(field).addClass("error_input");
+		return -1;
+	}
+	else if (isFinite(field.value) && field.value.split(".")[1].length > 2) {
+		$(field).addClass("error_input");
+		return -1;
+	}
+	else {
+		$(field).removeClass("error_input");
+		return 1;
+	}
+}
+
 // validateDateField := Object -> Integer
 // if a given form object (edit box) is not a valid date, an error class is added to it
 function validateDateField(field) {

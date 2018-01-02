@@ -46,8 +46,12 @@ $(document).ready(function() {
 				dataType: "json",
 				data: jsonData,
 				contentType: "application/json; charset=UTF-8",
+				success: function(response) {
+					alert("Registro cadastrado com sucesso!");
+					window.location.replace("/appointment/appointment_view.html?id=" + response);
+				},
 				error: function(response) {
-					alert(response);
+					console.log(response);
 				}
 			});
 		}

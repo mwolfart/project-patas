@@ -5,10 +5,16 @@ function processResponseJson(response) {
 	$("tbody > tr").remove();
 	
 	$('#appointments').append(
-			$.map(response, function (appoint_info) {				
-				return '<tr><td>' + appoint_info[1] + '</td><td>'+ appoint_info[4] +'</td><td>'+
-					dateToString(integerToDate(appoint_info[3])) +'</td><td>'+'</td><td>'+
-					appoint_info[5]+'</td><td>'+'<a href="appointment_view.html?id='+ appoint_info[0] +
+			$.map(response, function (appoint_info) {
+				var location = "";
+				var vetName = "";
+				
+				if (appoint_info[3] != null) location = appoint_info[3];
+				if (appoint_info[4] != null) vetName = appoint_info[4];
+				
+				return '<tr><td>' + appoint_info[1] + '</td><td>'+ dateToString(integerToDate(appoint_info[2])) +'</td><td>'+
+					location +'</td><td>'+ vetName +'</td><td>'+
+					'<a href="appointment_view.html?id='+ appoint_info[0] +
 					'" class="btn btn-info" role="button">Visualizar</a></td></tr>';
 			}).join());
 	$( "#appointments" ).removeClass("disabled-table");
@@ -62,8 +68,8 @@ $(document).ready(function() {
 			$.ajax({
 				url: "http://localhost:8080/appointment/search",
 				type: "POST",
-				dataType: "json",
 				data: jsonData,
+				dataType: "json",
 				contentType: "application/json; charset=UTF-8",
 				success: function(response) {
 					processResponseJson(response);
@@ -71,4 +77,28 @@ $(document).ready(function() {
 			});
 		}
 	});	
+	
+	/****************/
+	/** INIT STATE **/
+	/****************/
+	 
+	var dog_name = getUrlParameter("dogName");
+	var jsonData;
+	
+	if (dog_name != 0) {
+		$( "#dogName" ).val(dog_name);
+		jsonData = {"dogName": dog_name};
+		jsonData = JSON.stringify(jsonData);
+	}
+	
+	$.ajax({
+		url: "http://localhost:8080/appointment/search",
+		type: "POST",
+		dataType: "json",
+		data: jsonData,
+		contentType: "application/json; charset=UTF-8",
+		success: function(response) {
+			processResponseJson(response);
+		}
+	});
 });
