@@ -5,8 +5,6 @@ import java.util.Date;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-import model.Appointment;
-
 @StaticMetamodel(Appointment.class)
 public abstract class Appointment_ {
 	public static volatile SingularAttribute<Appointment, Long> id;

@@ -197,6 +197,24 @@ function protectSearchStringField(key) {
 	else return true;
 }
 
+//protectUserField := Object -> Boolean
+//function used to prevent invalid characters being inserted inside the user fields
+function protectUserField(key) {
+	var is_alphanumeric = (key.which >= 48 && key.which <= 90);
+	var is_backspace = (key.which == 8);
+	var is_tab = (key.which == 9);
+	var is_arrow = (key.which >= 37 && key.which <= 40);
+	var is_del = (key.which == 46);
+	var is_enter = (key.which == 13);
+
+	if (key.shiftKey || key.altKey)
+		return false;
+	else if (key.ctrlKey)
+		return;
+	else if (!is_alphanumeric && !is_backspace && !is_tab && !is_arrow && !is_del && !is_enter)
+		return false;
+}
+
 // isNatural := String -> Boolean
 // checks if a given number (as string) is natural
 function isNatural(num_str) {
@@ -222,7 +240,7 @@ function validateNatNumberField(field) {
 	}
 }
 
-// validateFloatField := Object -> Integer
+// validateRealNumberField := Object -> Integer
 // if a given form object (edit box) is not a valid real number, an error class is added to it
 function validateRealNumberField(field) {
 	if (field.value == "") {
@@ -234,6 +252,27 @@ function validateRealNumberField(field) {
 		return -1;
 	}
 	else {
+		$(field).removeClass("error_input");
+		return 1;
+	}
+}
+
+//validateUserField := Object -> Integer
+//if a given form object (edit box) is not a valid username/password, an error class is added to it
+function validateUserField(field) {
+	var available_chars = "abcdefghijklmnopqrstuvwxyz0123456789"
+	if (field.value == "") {
+		$(field).removeClass("error_input");
+		return 0;
+	}
+	else {
+		for (char in field.value) {
+			if (available_chars.indexOf(value[char]) == -1) {
+				$(field).addClass("error_input");
+				return -1;
+			}
+		}
+		
 		$(field).removeClass("error_input");
 		return 1;
 	}

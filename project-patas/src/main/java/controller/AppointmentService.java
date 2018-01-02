@@ -80,7 +80,6 @@ public class AppointmentService {
 	// Search
 	@RequestMapping(value = "/appointment/search", method = RequestMethod.POST, produces = {"application/json"})
 	public ResponseEntity<List<List<Object>>> appointmentSearch(@RequestBody String search_query) {
-		System.out.println(search_query);
 		String[] pairs = search_query.split("\\{|,|\\}");
 		Map<String, String> criteria_list = Helper.splitCriteriaFromKeys(pairs);
 		
