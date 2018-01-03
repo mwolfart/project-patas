@@ -10,7 +10,7 @@ function jsonToForm(json) {
 
 $(document).ready(function() {
 	// Edit button onClick handler
-	$(" #editBtn ").click(function() {
+	$(" #editBtn ").click(function() {		
 		$(" #password ").prop('disabled', false);
 		$(" #passwordConf ").prop('disabled', false);
 		$(" #userType ").prop('disabled', false);
@@ -47,16 +47,12 @@ $(document).ready(function() {
 	
 	$( "#userEditForm" ).submit(function(event) {
 		event.preventDefault();
-		
-		if ( validateUserField( $( "#password" )[0] ) == 0 )
-			showAlert($( "#errorPassword" ), "Senha deve ser informada.");
-		else if ( validateUserField( $( "#passwordConf" )[0] ) == 0 )
-			showAlert($( "#errorPasswordConf" ), "Senha deve ser informada novamente.");
-		else if ( validateUserField( $( "#password" )[0] ) == -1 )
+
+		if ( validateUserField( $( "#password" )[0] ) == -1 )
 			showAlert($( "#errorPassword" ), "Senha inválida.");
 		else if ( validateUserField( $( "#passwordConf" )[0] ) == -1 )
 			showAlert($( "#errorPasswordConf" ), "Senha inválida.");
-		else if ( $("password")[0] != $("passwordConf")[0] )
+		else if ( $("#password").val() != $("#passwordConf").val() )
 			showAlert($( "#errorPasswordConf" ), "Senhas não coincidem.");
 		else if ( validateStringField( $( "#fullName" )[0] ) == -1 )
 			showAlert($( "#errorFullName" ), "Nome contém caracteres inválidos.");
@@ -72,7 +68,6 @@ $(document).ready(function() {
 			$.ajax({
 				url: "/user/update",
 				type: "POST",
-				dataType: "json",
 				data: jsonData,
 				contentType: "application/json; charset=UTF-8",
 				error: function(response) {
@@ -81,6 +76,9 @@ $(document).ready(function() {
 				success: function() {
 					/* UNIQUE PART */
 					// Reset the form to previous state	
+					$(" #password ").val("");
+					$(" #passwordConf ").val("");
+					
 					$(" #password ").prop('disabled', true);
 					$(" #passwordConf ").prop('disabled', true);
 					$(" #userType ").prop('disabled', true);

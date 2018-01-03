@@ -55,13 +55,13 @@ public class AppointmentService {
 	public ResponseEntity<?> appointmentRegister(@RequestBody Appointment appointment) {
 		System.out.println(appointment);
 		if(appointment.getDogId() == null)
-			return new ResponseEntity<String>("Id do cachorro est· em branco", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>("Id do cachorro est√° em branco", HttpStatus.BAD_REQUEST);
 
 		if(appointment.getAppointmentDate() == null)
-			return new ResponseEntity<String>("Data da consulta est· em branca", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>("Data da consulta est√° em branco", HttpStatus.BAD_REQUEST);
 		
 		if(appointment.getReason() == null)
-			return new ResponseEntity<String>("Motivo da consulta est· em branco", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>("Motivo da consulta est√° em branco", HttpStatus.BAD_REQUEST);
 
 		appointmentRepository.saveAndFlush(appointment);
 		return new ResponseEntity<Long>(appointment.getId(), HttpStatus.OK);
@@ -72,7 +72,7 @@ public class AppointmentService {
 	public ResponseEntity<?> appointmentView(@RequestBody String appointmentId) {		
 		Appointment appointment = appointmentRepository.findOne(Long.parseLong(appointmentId));
 		if (appointment == null)
-			return new ResponseEntity<String>("Registro de consulta n„o encontrado.", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>("Registro de consulta n√£o encontrado.", HttpStatus.BAD_REQUEST);
 
 		return new ResponseEntity<Appointment>(appointment, HttpStatus.OK);
 	}
@@ -91,7 +91,7 @@ public class AppointmentService {
 		Specification<Appointment> final_specification = AppointmentSpecifications.buildSpecFromSpecList(spec_list);
 
 		List<Appointment> filtered_appointment_list = appointmentRepository.findAll(final_specification);
-		List<List<Object>> filtered_info_list = AppointmentSpecifications.filterVaccinationInfo(filtered_appointment_list, new String[] {"id", "dogId", "appointmentDate", "location", "vetName"});
+		List<List<Object>> filtered_info_list = AppointmentSpecifications.filterAppointmentInfo(filtered_appointment_list, new String[] {"id", "dogId", "appointmentDate", "location", "vetName"});
 		getDogNamesFromIds(filtered_info_list);
 		
 		return new ResponseEntity<List<List<Object>>>(filtered_info_list, HttpStatus.OK);

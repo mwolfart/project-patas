@@ -81,6 +81,7 @@ public final class DogSpecifications {
 	// given a list of criteria in the format of a hashmap, build a list
 	//   of specifications used for the querying.
 	public static List<Specification<Dog>> buildSpecListFromCriteria(Map<String, String> criteria_list) {
+		// TODO: CHECK IF REFACTORABLE (Only the list types differ)
 		List<Specification<Dog>> spec_list = new ArrayList<Specification<Dog>>();
 
 		for(Map.Entry<String, String> criterion : criteria_list.entrySet())
@@ -123,6 +124,7 @@ public final class DogSpecifications {
 	// buildSpecFromSpecList
 	// given a list of specification, return one specification containing all the given specs
 	public static Specification<Dog> buildSpecFromSpecList(List<Specification<Dog>> spec_list) {
+		// TODO: CHECK IF REFACTORABLE (Only the list types differ)
 		if (spec_list.size() < 1)
 			return null;
 

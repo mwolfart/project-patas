@@ -1,9 +1,13 @@
 package controller;
 
 
+import java.util.List;
 import java.util.Map;
+
 import model.User;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import repository.UserRepository;
+import repository.UserSpecifications;
 
 @RestController
 public class UserService {
@@ -112,7 +117,6 @@ public class UserService {
 		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 
-	/*
 	// Search
 	@RequestMapping(value = "/user/search", method = RequestMethod.POST, produces = {"application/json"})
 	public ResponseEntity<List<List<Object>>> userSearch(@RequestBody String search_query) {
@@ -123,11 +127,10 @@ public class UserService {
 		Specification<User> final_specification = UserSpecifications.buildSpecFromSpecList(spec_list);
 
 		List<User> filtered_user_list = userRepository.findAll(final_specification);
-		List<List<Object>> filtered_info_list = UserSpecifications.filterVaccinationInfo(filtered_user_list, new String[] {"id", "username", "fullName", "userType"});
+		List<List<Object>> filtered_info_list = UserSpecifications.filterUserInfo(filtered_user_list, new String[] {"id", "username", "fullName", "userType"});
 		
 		return new ResponseEntity<List<List<Object>>>(filtered_info_list, HttpStatus.OK);
 	}
-	*/
 	
 	// Delete
 	@RequestMapping(value = "/user/delete", method = RequestMethod.POST)

@@ -67,7 +67,7 @@ public final class AppointmentSpecifications {
 	// given a list of criteria in the format of a hashmap, build a list
 	//   of specifications used for the querying.
 	public static List<Specification<Appointment>> buildSpecListFromCriteria(Map<String, String> criteria_list) {
-		// CHECK IF REFACTORABLE (Only the list types differ)
+		// TODO: CHECK IF REFACTORABLE (Only the list types differ)
 		List<Specification<Appointment>> spec_list = new ArrayList<Specification<Appointment>>();
 
 		for(Map.Entry<String, String> criterion : criteria_list.entrySet())
@@ -107,7 +107,7 @@ public final class AppointmentSpecifications {
 	// buildSpecFromSpecList
 	// given a list of specification, return one specification containing all the given specs
 	public static Specification<Appointment> buildSpecFromSpecList(List<Specification<Appointment>> spec_list) {
-		// CHECK IF REFACTORABLE (Only the list types differ)
+		// TODO: CHECK IF REFACTORABLE (Only the list types differ)
 		if (spec_list.size() < 1)
 			return null;
 
@@ -118,10 +118,10 @@ public final class AppointmentSpecifications {
 		return result_spec;
 	}
 
-	// filterVermifugeInfo
+	// filterAppointmentInfo
 	// given a list of appointment classes, filter the information we want
 	//   (given as a list of strings), and return it in a list.
-	public static List<List<Object>> filterVaccinationInfo(List<Appointment> appointment_list, String[] desired_fields) {
+	public static List<List<Object>> filterAppointmentInfo(List<Appointment> appointment_list, String[] desired_fields) {
 		List<List<Object>> filtered_list = new ArrayList<List<Object>>();
 
 		for(Appointment appointment : appointment_list) {

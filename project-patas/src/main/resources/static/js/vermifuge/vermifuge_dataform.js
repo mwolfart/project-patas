@@ -1,4 +1,7 @@
 $(document).ready(function() {
+
+	// TODO: FIX FIELDS IDS IN HTML
+	
 	// Protect fields
 	$( "#vermName" ).keydown(protectStringField);
 	$( "#amount" ).keydown(protectNumericField);

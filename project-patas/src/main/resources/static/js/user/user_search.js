@@ -4,9 +4,14 @@
 function processResponseJson(response) {
 	$("tbody > tr").remove();
 	
-	$('#users').append(
-			$.map(response, function (user_info) {				
-				return '<tr><td>' + user_info[1] + '</td><td>'+ user_info[2] +'</td><td>'+ user_info[3] +'</td><td>'
+	$('#users').append(			
+			$.map(response, function (user_info) {	
+				var user_type;
+				if (user_info[3] == "1")
+					user_type = "Administrador";
+				else user_type = "Membro";
+				
+				return '<tr><td>' + user_info[1] + '</td><td>'+ user_info[2] +'</td><td>'+ user_type +'</td><td>'
 				+'<a href="user_view.html?id='+ user_info[0] +'" class="btn btn-info" role="button">Visualizar</a></td></tr>';
 			}).join());
 	$( "#users" ).removeClass("disabled-table");
@@ -28,7 +33,7 @@ $(document).ready(function() {
 		event.preventDefault();
 		
 		if ( validateSearchStringField( $("#username")[0] ) == -1 )
-			showAlert($( "#errorUsername" ), "Nome de usuário inválido.");
+			showAlert($( "#errorUsername" ), "Nome de usuï¿½rio invï¿½lido.");
 		else {
 			jsonData = formToJson(this);
 			jsonData = JSON.stringify(jsonData);
