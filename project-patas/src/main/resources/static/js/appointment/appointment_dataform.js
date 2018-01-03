@@ -70,7 +70,7 @@ $(document).ready(function() {
 	
 	// Configure dog combobox
 	$.ajax({
-		url: "http://localhost:8080/dog/get",
+		url: "/dog/get",
 		type: "GET",
 		success: function(data) {
 			putDogsInComboBox(data);

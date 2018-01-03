@@ -147,7 +147,7 @@ $(document).ready(function() {
 			
 			// Post the data
 			$.ajax({
-				url: "http://localhost:8080/dog/update",
+				url: "/dog/update",
 				type: "POST",
 				data: jsonData,
 				contentType: "application/json; charset=UTF-8",
@@ -197,7 +197,7 @@ $(document).ready(function() {
 		dogId = "1";
 	
 	$.ajax({
-		url: "http://localhost:8080/dog/view",
+		url: "/dog/view",
 		type: "POST",
 		data: dogId,
 		contentType: "application/json; charset=UTF-8",
