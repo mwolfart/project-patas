@@ -4,6 +4,7 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 
 @Entity
@@ -34,6 +35,7 @@ public class Dog {
 	private Boolean disease;
 	private String diseaseDescription;
 	private String sponsors;	
+	public byte[] photo;
 
     public Dog() {
     }
@@ -207,6 +209,15 @@ public class Dog {
 
 	public void setSponsors(String sponsors) {
 		this.sponsors = sponsors;
+	}
+	
+	@Lob
+	public byte[] getPhoto() {
+		return photo;
+	}
+	
+	public void setPhoto(byte[] photo) {
+		this.photo = photo;
 	}
 
 	@Override

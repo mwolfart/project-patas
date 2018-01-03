@@ -36,7 +36,10 @@ public class DogService {
 
 		if(dog.getCastrated() == null)
 			return new ResponseEntity<String>("Flag de castrado está em branco", HttpStatus.BAD_REQUEST);
-
+		
+		byte[] imgArray  = Helper.saveImage("C:/Users/Jessica/Desktop/cachorro.jpg"); 
+		Helper.displayImage(imgArray);
+		
 		dogRepository.saveAndFlush(dog);
 		return new ResponseEntity<Long>(dog.getId(), HttpStatus.OK);
 	}
