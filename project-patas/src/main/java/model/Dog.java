@@ -8,7 +8,7 @@ import javax.persistence.Lob;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "dog", schema="public")
+@Table(name = "dog")
 public class Dog {
 	
 	public enum Availability{
