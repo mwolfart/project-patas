@@ -60,7 +60,7 @@ $(document).ready(function() {
 			var app_id = getUrlParameter('id');
 			
 			$.ajax({
-				url: "http://localhost:8080/appointment/delete",
+				url: "/appointment/delete",
 				type: "POST",
 				data: app_id,
 				contentType: "application/json; charset=UTF-8",
@@ -119,7 +119,7 @@ $(document).ready(function() {
 			
 			// Post the data
 			$.ajax({
-				url: "http://localhost:8080/appointment/register",
+				url: "/appointment/register",
 				type: "POST",
 				data: jsonData,
 				contentType: "application/json; charset=UTF-8",
@@ -163,7 +163,7 @@ $(document).ready(function() {
 		appointment_id = "1";
 	
 	$.ajax({
-		url: "http://localhost:8080/appointment/view",
+		url: "/appointment/view",
 		type: "POST",
 		data: appointment_id,
 		contentType: "application/json; charset=UTF-8",

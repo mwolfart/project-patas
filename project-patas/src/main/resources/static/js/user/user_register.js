@@ -27,7 +27,7 @@ $(document).ready(function() {
 	
 			// Post the data
 			$.ajax({
-				url: "http://localhost:8080/user/register",
+				url: "/user/register",
 				type: "POST",
 				data: jsonData,
 				contentType: "application/json; charset=UTF-8",

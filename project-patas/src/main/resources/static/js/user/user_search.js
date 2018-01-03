@@ -34,7 +34,7 @@ $(document).ready(function() {
 			jsonData = JSON.stringify(jsonData);
 			
 			$.ajax({
-				url: "http://localhost:8080/user/search",
+				url: "/user/search",
 				type: "POST",
 				dataType: "json",
 				data: jsonData,

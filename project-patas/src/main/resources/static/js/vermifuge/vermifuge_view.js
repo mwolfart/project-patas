@@ -40,7 +40,7 @@ $(document).ready(function() {
 			var verm_id = getUrlParameter('id');
 			
 			$.ajax({
-				url: "http://localhost:8080/vermifuge/delete",
+				url: "/vermifuge/delete",
 				type: "POST",
 				data: verm_id,
 				contentType: "application/json; charset=UTF-8",
@@ -87,7 +87,7 @@ $(document).ready(function() {
 			
 			// Post the data
 			$.ajax({
-				url: "http://localhost:8080/vermifuge/register",
+				url: "/vermifuge/register",
 				type: "POST",
 				data: jsonData,
 				contentType: "application/json; charset=UTF-8",
@@ -120,7 +120,7 @@ $(document).ready(function() {
 		verm_id = "1";
 	
 	$.ajax({
-		url: "http://localhost:8080/vermifuge/view",
+		url: "/vermifuge/view",
 		type: "POST",
 		data: verm_id,
 		contentType: "application/json; charset=UTF-8",

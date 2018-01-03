@@ -58,7 +58,7 @@ $(document).ready(function() {
 			jsonData = JSON.stringify(jsonData);
 			
 			$.ajax({
-				url: "http://localhost:8080/vaccination/search",
+				url: "/vaccination/search",
 				type: "POST",
 				dataType: "json",
 				data: jsonData,
@@ -84,7 +84,7 @@ $(document).ready(function() {
 	}
 	
 	$.ajax({
-		url: "http://localhost:8080/vaccination/search",
+		url: "/vaccination/search",
 		type: "POST",
 		dataType: "json",
 		data: jsonData,

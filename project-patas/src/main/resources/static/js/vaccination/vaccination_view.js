@@ -38,7 +38,7 @@ $(document).ready(function() {
 			var vac_id = getUrlParameter('id');
 			
 			$.ajax({
-				url: "http://localhost:8080/vaccination/delete",
+				url: "/vaccination/delete",
 				type: "POST",
 				data: vac_id,
 				contentType: "application/json; charset=UTF-8",
@@ -80,7 +80,7 @@ $(document).ready(function() {
 			
 			// Post the data
 			$.ajax({
-				url: "http://localhost:8080/vaccination/register",
+				url: "/vaccination/register",
 				type: "POST",
 				dataType: "json",
 				data: jsonData,
@@ -113,7 +113,7 @@ $(document).ready(function() {
 		vac_id = "1";
 	
 	$.ajax({
-		url: "http://localhost:8080/vaccination/view",
+		url: "/vaccination/view",
 		type: "POST",
 		data: vac_id,
 		contentType: "application/json; charset=UTF-8",

@@ -66,7 +66,7 @@ $(document).ready(function() {
 			jsonData = JSON.stringify(jsonData);
 			
 			$.ajax({
-				url: "http://localhost:8080/appointment/search",
+				url: "/appointment/search",
 				type: "POST",
 				data: jsonData,
 				dataType: "json",
@@ -92,7 +92,7 @@ $(document).ready(function() {
 	}
 	
 	$.ajax({
-		url: "http://localhost:8080/appointment/search",
+		url: "/appointment/search",
 		type: "POST",
 		dataType: "json",
 		data: jsonData,

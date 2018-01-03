@@ -25,7 +25,7 @@ $(document).ready(function() {
 	
 			// Post the data
 			$.ajax({
-				url: "http://localhost:8080/vaccination/register",
+				url: "/vaccination/register",
 				type: "POST",
 				data: jsonData,
 				contentType: "application/json; charset=UTF-8",
