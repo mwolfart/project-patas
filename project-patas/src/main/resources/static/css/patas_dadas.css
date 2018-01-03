@@ -126,11 +126,6 @@ fa-pencil-square-o{
 }
 
 /** Overwrite **/
-.form-control{
-	padding: 10px 50px;
-}
-
-/** Overwrite **/
 .form-input{
 	height:50px;
 	border-radius: 0px;

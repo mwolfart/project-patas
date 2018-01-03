@@ -81,27 +81,27 @@ $(document).ready(function() {
 		
 		// Form validation
 		if ( validateStringField( $( "#dogName" )[0] ) == 0 )
-			showAlert($( "#errorDogName" ), "Campo obrigatório!");
+			showAlert($( "#errorDogName" ), "Nome do cachorro deve ser informado.");
 		else if ( validateStringField( $( "#volName" )[0] ) == -1 )
-			showAlert($( "#errorVolName" ), "Nome inválido!");
+			showAlert($( "#errorVolName" ), "Nome inválido.");
 		else if ( validateDateField( $( "#appointmentDate" )[0] ) == 0 ) 
-			showAlert($( "#errorAppointmentDate" ), "Campo obrigatório!");
+			showAlert($( "#errorAppointmentDate" ), "Data deve ser informada.");
 		else if ( validateDateField( $( "#appointmentDate" )[0] ) == -1 ) 
-			showAlert($( "#errorAppointmentDate" ), "Data inválida!");
+			showAlert($( "#errorAppointmentDate" ), "Data inválida.");
 		else if ( validateStringField( $( "#location" )[0] ) == -1 )
-			showAlert($( "#errorLocation" ), "Nome inválido!");
+			showAlert($( "#errorLocation" ), "Nome inválido.");
 		else if ( validateStringField( $( "#vetName" )[0] ) == -1 )
-			showAlert($( "#errorVetName" ), "Nome inválido!");
+			showAlert($( "#errorVetName" ), "Nome inválido.");
 		else if ( validateCurrencyField( $( "#totalCost" )[0] ) == -1 )
-			showAlert($( "#errorTotalCost" ), "Valor inválido!");
+			showAlert($( "#errorTotalCost" ), "Preço deve ser informado.");
 		else if ( validateStringField( $( "#reason" )[0] ) == 0 )
-			showAlert($( "#errorReason" ), "Campo obrigatório!");
+			showAlert($( "#errorReason" ), "O motivo deve ser informado.");
 		else if ( validateStringField( $( "#reason" )[0] ) == -1 )
-			showAlert($( "#errorReason" ), "Descrição inválida!");
+			showAlert($( "#errorReason" ), "Descrição inválida.");
 		else if ( validateStringField( $( "#examDescription" )[0] ) == -1 )
-			showAlert($( "#errorExamDescription" ), "Descrição inválida!");
+			showAlert($( "#errorExamDescription" ), "Descrição inválida.");
 		else if ( validateStringField( $( "#description" )[0] ) == -1 )
-			showAlert($( "#errorDescription" ), "Descrição inválida!");
+			showAlert($( "#errorDescription" ), "Descrição inválida.");
 		else {
 			// Convert form to json
 			var jsonData = formToJson(this);

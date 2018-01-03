@@ -7,27 +7,27 @@ $(document).ready(function() {
 		
 		// Form validation
 		if ( validateStringField( $( "#name" )[0] ) == 0 )
-			showAlert($( "#errorName" ), "Preencha o nome do cachorro!");
+			showAlert($( "#errorName" ), "Nome do cachorro deve ser informado.");
 		else if ( validateStringField( $( "#name" )[0] ) == -1 ) 
-			showAlert($( "#errorName" ), "Nome do cachorro inválido!");
+			showAlert($( "#errorName" ), "Nome inválido.");
 		else if ( validateDateField( $( "#birthDate" )[0] ) == -1 ) 
-			showAlert($( "#errorBirthDate" ), "Data de nascimento inválida!");
+			showAlert($( "#errorBirthDate" ), "Data inválida.");
 		else if ( validateRealNumberField( $( "#weight" )[0] ) == -1 ) 
-			showAlert($( "#errorWeight" ), "Peso inválido!");
+			showAlert($( "#errorWeight" ), "Peso inválido.");
 		else if ( validateStringField( $( "#furColor" )[0] ) == -1 ) 
-			showAlert($( "#errorFurColor" ), "Cor de pelo inválida!");
+			showAlert($( "#errorFurColor" ), "Cor de pelo inválida.");
 		else if ( validateDateField( $( "#arrivalDate" )[0] ) == -1 ) 
-			showAlert($( "#errorArrivalDate" ), "Data de chegada inválida!");
+			showAlert($( "#errorArrivalDate" ), "Data de chegada inválida.");
 		else if ( validateDateField( $( "#arrivalDate" )[0] ) == 0 ) 
-			showAlert($( "#errorArrivalDate" ), "Preencha a data de chegada!");
+			showAlert($( "#errorArrivalDate" ), "Preencha a data de chegada.");
 		else if ( validateStringField( $( "#rationOther" )[0] ) == -1 ) 
-			showAlert($( "#errorRation" ), "Tipo de ração inválido!");
+			showAlert($( "#errorRation" ), "Tipo de ração inválido.");
 		else if ( validateDateField( $( "#castrationDate" )[0] ) == -1 ) 
-			showAlert($( "#errorCastrationDate" ), "Data de chegada inválida!");
+			showAlert($( "#errorCastrationDate" ), "Data de chegada inválida.");
 		else if ( validateStringField( $( "#diseaseDescription" )[0] ) == -1 ) 
-			showAlert($( "#errorDisease" ), "Descrição de doença inválida!");
+			showAlert($( "#errorDisease" ), "Descrição inválida.");
 		else if ( validateStringField( $( "#sponsors" )[0] ) == -1 ) 
-			showAlert($( "#errorSponsors" ), "Nome de padrinho(s) inválida!");
+			showAlert($( "#errorSponsors" ), "Nome do(s) padrinho(s) inválido.");
 		else {
 			// Convert form to json
 			var jsonData = formToJson(this);

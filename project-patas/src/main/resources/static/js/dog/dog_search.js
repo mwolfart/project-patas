@@ -40,9 +40,9 @@ $(document).ready(function() {
 		event.preventDefault();
 		
 		if ( validateSearchStringField( $("#name")[0] ) == -1 )
-			showAlert($( "#errorName" ), "Nome inválido!");
+			showAlert($( "#errorName" ), "Nome inválido.");
 		else if ( validateNatNumberField( $("#arrivalYear")[0] ) == -1 )
-			showAlert($( "#errorArrivalYear" ), "Ano de chegada inválido!");
+			showAlert($( "#errorArrivalYear" ), "Ano de chegada inválido.");
 		else {
 			jsonData = formToJson(this);
 			jsonData = JSON.stringify(jsonData);
