@@ -9,25 +9,25 @@ $(document).ready(function() {
 		if ( validateStringField( $( "#name" )[0] ) == 0 )
 			showAlert($( "#errorName" ), "Nome do cachorro deve ser informado.");
 		else if ( validateStringField( $( "#name" )[0] ) == -1 ) 
-			showAlert($( "#errorName" ), "Nome inválido.");
+			showAlert($( "#errorName" ), "Nome invÃ¡lido.");
 		else if ( validateDateField( $( "#birthDate" )[0] ) == -1 ) 
-			showAlert($( "#errorBirthDate" ), "Data inválida.");
+			showAlert($( "#errorBirthDate" ), "Data invÃ¡lida.");
 		else if ( validateRealNumberField( $( "#weight" )[0] ) == -1 ) 
-			showAlert($( "#errorWeight" ), "Peso inválido.");
+			showAlert($( "#errorWeight" ), "Peso invÃ¡lido.");
 		else if ( validateStringField( $( "#furColor" )[0] ) == -1 ) 
-			showAlert($( "#errorFurColor" ), "Cor de pelo inválida.");
+			showAlert($( "#errorFurColor" ), "Cor de pelo invÃ¡lida.");
 		else if ( validateDateField( $( "#arrivalDate" )[0] ) == -1 ) 
-			showAlert($( "#errorArrivalDate" ), "Data de chegada inválida.");
+			showAlert($( "#errorArrivalDate" ), "Data de chegada invÃ¡lida.");
 		else if ( validateDateField( $( "#arrivalDate" )[0] ) == 0 ) 
 			showAlert($( "#errorArrivalDate" ), "Preencha a data de chegada.");
 		else if ( validateStringField( $( "#rationOther" )[0] ) == -1 ) 
-			showAlert($( "#errorRation" ), "Tipo de ração inválido.");
+			showAlert($( "#errorRation" ), "Tipo de raÃ§Ã£o invÃ¡lido.");
 		else if ( validateDateField( $( "#castrationDate" )[0] ) == -1 ) 
-			showAlert($( "#errorCastrationDate" ), "Data de chegada inválida.");
+			showAlert($( "#errorCastrationDate" ), "Data de chegada invÃ¡lida.");
 		else if ( validateStringField( $( "#diseaseDescription" )[0] ) == -1 ) 
-			showAlert($( "#errorDisease" ), "Descrição inválida.");
+			showAlert($( "#errorDisease" ), "DescriÃ§Ã£o invï¿½lida.");
 		else if ( validateStringField( $( "#sponsors" )[0] ) == -1 ) 
-			showAlert($( "#errorSponsors" ), "Nome do(s) padrinho(s) inválido.");
+			showAlert($( "#errorSponsors" ), "Nome do(s) padrinho(s) invÃ¡lido.");
 		else {
 			// Convert form to json
 			var jsonData = formToJson(this);

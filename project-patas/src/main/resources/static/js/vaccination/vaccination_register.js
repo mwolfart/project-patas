@@ -11,13 +11,13 @@ $(document).ready(function() {
 		else if ( validateDateField( $( "#appDate" )[0] ) == 0 )
 			showAlert($( "#errorAppDate" ), "Data deve ser informada.");
 		else if ( validateStringField( $( "#vacName" )[0] ) == -1 )
-			showAlert($( "#errorVacName" ), "Nome inv·lido.");
+			showAlert($( "#errorVacName" ), "Nome inv√°lido.");
 		else if ( validateDateField( $( "#appDate" )[0] ) == -1 )
-			showAlert($( "#errorAppDate" ), "Data inv·lida.");
+			showAlert($( "#errorAppDate" ), "Data inv√°lida.");
 		else if ( validateDateField( $( "#nextAppDate" )[0] ) == -1 )
-			showAlert($( "#errorNextAppDate" ), "Data inv·lida.");
+			showAlert($( "#errorNextAppDate" ), "Data inv√°lida.");
 		else if ( validateStringField( $( "#obs" )[0] ) == -1 )
-			showAlert($( "#errorObs" ), "ObservaÁıes contÈm caracteres inv·lidos.");
+			showAlert($( "#errorObs" ), "Observa√ß√µes cont√©m caracteres inv√°lidos.");
 		else {
 			// Convert form to json and fix
 			var jsonData = formToJson(this);

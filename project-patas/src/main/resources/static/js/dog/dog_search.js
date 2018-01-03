@@ -7,7 +7,7 @@ function processResponseJson(response) {
 	$('#dogs').append(
 			$.map(response, function (dog_info) {
 				if (dog_info[2] == "F")
-					dog_sex = "Fêmea";
+					dog_sex = "FÃªmea";
 				else if (dog_info[2] == "M")
 					dog_sex = "Macho";
 				else dog_sex = "";
@@ -40,9 +40,9 @@ $(document).ready(function() {
 		event.preventDefault();
 		
 		if ( validateSearchStringField( $("#name")[0] ) == -1 )
-			showAlert($( "#errorName" ), "Nome inválido.");
+			showAlert($( "#errorName" ), "Nome invÃ¡lido.");
 		else if ( validateNatNumberField( $("#arrivalYear")[0] ) == -1 )
-			showAlert($( "#errorArrivalYear" ), "Ano de chegada inválido.");
+			showAlert($( "#errorArrivalYear" ), "Ano de chegada invï¿½lido.");
 		else {
 			jsonData = formToJson(this);
 			jsonData = JSON.stringify(jsonData);

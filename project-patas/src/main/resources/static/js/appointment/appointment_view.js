@@ -83,25 +83,25 @@ $(document).ready(function() {
 		if ( validateStringField( $( "#dogName" )[0] ) == 0 )
 			showAlert($( "#errorDogName" ), "Nome do cachorro deve ser informado.");
 		else if ( validateStringField( $( "#volName" )[0] ) == -1 )
-			showAlert($( "#errorVolName" ), "Nome inválido.");
+			showAlert($( "#errorVolName" ), "Nome invÃ¡lido.");
 		else if ( validateDateField( $( "#appointmentDate" )[0] ) == 0 ) 
 			showAlert($( "#errorAppointmentDate" ), "Data deve ser informada.");
 		else if ( validateDateField( $( "#appointmentDate" )[0] ) == -1 ) 
-			showAlert($( "#errorAppointmentDate" ), "Data inválida.");
+			showAlert($( "#errorAppointmentDate" ), "Data invÃ¡lida.");
 		else if ( validateStringField( $( "#location" )[0] ) == -1 )
-			showAlert($( "#errorLocation" ), "Nome inválido.");
+			showAlert($( "#errorLocation" ), "Nome invÃ¡lido.");
 		else if ( validateStringField( $( "#vetName" )[0] ) == -1 )
-			showAlert($( "#errorVetName" ), "Nome inválido.");
+			showAlert($( "#errorVetName" ), "Nome invÃ¡lido.");
 		else if ( validateCurrencyField( $( "#totalCost" )[0] ) == -1 )
-			showAlert($( "#errorTotalCost" ), "Preço deve ser informado.");
+			showAlert($( "#errorTotalCost" ), "PreÃ§o deve ser informado.");
 		else if ( validateStringField( $( "#reason" )[0] ) == 0 )
 			showAlert($( "#errorReason" ), "O motivo deve ser informado.");
 		else if ( validateStringField( $( "#reason" )[0] ) == -1 )
-			showAlert($( "#errorReason" ), "Descrição inválida.");
+			showAlert($( "#errorReason" ), "DescriÃ§Ã£o invÃ¡lida.");
 		else if ( validateStringField( $( "#examDescription" )[0] ) == -1 )
-			showAlert($( "#errorExamDescription" ), "Descrição inválida.");
+			showAlert($( "#errorExamDescription" ), "DescriÃ§Ã£o invÃ¡lida.");
 		else if ( validateStringField( $( "#description" )[0] ) == -1 )
-			showAlert($( "#errorDescription" ), "Descrição inválida.");
+			showAlert($( "#errorDescription" ), "DescriÃ§Ã£o invÃ¡lida.");
 		else {
 			// Convert form to json
 			var jsonData = formToJson(this);
