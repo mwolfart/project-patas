@@ -28,6 +28,11 @@
            <artifactId>postgresql</artifactId>
            <version>9.4.1208-jdbc42-atlassian-hosted</version>
       </dependency> 
+       <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.4-1201-jdbc4</version>
+        </dependency>
        
   </dependencies>
   <properties>
@@ -72,12 +77,5 @@
             <url>https://repo.spring.io/libs-release</url>
         </pluginRepository>
     </pluginRepositories>
-    <dependencies>
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>9.4-1201-jdbc4</version>
-        </dependency>
-    </dependencies>
 </project>
 
