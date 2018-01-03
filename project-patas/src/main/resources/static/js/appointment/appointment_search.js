@@ -54,13 +54,13 @@ $(document).ready(function() {
 		event.preventDefault();
 		
 		if ( validateSearchStringField( $("#dogName")[0] ) == -1 )
-			showAlert($( "#errorDogName" ), "Nome inválido!");
+			showAlert($( "#errorDogName" ), "Nome invÃ¡lido.");
 		else if ( validateSearchStringField( $("#vetName")[0] ) == -1 )
-			showAlert($( "#errorVetName" ), "Nome inválido!");
+			showAlert($( "#errorVetName" ), "Nome invÃ¡lido.");
 		else if ( validateSearchStringField( $("#location")[0] ) == -1 )
-			showAlert($( "#errorLocation" ), "Nome inválido!");
+			showAlert($( "#errorLocation" ), "Nome invÃ¡lido.");
 		else if ( validateDateField( $("#appointmentDate")[0] ) == -1 )
-			showAlert($( "#errorAppointmentDate" ), "Data inválida!");
+			showAlert($( "#errorAppointmentDate" ), "Data invÃ¡lida.");
 		else {
 			jsonData = formToJson(this);
 			jsonData = JSON.stringify(jsonData);

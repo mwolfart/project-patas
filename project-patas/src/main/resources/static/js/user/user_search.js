@@ -28,7 +28,7 @@ $(document).ready(function() {
 		event.preventDefault();
 		
 		if ( validateSearchStringField( $("#username")[0] ) == -1 )
-			showAlert($( "#errorUsername" ), "Nome de usuário inválido!");
+			showAlert($( "#errorUsername" ), "Nome de usuário inválido.");
 		else {
 			jsonData = formToJson(this);
 			jsonData = JSON.stringify(jsonData);

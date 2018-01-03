@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt">
 	<head>
 		<title>Pesquisa de Cachorro</title>
 		<meta charset="utf-8">
@@ -22,7 +22,7 @@
 			<form action="" id="dogSearchForm" method="post">
 				<div class="form-row">
 					<div class="form-group col-md-6">
-						<label for="name">Nome</label>
+						<label for="name" class="col-form-label">Nome</label>
 						<input type="text" id="name" name="name" class="form-control" maxlength="80" placeholder="Nome do cachorro">
 						<div id="errorName" class="alert alert-danger disabled-alert"></div>
 					</div>
@@ -37,7 +37,7 @@
 				</div>
 				<div class="form-row">				
 					<div class="form-group col-md-2">
-						<label for="arrivalDay">Dia de chegada</label>
+						<label for="arrivalDay" class="col-form-label">Dia de chegada</label>
 						<select id="arrivalDay" name="arrivalDay" class="form-control">
 							<option value=""></option>
 							<option value="1">01</option>
@@ -74,7 +74,7 @@
 						</select>
 					</div>
 					<div class="form-group col-md-2">
-						<label for="arrivalMonth">Mês de chegada</label>
+						<label for="arrivalMonth" class="col-form-label">Mês de chegada</label>
 						<select id="arrivalMonth" name="arrivalMonth" class="form-control">
 							<option value=""></option>
 							<option value="1">01</option>
@@ -92,12 +92,12 @@
 						</select>
 					</div>
 					<div class="form-group col-md-2">
-						<label for="arrivalYear">Ano de chegada</label>
+						<label for="arrivalYear" class="col-form-label">Ano de chegada</label>
 						<input type="text" id="arrivalYear" name="arrivalYear" class="form-control" maxlength="4">
 						<div id="errorArrivalYear" class="alert alert-danger disabled-alert"></div>
 					</div>
 					<div class="form-group col-md-2">
-						<label for="castrated">Castrado</label>
+						<label for="castrated" class="col-form-label">Castrado</label>
 						<select id="castrated" name="castrated" class="form-control">
 							<option value=""></option>
 							<option value="true">Sim</option>
@@ -105,7 +105,7 @@
 						</select>
 					</div>
 					<div class="form-group col-md-2">
-						<label for="vermifuged">Vermifugado</label>
+						<label for="vermifuged" class="col-form-label">Vermifugado</label>
 						<select id="vermifuged" name="vermifuged" class="form-control">
 							<option value=""></option>
 							<option value="true">Sim</option>
@@ -113,7 +113,7 @@
 						</select>
 					</div>
 					<div class="form-group col-md-2">
-						<label for="vacinated">Vacinado</label>
+						<label for="vacinated" class="col-form-label">Vacinado</label>
 						<select id="vacinated" name="vacinated" class="form-control">
 							<option value=""></option>
 							<option value="true">Sim</option>

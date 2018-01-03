@@ -46,13 +46,13 @@ $(document).ready(function() {
 		event.preventDefault();
 		
 		if ( validateSearchStringField( $("#dogName")[0] ) == -1 )
-			showAlert($( "#errorDogName" ), "Nome inválido!");
+			showAlert($( "#errorDogName" ), "Nome invÃ¡lido.");
 		else if ( validateSearchStringField( $("#vacName")[0] ) == -1 )
-			showAlert($( "#errorVacName" ), "Nome inválido!");
+			showAlert($( "#errorVacName" ), "Nome invÃ¡lido.");
 		else if ( validateDateField( $("#appDate")[0] ) == -1 )
-			showAlert($( "#errorAppDate" ), "Data inválida!");
+			showAlert($( "#errorAppDate" ), "Data invÃ¡lida.");
 		else if ( validateNatNumberField( $("#nextAppDate")[0] ) == -1 )
-			showAlert($( "#errorNextAppDate" ), "Data inválida!");
+			showAlert($( "#errorNextAppDate" ), "Data invÃ¡lida.");
 		else {
 			jsonData = formToJson(this);
 			jsonData = JSON.stringify(jsonData);

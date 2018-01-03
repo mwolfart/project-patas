@@ -5,21 +5,21 @@ $(document).ready(function() {
 		event.preventDefault();
 		
 		if ( validateUserField( $( "#username" )[0] ) == 0 )
-			showAlert($( "#errorUserName" ), "Campo obrigatório!");
+			showAlert($( "#errorUserName" ), "Nome de usuï¿½rio deve ser informado.");
 		else if ( validateUserField( $( "#password" )[0] ) == 0 )
-			showAlert($( "#errorPassword" ), "Campo obrigatório!");
+			showAlert($( "#errorPassword" ), "Senha deve ser informada.");
 		else if ( validateUserField( $( "#passwordConf" )[0] ) == 0 )
-			showAlert($( "#errorPasswordConf" ), "Campo obrigatório!");
+			showAlert($( "#errorPasswordConf" ), "Senha deve ser informada novamente.");
 		else if ( validateUserField( $( "#username" )[0] ) == -1 )
-			showAlert($( "#errorUserName" ), "Nome de usuário inválido!");
+			showAlert($( "#errorUserName" ), "Nome de usuï¿½rio invï¿½lido.");
 		else if ( validateUserField( $( "#password" )[0] ) == -1 )
-			showAlert($( "#errorPassword" ), "Senha inválida!");
+			showAlert($( "#errorPassword" ), "Senha invï¿½lida.");
 		else if ( validateUserField( $( "#passwordConf" )[0] ) == -1 )
-			showAlert($( "#errorPasswordConf" ), "Senha inválida!");
+			showAlert($( "#errorPasswordConf" ), "Senha invï¿½lida.");
 		else if ( $("password")[0] != $("passwordConf")[0] )
-			showAlert($( "#errorPasswordConf" ), "Senhas não coincidem!");
+			showAlert($( "#errorPasswordConf" ), "Senhas nï¿½o coincidem.");
 		else if ( validateStringField( $( "#fullName" )[0] ) == -1 )
-			showAlert($( "#errorFullName" ), "Nome contém caracteres inválidos!");
+			showAlert($( "#errorFullName" ), "Nome contï¿½m caracteres invï¿½lidos.");
 		else {
 			// Convert form to json and fix
 			var jsonData = formToJson(this);
@@ -32,7 +32,7 @@ $(document).ready(function() {
 				data: jsonData,
 				contentType: "application/json; charset=UTF-8",
 				success: function(response) {
-					alert("Usuário cadastrado com sucesso!");
+					alert("UsuÃ¡rio cadastrado com sucesso!");
 					window.location.replace("/user/user_view.html?id=" + response);
 				},
 				error: function(response) {

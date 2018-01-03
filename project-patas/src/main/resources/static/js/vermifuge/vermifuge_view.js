@@ -59,23 +59,23 @@ $(document).ready(function() {
 		event.preventDefault();
 		
 		if ( validateStringField( $( "#dogName" )[0] ) == 0 )
-			showAlert($( "#errorDogName" ), "Campo obrigatÛrio!");
+			showAlert($( "#errorDogName" ), "Nome do cachorro deve ser informado.");
 		else if ( validateStringField( $( "#vermName" )[0] ) == 0 )
-			showAlert($( "#errorVermName" ), "Campo obrigatÛrio!");
+			showAlert($( "#errorVermName" ), "Nome do verm√≠fugo deve ser informado.");
 		else if ( validateDateField( $( "#appDate" )[0] ) == 0 )
-			showAlert($( "#errorAppDate" ), "Campo obrigatÛrio!");
+			showAlert($( "#errorAppDate" ), "Data deve ser informada.");
 		else if ( validateNatNumberField( $( "#amount" )[0] ) == 0 )
-			showAlert($( "#errorAmount" ), "Campo obrigatÛrio!");
+			showAlert($( "#errorAmount" ), "Dosagem deve ser informada.");
 		else if ( validateStringField( $( "#vermName" )[0] ) == -1 )
-			showAlert($( "#errorVermName" ), "Nome inv·lido!");
+			showAlert($( "#errorVermName" ), "Nome inv√°lido.");
 		else if ( validateDateField( $( "#appDate" )[0] ) == -1 )
-			showAlert($( "#errorAppDate" ), "Data inv·lida!");
+			showAlert($( "#errorAppDate" ), "Data inv√°lida.");
 		else if ( validateNatNumberField( $( "#amount" )[0] ) == -1 )
-			showAlert($( "#errorAmount" ), "Dosagem inv·lida");
+			showAlert($( "#errorAmount" ), "Dosagem inv√°lida.");
 		else if ( validateDateField( $( "#nextAppDate" )[0] ) == -1 )
-			showAlert($( "#errorNextAppDate" ), "Data inv·lida");
+			showAlert($( "#errorNextAppDate" ), "Data inv√°lida.");
 		else if ( validateStringField( $( "#obs" )[0] ) == -1 )
-			showAlert($( "#errorObs" ), "ObservaÁıes contÈm caracteres inv·lidos!");
+			showAlert($( "#errorObs" ), "Observa√ß√µes cont√©m caracteres inv√°lidos.");
 		else {
 			// Convert form to json and fix its format
 			var jsonData = formToJson(this);	

@@ -5,19 +5,19 @@ $(document).ready(function() {
 		event.preventDefault();
 		
 		if ( validateStringField( $( "#dogName" )[0] ) == 0 )
-			showAlert($( "#errorDogName" ), "Campo obrigatório!");
+			showAlert($( "#errorDogName" ), "Nome do cachorro deve ser informado.");
 		else if ( validateStringField( $( "#vacName" )[0] ) == 0 )
-			showAlert($( "#errorVacName" ), "Campo obrigatório!");
+			showAlert($( "#errorVacName" ), "Nome da vacina deve ser informado.");
 		else if ( validateDateField( $( "#appDate" )[0] ) == 0 )
-			showAlert($( "#errorAppDate" ), "Campo obrigatório!");
+			showAlert($( "#errorAppDate" ), "Data deve ser informada.");
 		else if ( validateStringField( $( "#vacName" )[0] ) == -1 )
-			showAlert($( "#errorVacName" ), "Nome inválido!");
+			showAlert($( "#errorVacName" ), "Nome invÃ¡lido.");
 		else if ( validateDateField( $( "#appDate" )[0] ) == -1 )
-			showAlert($( "#errorAppDate" ), "Data inválida!");
+			showAlert($( "#errorAppDate" ), "Data invÃ¡lida.");
 		else if ( validateDateField( $( "#nextAppDate" )[0] ) == -1 )
-			showAlert($( "#errorNextAppDate" ), "Data inválida");
+			showAlert($( "#errorNextAppDate" ), "Data invÃ¡lida.");
 		else if ( validateStringField( $( "#obs" )[0] ) == -1 )
-			showAlert($( "#errorObs" ), "Observações contém caracteres inválidos!");
+			showAlert($( "#errorObs" ), "ObservaÃ§Ãµes contÃ©m caracteres invÃ¡lidos.");
 		else {
 			// Convert form to json and fix
 			var jsonData = formToJson(this);
