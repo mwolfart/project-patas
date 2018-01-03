@@ -107,6 +107,53 @@ public class UserService {
 		}
 	}
 
+	// Password change
+	@RequestMapping(value = "/user/set_password", method = RequestMethod.POST)
+	public ResponseEntity<String> userPasswordChange(@RequestBody String userData) {
+		String[] pairs = userData.split("\\{|,|\\}");
+		Map<String, String> userDataHashMap = Helper.splitCriteriaFromKeys(pairs);
+		
+		try {
+			Long userId = Long.parseLong(userDataHashMap.get("id"));
+			User user = userRepository.findById(userId);
+			char[] password = userDataHashMap.get("password").toCharArray();
+			
+			// TODO: UNDERSTAND HOW SALTING WORKS
+			if (Password.isExpectedPassword(password, Password.getNextSalt(), user.getPasswordHash())) {
+				char[] new_password = userDataHashMap.get("new_password").toCharArray();
+				byte[] new_password_hash = Password.hash(new_password, Password.getNextSalt());
+				user.setPasswordHash(new_password_hash);
+				return new ResponseEntity<String>(HttpStatus.OK);
+			} else {
+				return new ResponseEntity<String>("Senha incorreta.", HttpStatus.BAD_REQUEST);
+			}
+			
+		} catch (Exception e) {
+			return new ResponseEntity<String>("Dados mal formatados.", HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	// Password check
+	@RequestMapping(value = "/user/check_password", method = RequestMethod.POST)
+	public ResponseEntity<Boolean> userPasswordCheck(@RequestBody String userData) {
+		String[] pairs = userData.split("\\{|,|\\}");
+		Map<String, String> userDataHashMap = Helper.splitCriteriaFromKeys(pairs);
+		
+		try {
+			Long userId = Long.parseLong(userDataHashMap.get("id"));
+			User user = userRepository.findById(userId);
+			char[] password = userDataHashMap.get("password").toCharArray();
+			
+			if (Password.isExpectedPassword(password, Password.getNextSalt(), user.getPasswordHash())) {
+				return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+			} else {
+				return new ResponseEntity<Boolean>(false, HttpStatus.OK);
+			}
+		} catch (Exception e) {
+			return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
+		}		
+	}
+	
 	// View 
 	@RequestMapping(value = "/user/view", method = RequestMethod.POST)
 	public ResponseEntity<?> userView(@RequestBody String userId) {		
