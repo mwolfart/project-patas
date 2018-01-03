@@ -46,7 +46,7 @@ $(document).ready(function() {
 
 			// Post the data
 			$.ajax({
-				url: "http://localhost:8080/dog/register",
+				url: "/dog/register",
 				type: "POST",
 				dataType: "json",
 				data: jsonData,
