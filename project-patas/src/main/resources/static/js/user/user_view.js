@@ -10,8 +10,7 @@ function jsonToForm(json) {
 
 $(document).ready(function() {
 	// Edit button onClick handler
-	$(" #editBtn ").click(function() {		
-		$(" #username ").prop('disabled', false);
+	$(" #editBtn ").click(function() {
 		$(" #password ").prop('disabled', false);
 		$(" #passwordConf ").prop('disabled', false);
 		$(" #userType ").prop('disabled', false);
@@ -26,8 +25,8 @@ $(document).ready(function() {
 	$(" #deleteBtn ").click(function(event) {
 		event.preventDefault();
 		
-		if (confirm("Tem certeza que deseja excluir este usu·rio?")) {
-			// TODO: TESTAR SE USU¡RIO EST¡ LOGADO
+		if (confirm("Tem certeza que deseja excluir este usuÔøΩrio?")) {
+			// TODO: TESTAR SE USU√ÅRIO EST√Å LOGADO
 			var POST = getUrlParameter('id');
 			
 			$.ajax({
@@ -36,7 +35,7 @@ $(document).ready(function() {
 				data: user_id,
 				contentType: "application/json; charset=UTF-8",
 				success: function(response) {
-					alert("Usu·rio removido com sucesso!");
+					alert("Usu√°rio removido com sucesso!");
 					window.location.replace("/user/user_search.html");
 				},
 				error: function(response) {
@@ -49,22 +48,18 @@ $(document).ready(function() {
 	$( "#userEditForm" ).submit(function(event) {
 		event.preventDefault();
 		
-		if ( validateUserField( $( "#username" )[0] ) == 0 )
-			showAlert($( "#errorUserName" ), "Nome de usu·rio deve ser informado.");
-		else if ( validateUserField( $( "#password" )[0] ) == 0 )
+		if ( validateUserField( $( "#password" )[0] ) == 0 )
 			showAlert($( "#errorPassword" ), "Senha deve ser informada.");
 		else if ( validateUserField( $( "#passwordConf" )[0] ) == 0 )
 			showAlert($( "#errorPasswordConf" ), "Senha deve ser informada novamente.");
-		else if ( validateUserField( $( "#username" )[0] ) == -1 )
-			showAlert($( "#errorUserName" ), "Nome de usu·rio inv·lido.");
 		else if ( validateUserField( $( "#password" )[0] ) == -1 )
-			showAlert($( "#errorPassword" ), "Senha inv·lida.");
+			showAlert($( "#errorPassword" ), "Senha inv√°lida.");
 		else if ( validateUserField( $( "#passwordConf" )[0] ) == -1 )
-			showAlert($( "#errorPasswordConf" ), "Senha inv·lida.");
+			showAlert($( "#errorPasswordConf" ), "Senha inv√°lida.");
 		else if ( $("password")[0] != $("passwordConf")[0] )
-			showAlert($( "#errorPasswordConf" ), "Senhas n„o coincidem.");
+			showAlert($( "#errorPasswordConf" ), "Senhas n√£o coincidem.");
 		else if ( validateStringField( $( "#fullName" )[0] ) == -1 )
-			showAlert($( "#errorFullName" ), "Nome contÈm caracteres inv·lidos.");
+			showAlert($( "#errorFullName" ), "Nome cont√©m caracteres inv√°lidos.");
 		else {
 			// Convert form to json and fix its format
 			var jsonData = formToJson(this);	
@@ -75,18 +70,17 @@ $(document).ready(function() {
 			
 			// Post the data
 			$.ajax({
-				url: "/user/register",
+				url: "/user/update",
 				type: "POST",
 				dataType: "json",
 				data: jsonData,
 				contentType: "application/json; charset=UTF-8",
 				error: function(response) {
-					alert(response);
+					alert(response.responseText);
 				},
 				success: function() {
 					/* UNIQUE PART */
 					// Reset the form to previous state	
-					$(" #username ").prop('disabled', true);
 					$(" #password ").prop('disabled', true);
 					$(" #passwordConf ").prop('disabled', true);
 					$(" #userType ").prop('disabled', true);

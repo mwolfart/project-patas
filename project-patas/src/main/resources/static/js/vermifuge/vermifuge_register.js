@@ -37,7 +37,7 @@ $(document).ready(function() {
 					window.location.replace("/vermifuge/vermifuge_view.html?id=" + response);
 				},
 				error: function(response) {
-					console.log(response);
+					alert(response.responseText);
 				}
 			});
 		}

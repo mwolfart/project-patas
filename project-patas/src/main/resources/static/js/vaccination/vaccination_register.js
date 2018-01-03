@@ -34,7 +34,7 @@ $(document).ready(function() {
 					window.location.replace("/vaccination/vaccination_view.html?id=" + response);
 				},
 				error: function(response) {
-					alert(response);
+					alert(response.responseText);
 				}
 			});
 		}

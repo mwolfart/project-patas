@@ -51,7 +51,7 @@ $(document).ready(function() {
 					window.location.replace("/appointment/appointment_view.html?id=" + response);
 				},
 				error: function(response) {
-					console.log(response);
+					console.log(response.responseText);
 				}
 			});
 		}

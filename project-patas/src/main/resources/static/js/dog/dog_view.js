@@ -76,7 +76,7 @@ $(document).ready(function() {
 			$(" #rationOther ").prop('disabled', false);
 		
 		$(" #editBtn ").prop('disabled', true);
-		$(" #examBtn ").prop('disabled', false);
+		$(" #appointmentBtn ").prop('disabled', false);
 		$(" #vaccinationBtn ").prop('disabled', true);
 		$(" #vermifugationBtn ").prop('disabled', true);
 		$(" #saveBtn ").prop('disabled', false);
@@ -91,6 +91,11 @@ $(document).ready(function() {
 	// Vaccination button onClick handler
 	$(" #vaccinationBtn ").click(function() {
 		window.location.replace("/vaccination/vaccination_search.html?dogName=" + $("#name").val());
+	});
+	
+	// Appointment button onClick handler
+	$(" #appointmentBtn ").click(function() {
+		window.location.replace("/appointment/appointment_search.html?dogName=" + $("#name").val());
 	});
 	
 	// Set the submit configuration for the form
@@ -175,7 +180,7 @@ $(document).ready(function() {
 					$(" #diseaseDescription ").prop('disabled', true);
 					
 					$(" #editBtn ").prop('disabled', false);
-					$(" #examBtn ").prop('disabled', false);
+					$(" #appointmentBtn ").prop('disabled', false);
 					$(" #vaccinationBtn ").prop('disabled', false);
 					$(" #vermifugationBtn ").prop('disabled', false);
 					$(" #saveBtn ").prop('disabled', true);
@@ -209,7 +214,7 @@ $(document).ready(function() {
 			$(" #editBtn ").prop("disabled", true);
 			$(" #vaccinationBtn ").prop("disabled", true);
 			$(" #vermifugationBtn ").prop("disabled", true);
-			$(" #examBtn ").prop("disabled", true);
+			$(" #appointmentBtn ").prop("disabled", true);
 			$(" #deleteBtn ").prop("disabled", true);
 		}
 	});

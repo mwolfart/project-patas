@@ -56,8 +56,7 @@ $(document).ready(function() {
 					window.location.replace("/dog/dog_view.html?id=" + response);
 				},
 				error: function(response) {
-					alert(response);
-					console.log(response);
+					alert(response.responseText);
 				}
 			});
 		}

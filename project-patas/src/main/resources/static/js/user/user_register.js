@@ -5,21 +5,21 @@ $(document).ready(function() {
 		event.preventDefault();
 		
 		if ( validateUserField( $( "#username" )[0] ) == 0 )
-			showAlert($( "#errorUserName" ), "Nome de usu�rio deve ser informado.");
+			showAlert($( "#errorUserName" ), "Nome de usuário deve ser informado.");
 		else if ( validateUserField( $( "#password" )[0] ) == 0 )
 			showAlert($( "#errorPassword" ), "Senha deve ser informada.");
 		else if ( validateUserField( $( "#passwordConf" )[0] ) == 0 )
 			showAlert($( "#errorPasswordConf" ), "Senha deve ser informada novamente.");
 		else if ( validateUserField( $( "#username" )[0] ) == -1 )
-			showAlert($( "#errorUserName" ), "Nome de usu�rio inv�lido.");
+			showAlert($( "#errorUserName" ), "Nome de usuário inválido.");
 		else if ( validateUserField( $( "#password" )[0] ) == -1 )
-			showAlert($( "#errorPassword" ), "Senha inv�lida.");
+			showAlert($( "#errorPassword" ), "Senha inválida.");
 		else if ( validateUserField( $( "#passwordConf" )[0] ) == -1 )
-			showAlert($( "#errorPasswordConf" ), "Senha inv�lida.");
-		else if ( $("password")[0] != $("passwordConf")[0] )
-			showAlert($( "#errorPasswordConf" ), "Senhas n�o coincidem.");
+			showAlert($( "#errorPasswordConf" ), "Senha inválida.");
+		else if ( $("#password").val() != $("#passwordConf").val() )
+			showAlert($( "#errorPasswordConf" ), "Senhas não coincidem.");
 		else if ( validateStringField( $( "#fullName" )[0] ) == -1 )
-			showAlert($( "#errorFullName" ), "Nome cont�m caracteres inv�lidos.");
+			showAlert($( "#errorFullName" ), "Nome contém caracteres inválidos.");
 		else {
 			// Convert form to json and fix
 			var jsonData = formToJson(this);
@@ -36,7 +36,7 @@ $(document).ready(function() {
 					window.location.replace("/user/user_view.html?id=" + response);
 				},
 				error: function(response) {
-					alert(response);
+					alert(response.responseText);
 				}
 			});
 		}

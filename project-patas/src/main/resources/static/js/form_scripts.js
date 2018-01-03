@@ -267,7 +267,7 @@ function validateUserField(field) {
 	}
 	else {
 		for (char in field.value) {
-			if (available_chars.indexOf(value[char]) == -1) {
+			if (available_chars.indexOf(field.value[char]) == -1) {
 				$(field).addClass("error_input");
 				return -1;
 			}
