@@ -12,7 +12,7 @@ function processResponseJson(response) {
 				else user_type = "Membro";
 				
 				return '<tr><td>' + user_info[1] + '</td><td>'+ user_info[2] +'</td><td>'+ user_type +'</td><td>'
-				+'<a href="user_view.html?id='+ user_info[0] +'" class="btn btn-info" role="button">Visualizar</a></td></tr>';
+				+'<a href="user_view.html?id='+ user_info[0] +'" class="btn" role="button">Visualizar</a></td></tr>';
 			}).join());
 	$( "#users" ).removeClass("disabled-table");
 

@@ -15,7 +15,7 @@ function processResponseJson(response) {
 				return '<tr><td>' + appoint_info[1] + '</td><td>'+ dateToString(integerToDate(appoint_info[2])) +'</td><td>'+
 					location +'</td><td>'+ vetName +'</td><td>'+
 					'<a href="appointment_view.html?id='+ appoint_info[0] +
-					'" class="btn btn-info" role="button">Visualizar</a></td></tr>';
+					'" class="btn" role="button">Visualizar</a></td></tr>';
 			}).join());
 	$( "#appointments" ).removeClass("disabled-table");
 

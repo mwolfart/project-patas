@@ -2,21 +2,19 @@
 //function used to filter the json returned by the query
 //returns another json, containing only the fields we are interested in.
 function processResponseJson(response) {
-	$("tbody > tr").remove();
-	
-	$('#dogs').append(
-			$.map(response, function (dog_info) {
-				if (dog_info[2] == "F")
-					dog_sex = "Fêmea";
-				else if (dog_info[2] == "M")
-					dog_sex = "Macho";
-				else dog_sex = "";
-				
-				return '<tr><td>' + dog_info[1] + '</td><td>'+ dog_sex +'</td><td>'+ dateToString(integerToDate(dog_info[3])) +'</td><td>'
-				+'<a href="dog_view.html?id='+ dog_info[0] +'" class="btn btn-info" role="button">Visualizar</a></td></tr>';
-			}).join());
-	$( "#dogs" ).removeClass("disabled-table");
-
+		$("tbody > tr").remove();		
+		$('#dogs').append(
+				$.map(response, function (dog_info) {
+					if (dog_info[2] == "F")
+						dog_sex = "Fêmea";
+					else if (dog_info[2] == "M")
+						dog_sex = "Macho";
+					else dog_sex = "";
+					
+					return '<tr><td>' + dog_info[1] + '</td><td>'+ dog_sex +'</td><td>'+ dateToString(integerToDate(dog_info[3])) +'</td><td>'
+					+'<a href="dog_view.html?id='+ dog_info[0] +'" class="btn" role="button">Visualizar</a></td></tr>';
+				}).join());
+		$( "#dogs" ).removeClass("disabled-table");	
 }
 
 // Document load script
@@ -42,7 +40,7 @@ $(document).ready(function() {
 		if ( validateSearchStringField( $("#name")[0] ) == -1 )
 			showAlert($( "#errorName" ), "Nome inválido.");
 		else if ( validateNatNumberField( $("#arrivalYear")[0] ) == -1 )
-			showAlert($( "#errorArrivalYear" ), "Ano de chegada inv�lido.");
+			showAlert($( "#errorArrivalYear" ), "Ano de chegada inválido.");
 		else {
 			jsonData = formToJson(this);
 			jsonData = JSON.stringify(jsonData);

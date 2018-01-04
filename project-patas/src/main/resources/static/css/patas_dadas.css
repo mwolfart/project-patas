@@ -5,6 +5,11 @@
     color: #4c4c4c !important;
 }
 
+.fa-camera:before {
+    content: "\f030";
+    color: gold;
+}
+
 fa-pencil-square-o{
 	font-size: 15px !important;
 }
@@ -75,7 +80,6 @@ fa-pencil-square-o{
   width: 20px;
   height: 16px; 
   display: inline-block;
-  opacity: 0.2;
   background-image: url(../images/patasdadas-swiper-bullet.png);
 }
 
