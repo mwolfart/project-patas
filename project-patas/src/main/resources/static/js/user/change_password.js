@@ -29,10 +29,13 @@ $(document).ready(function() {
 			showAlert($( "#errorPasswordConf" ), "Senha inválida.");
 		else if ( $("#newPassword").val() != $("#passwordConf").val() )
 			showAlert($( "#errorPasswordConf" ), "Senhas não coincidem.");
-		else {		
-			// TODO: GET CURRENT USER ID
+		else {	
 			var jsonData;
-			jsonData["id"] = "1";
+			jsonData["username"] = getCookie("username");
+			
+			if (jsonData["username"] == "")
+				window.location.replace("/login.html");
+			
 			jsonData["password"] = $("#password").val();
 			jsonData["new_password"] = $("#newPassword").val();
 			

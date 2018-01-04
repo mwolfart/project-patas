@@ -26,7 +26,6 @@ $(document).ready(function() {
 	});
 	
 	$(" #changePasswordBtn ").click(function() {
-		// TODO: CURRENT USER ID
 		window.location.replace("/user/change_password.html");
 	});
 	
@@ -37,19 +36,24 @@ $(document).ready(function() {
 		if (confirm("Tem certeza que deseja excluir sua conta?")) {
 			var POST = getUrlParameter('id');
 			
-			$.ajax({
-				url: "/user/delete",
-				type: "POST",
-				data: user_id,
-				contentType: "application/json; charset=UTF-8",
-				success: function(response) {
-					alert("Conta excluída com sucesso!");
-					window.location.replace("/login.html");
-				},
-				error: function(response) {
-					alert(response.responseText);
-				}
-			});
+			var username = getCookie("username");
+			if (username != "") {
+				$.ajax({
+					url: "/user/delete",
+					type: "POST",
+					data: username,
+					contentType: "application/json; charset=UTF-8",
+					success: function(response) {
+						alert("Conta excluída com sucesso!");
+						window.location.replace("/login.html");
+					},
+					error: function(response) {
+						alert(response.responseText);
+					}
+				});
+			} else {
+				window.location.replace("/login.html");
+			}
 		}
 	});
 	
@@ -63,8 +67,10 @@ $(document).ready(function() {
 			var jsonData = formToJson(this);	
 			
 			// Store the id so we know which user to edit
-			// TODO: CURRENT USER ID
-			jsonData["id"] = parseInt(getUrlParameter('id'));
+			jsonData["username"] = getCookie("username");
+			if (jsonData["username"] == "")
+				window.location.replace("/login.html");
+			
 			jsonData = JSON.stringify(jsonData);
 			
 			// Post the data
@@ -89,22 +95,25 @@ $(document).ready(function() {
 		}
 	});
 	
-	// TODO: GET CURRENT USER ID
-	var user_id = "1";
+	var username = getCookie("username");
 	
-	$.ajax({
-		url: "/user/view",
-		type: "POST",
-		data: user_id,
-		contentType: "application/json; charset=UTF-8",
-		success: function(response) {
-			jsonToForm(response);
-		},
-		error: function(response) {
-			alert(response.responseText);
-			$(" #editBtn ").prop("disabled", true);
-			$(" #deleteBtn ").prop("disabled", true);
-			$(" #changePasswordBtn ").prop("disabled", true);
-		}
-	});
+	if (username != "") {
+		$.ajax({
+			url: "/user/view",
+			type: "POST",
+			data: username,
+			contentType: "application/json; charset=UTF-8",
+			success: function(response) {
+				jsonToForm(response);
+			},
+			error: function(response) {
+				alert(response.responseText);
+				$(" #editBtn ").prop("disabled", true);
+				$(" #deleteBtn ").prop("disabled", true);
+				$(" #changePasswordBtn ").prop("disabled", true);
+			}
+		});
+	} else {
+		window.location.replace("/login.html");
+	}
 });

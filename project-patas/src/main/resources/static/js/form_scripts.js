@@ -380,6 +380,34 @@ function hideAlert(element) {
 	element.addClass("disabled-alert");	
 }
 
+// setCookie : String, String, Integer -> Void
+// stores a cookie in the client side
+function setCookie(cname, cvalue, exhours) {
+	var date = new Date();
+	date.setTime(date.getTime() + (exhours * 60 * 60 * 1000));
+	var expires = "expires=" + date.toUTCString();
+	document.cookie = cname + "=" + cvalue + ";" + expires;
+}
+
+// getCookie : String -> String
+// gets the value of a cookie
+function getCookie(cname) {
+	var name = cname + "=";
+    var decoded_cookie = decodeURIComponent(document.cookie);
+    var cookie_array = decoded_cookie.split(';');
+    
+    for(var i = 0; i < cookie_array.length; i++) {
+        var cur_cookie = cookie_array[i];
+        while (cur_cookie.charAt(0) == ' ') {
+        	cur_cookie = cur_cookie.substring(1);
+        }
+        if (cur_cookie.indexOf(name) == 0) {
+            return cur_cookie.substring(name.length, cur_cookie.length);
+        }
+    }
+    return "";
+}
+
 //putDogsInComboBox := Object -> Void
 //given a list of dog ids and names, put them into the
 //dogName combobox (vacination, vermifugation, appointments)

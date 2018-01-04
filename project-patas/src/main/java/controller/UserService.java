@@ -35,6 +35,7 @@ public class UserService {
 			// TODO: I think we don't need this for loop - we can access the data by hash
 			for(Map.Entry<String, String> datum : userDataHashMap.entrySet()) {
 				switch(datum.getKey()) {
+				// TODO: username has to contain at least 6 characters, and a mix of numbers and letters
 				case "username":
 					if (userRepository.findByUsername(datum.getValue()) != null)
 						return new ResponseEntity<String>("Nome de usuário já existe.", HttpStatus.BAD_REQUEST);
@@ -118,8 +119,8 @@ public class UserService {
 		Map<String, String> userDataHashMap = Helper.splitCriteriaFromKeys(pairs);
 		
 		try {
-			Long userId = Long.parseLong(userDataHashMap.get("id"));
-			User user = userRepository.findById(userId);
+			String username = userDataHashMap.get("username");
+			User user = userRepository.findByUsername(username);
 			char[] password = userDataHashMap.get("password").toCharArray();
 			
 			if (Password.isExpectedPassword(password, user.getSalt(), user.getPasswordHash())) {
@@ -162,8 +163,12 @@ public class UserService {
 	
 	// View 
 	@RequestMapping(value = "/user/view", method = RequestMethod.POST)
-	public ResponseEntity<?> userView(@RequestBody String userId) {		
-		User user = userRepository.findOne(Long.parseLong(userId));
+	public ResponseEntity<?> userView(@RequestBody String usernameOrId) {
+		User user = null;
+		if (Helper.isNumeric(usernameOrId))
+			user = userRepository.findOne(Long.parseLong(usernameOrId));
+		else user = userRepository.findByUsername(usernameOrId);
+		
 		if (user == null)
 			return new ResponseEntity<String>("Usuário não encontrado.", HttpStatus.BAD_REQUEST);
 

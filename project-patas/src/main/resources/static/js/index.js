@@ -1,3 +1,4 @@
+// Display today's vaccinations
 function displayTodaysVaccinations(vacArray) {
 	if (vacArray.length > 0) {
 		$("#vacinacoes").html(
@@ -7,6 +8,7 @@ function displayTodaysVaccinations(vacArray) {
 	}
 }
 
+// Display today's vermifugations
 function displayTodaysVermifugations(vermArray) {
 	if (vermArray.length > 0) {
 		$("#vermifugacoes").html(

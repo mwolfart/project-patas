@@ -20,8 +20,10 @@ $(document).ready(function() {
 			contentType: "application/json; charset=UTF-8",
 			success: function(response) {
 				// TODO: set current user or session
-				if (response == true)
+				if (response == true) {
+					setCookie("username", userData["username"], 3);
 					window.location.replace("/index.html");	
+				}
 				else {
 					alert("Senha incorreta. Cuidado maiúsculas e minúsculas.");
 					window.location.replace("/login.html");					

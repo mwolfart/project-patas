@@ -70,4 +70,9 @@ public class Helper {
 			return null;
 		}
 	}
+	
+	// Checks if a string is numeric
+	public static boolean isNumeric(String s) {  
+	    return s != null && s.matches("[-+]?\\d*\\.?\\d+");  
+	}
 }
