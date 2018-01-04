@@ -10,6 +10,7 @@ function jsonToForm(json) {
 	$(" #sex ").val(json.sex);
 	$(" #size ").val(json.size);
 	$(" #furColor ").val(json.furColor);
+	$(" #status ").val(json.status);
 	$(" #arrivalDate ").val(dateToString(arrival_date));
 	$(" #ration ").val(json.ration);
 	$(" #rationPortions ").val(json.rationPortions);

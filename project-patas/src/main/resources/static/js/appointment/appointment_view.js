@@ -9,7 +9,7 @@ function jsonToForm(json) {
 	$(" #totalCost ").val((json.price).toFixed(2));
 	$(" #reason ").val(json.reason);
 	$(" #examDescription ").val(json.examDescription);
-	$(" #description ").val(json.description);
+	$(" #appointmentDescription ").val(json.appointmentDescription);
 	
 	if (json.appointmentDate) {
 		var appointment_date = new Date();
