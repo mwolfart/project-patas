@@ -30,14 +30,15 @@ $(document).ready(function() {
 		else if ( $("#newPassword").val() != $("#passwordConf").val() )
 			showAlert($( "#errorPasswordConf" ), "Senhas não coincidem.");
 		else {	
-			var jsonData;
-			jsonData["username"] = getCookie("username");
+			var jsonData = {};
+			jsonData["username"] = $.session.get("username");
 			
 			if (jsonData["username"] == "")
 				window.location.replace("/login.html");
 			
 			jsonData["password"] = $("#password").val();
 			jsonData["new_password"] = $("#newPassword").val();
+			jsonData = JSON.stringify(jsonData);
 			
 			$.ajax({
 				url: "/user/set_password",

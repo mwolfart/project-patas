@@ -78,8 +78,8 @@ public class UserService {
 		Map<String, String> userDataHashMap = Helper.splitCriteriaFromKeys(pairs);
 		
 		try {
-			Long userId = Long.parseLong(userDataHashMap.get("id"));
-			User user = userRepository.findById(userId);
+			String username = userDataHashMap.get("username");
+			User user = userRepository.findByUsername(username);
 			
 			// TODO: I think we don't need this for loop - we can access the data by hash
 			for(Map.Entry<String, String> datum : userDataHashMap.entrySet()) {
@@ -129,6 +129,7 @@ public class UserService {
 				byte[] new_password_hash = Password.hash(new_password, new_salt);
 				user.setPasswordHash(new_password_hash);
 				user.setSalt(new_salt);
+				userRepository.saveAndFlush(user);
 				return new ResponseEntity<String>(HttpStatus.OK);
 			} else {
 				return new ResponseEntity<String>("Senha incorreta.", HttpStatus.BAD_REQUEST);
@@ -157,7 +158,7 @@ public class UserService {
 			}
 		} catch (Exception e) {
 			System.out.println(e);
-			return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<Boolean>(HttpStatus.BAD_REQUEST);
 		}
 	}
 	

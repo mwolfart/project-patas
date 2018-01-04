@@ -36,7 +36,7 @@ $(document).ready(function() {
 		if (confirm("Tem certeza que deseja excluir sua conta?")) {
 			var POST = getUrlParameter('id');
 			
-			var username = getCookie("username");
+			var username = $.session.get("username");
 			if (username != "") {
 				$.ajax({
 					url: "/user/delete",
@@ -67,7 +67,7 @@ $(document).ready(function() {
 			var jsonData = formToJson(this);	
 			
 			// Store the id so we know which user to edit
-			jsonData["username"] = getCookie("username");
+			jsonData["username"] = $.session.get("username");
 			if (jsonData["username"] == "")
 				window.location.replace("/login.html");
 			
@@ -95,7 +95,7 @@ $(document).ready(function() {
 		}
 	});
 	
-	var username = getCookie("username");
+	var username = $.session.get("username");
 	
 	if (username != "") {
 		$.ajax({
