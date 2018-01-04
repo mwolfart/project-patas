@@ -60,8 +60,8 @@ $(document).ready(function() {
 			// Convert form to json and fix its format
 			var jsonData = formToJson(this);	
 			
-			// Store the id so we know which user to edit
-			jsonData["id"] = parseInt(getUrlParameter('id'));
+			// Store the username so we know which user to edit
+			jsonData["username"] = $("#username").val();
 			jsonData = JSON.stringify(jsonData);
 			
 			// Post the data

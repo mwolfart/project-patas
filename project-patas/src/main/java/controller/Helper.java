@@ -38,6 +38,7 @@ public class Helper {
 
 		return criteria_list;
 	}
+	
 	/*
 	public static byte[] saveImage(String path){
 		BufferedImage img;

@@ -17,9 +17,13 @@ function jsonToForm(json) {
 	$(" #rationMeasurement ").val(json.rationMeasurement);
 	$(" #sponsors ").val(json.sponsors);
 	
-	if(json.photo)
-		$(" #dogPhoto ").attr("src", "data:image/png;base64," + json.photo);
-	
+	if(json.photo) {
+		var image = "data:image/png;base64," + json.photo;
+		$(" #dogPhoto ").attr("src", image);
+		document.getElementById("dogPhoto").width = 200;
+		document.getElementById("dogPhoto").height = 200;
+	}
+		
 	if (json.birthDate) {
 		var birth_date = new Date();
 		birth_date.setTime(json.birthDate);
