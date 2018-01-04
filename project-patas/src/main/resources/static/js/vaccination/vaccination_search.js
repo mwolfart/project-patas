@@ -16,29 +16,29 @@ function processResponseJson(response) {
 // Document load script
 $(document).ready(function() {
 	// Prevent user from typing letters and other symbols into numeric fields	
-	$( "#vacName" ).keydown(protectSearchStringField);
+	$( "#vaccineName" ).keydown(protectSearchStringField);
 	$( "#dogName" ).keydown(protectSearchStringField);
-	$( "#appDate" ).keydown(protectNumericField);
-	$( "#nextAppDate" ).keydown(protectNumericField);
+	$( "#applicationDate" ).keydown(protectNumericField);
+	$( "#nextApplicationDate" ).keydown(protectNumericField);
 	
 	$( "#dogName" ).focusout( function() { 
 		validateSearchStringField(this);
 		hideAlert($("#errorDogName"));
 	});
 	
-	$( "#vacName" ).focusout( function() { 
+	$( "#vaccineName" ).focusout( function() { 
 		validateSearchStringField(this);
-		hideAlert($("#errorVacName"));
+		hideAlert($("#errorVaccineName"));
 	});
 	
-	$( "#appDate" ).focusout( function() { 
+	$( "#applicationDate" ).focusout( function() { 
 		validateDateField(this);
-		hideAlert($("#errorAppDate"));
+		hideAlert($("#errorApplicationDate"));
 	});
 	
-	$( "#nextAppDate" ).focusout( function() { 
+	$( "#nextApplicationDate" ).focusout( function() { 
 		validateDateField(this);
-		hideAlert($("#errorNextAppDate"));
+		hideAlert($("#errorNextApplicationDate"));
 	});
 
 	// Set the submit configuration for the form
@@ -47,12 +47,12 @@ $(document).ready(function() {
 		
 		if ( validateSearchStringField( $("#dogName")[0] ) == -1 )
 			showAlert($( "#errorDogName" ), "Nome inválido.");
-		else if ( validateSearchStringField( $("#vacName")[0] ) == -1 )
-			showAlert($( "#errorVacName" ), "Nome inválido.");
-		else if ( validateDateField( $("#appDate")[0] ) == -1 )
-			showAlert($( "#errorAppDate" ), "Data inválida.");
-		else if ( validateDateField( $("#nextAppDate")[0] ) == -1 )
-			showAlert($( "#errorNextAppDate" ), "Data inválida.");
+		else if ( validateSearchStringField( $("#vaccineName")[0] ) == -1 )
+			showAlert($( "#errorVaccineName" ), "Nome inválido.");
+		else if ( validateDateField( $("#applicationDate")[0] ) == -1 )
+			showAlert($( "#errorApplicationDate" ), "Data inválida.");
+		else if ( validateDateField( $("#nextApplicationDate")[0] ) == -1 )
+			showAlert($( "#errorNextApplicationDate" ), "Data inválida.");
 		else {
 			jsonData = formToJson(this);
 			jsonData = JSON.stringify(jsonData);

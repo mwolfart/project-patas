@@ -3,36 +3,36 @@ $(document).ready(function() {
 	// TODO: FIX FIELDS IDS IN HTML
 	
 	// Protect fields
-	$( "#vermName" ).keydown(protectStringField);
-	$( "#amount" ).keydown(protectNumericField);
-	$( "#appDate" ).keydown(protectNumericField);
-	$( "#nextAppDate" ).keydown(protectNumericField);
+	$( "#vermifugeName" ).keydown(protectStringField);
+	$( "#dosage" ).keydown(protectNumericField);
+	$( "#applicationDate" ).keydown(protectNumericField);
+	$( "#nextApplicationDate" ).keydown(protectNumericField);
 	$( "#obs" ).keydown(protectStringField);
 
 	//Validate fields
-	$( "#dogName" ).focusout(function() {
+	$( "#dogId" ).focusout(function() {
 		if (validateStringField(this) > 0)
-			hideAlert($( "#errorDogName" ));
+			hideAlert($( "#errorDogId" ));
 	})
 	
-	$( "#vermName" ).focusout(function() {
+	$( "#vermifugeName" ).focusout(function() {
 		if (validateStringField(this) > 0)
-			hideAlert($( "#errorVermName" ));
+			hideAlert($( "#errorVermifugeName" ));
 	})
 	
-	$( "#amount" ).focusout(function() {
+	$( "#dosage" ).focusout(function() {
 		if (validateRealNumberField(this) > 0)
-			hideAlert($( "#errorAmount" ));
+			hideAlert($( "#errorDosage" ));
 	})
 	
-	$( "#appDate" ).focusout(function() {
+	$( "#applicationDate" ).focusout(function() {
 		if (validateDateField(this) > 0)
-			hideAlert($( "#errorAppDate" ));
+			hideAlert($( "#errorApplicationDate" ));
 	})
 	
-	$( "#nextAppDate" ).focusout(function() {
+	$( "#nextApplicationDate" ).focusout(function() {
 		if (validateDateField(this) >= 0)
-			hideAlert($( "#errorNextAppDate" ));
+			hideAlert($( "#errorNextApplicationDate" ));
 	})
 	
 	$( "#obs" ).focusout(function() {

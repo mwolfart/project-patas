@@ -25,7 +25,7 @@ $(document).ready(function() {
 		else if ( validateDateField( $( "#castrationDate" )[0] ) == -1 ) 
 			showAlert($( "#errorCastrationDate" ), "Data de chegada inválida.");
 		else if ( validateStringField( $( "#diseaseDescription" )[0] ) == -1 ) 
-			showAlert($( "#errorDisease" ), "Descrição inválida.");
+			showAlert($( "#errorDiseaseDescription" ), "Descrição inválida.");
 		else if ( validateStringField( $( "#sponsors" )[0] ) == -1 ) 
 			showAlert($( "#errorSponsors" ), "Nome do(s) padrinho(s) inválido.");
 		else {
@@ -33,11 +33,11 @@ $(document).ready(function() {
 			var jsonData = formToJson(this);
 			
 			// Fix the checkbox values within the json
-			if ( $(" #checkboxDis ").prop("checked") )
-				jsonData["disease"] = true;
-			else jsonData["disease"] = false;
+			if ( $(" #hasDiseases ").prop("checked") )
+				jsonData["hasDiseases"] = true;
+			else jsonData["hasDiseases"] = false;
 			
-			if ( $(" #checkboxCastr ").prop("checked") )
+			if ( $(" #castrated ").prop("checked") )
 				jsonData["castrated"] = true;
 			else jsonData["castrated"] = false;
 			

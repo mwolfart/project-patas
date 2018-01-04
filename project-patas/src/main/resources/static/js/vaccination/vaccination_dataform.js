@@ -1,29 +1,29 @@
 $(document).ready(function() {
 	// Protect fields
-	$( "#vacName" ).keydown(protectStringField);
-	$( "#appDate" ).keydown(protectNumericField);
-	$( "#nextAppDate" ).keydown(protectNumericField);
+	$( "#vaccineName" ).keydown(protectStringField);
+	$( "#applicationDate" ).keydown(protectNumericField);
+	$( "#nextApplicationDate" ).keydown(protectNumericField);
 	$( "#obs" ).keydown(protectStringField);
 
 	//Validate fields
-	$( "#dogName" ).focusout(function() {
+	$( "#dogId" ).focusout(function() {
 		if (validateStringField(this) > 0)
-			hideAlert($( "#errorDogName" ));
+			hideAlert($( "#errorDogId" ));
 	})
 	
-	$( "#vacName" ).focusout(function() {
+	$( "#vaccineName" ).focusout(function() {
 		if (validateStringField(this) > 0)
-			hideAlert($( "#errorVacName" ));
+			hideAlert($( "#errorVaccineName" ));
 	})
 	
-	$( "#appDate" ).focusout(function() {
+	$( "#applicationDate" ).focusout(function() {
 		if (validateDateField(this) > 0)
-			hideAlert($( "#errorAppDate" ));
+			hideAlert($( "#errorApplicationDate" ));
 	})
 	
-	$( "#nextAppDate" ).focusout(function() {
+	$( "#nextApplicationDate" ).focusout(function() {
 		if (validateDateField(this) >= 0)
-			hideAlert($( "#errorNextAppDate" ));
+			hideAlert($( "#errorNextApplicationDate" ));
 	})
 	
 	$( "#obs" ).focusout(function() {

@@ -46,20 +46,21 @@ public class DogService {
 
 	// Update dog
 	// This is different from register, because we may accept a dog with the same name if unchanged
+	// TODO: CHECK IF REFACTORABLE
 	@RequestMapping(value = "/dog/update", method = RequestMethod.POST)
 	public ResponseEntity<String> dogUpdate(@RequestBody Dog dog) {
 		if(dog.getName() == null)
-			return new ResponseEntity<String>("Nome est� em branco", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>("Nome está em branco", HttpStatus.BAD_REQUEST);
 
 		Dog dogWithSameName = dogRepository.findByName(dog.getName());
 		if(dogWithSameName != null && dogWithSameName.getId() != dog.getId())
-			return new ResponseEntity<String>("J� existe um cachorro com este nome", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>("Já existe um cachorro com este nome", HttpStatus.BAD_REQUEST);
 
 		if(dog.getArrivalDate() == null)
-			return new ResponseEntity<String>("Data de chegada est� em branco", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>("Data de chegada está em branco", HttpStatus.BAD_REQUEST);
 
 		if(dog.getCastrated() == null)
-			return new ResponseEntity<String>("Flag de castrado est� em branco", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>("Flag de castrado está em branco", HttpStatus.BAD_REQUEST);
 
 		dogRepository.saveAndFlush(dog);
 		return new ResponseEntity<String>(HttpStatus.OK);
@@ -71,7 +72,7 @@ public class DogService {
 		Dog dog = dogRepository.findOne(Long.parseLong(dogId));
 
 		if (dog == null)
-			return new ResponseEntity<String>("Cachorro n�o encontrado.", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>("Cachorro não encontrado.", HttpStatus.BAD_REQUEST);
 
 		return new ResponseEntity<Dog>(dog, HttpStatus.OK);
 	}

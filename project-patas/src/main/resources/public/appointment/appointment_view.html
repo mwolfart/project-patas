@@ -24,15 +24,15 @@
 				<div class="form-row">
 					<div class="form-group col-md-5">
 						<label for="dogId" class="col-form-label required">Nome do cachorro</label>
-						<select id="dogName" name="dogId" class="form-control" disabled>
+						<select id="dogId" name="dogId" class="form-control" disabled>
 							<option value=""></option>
 						</select>
-						<div id="errorDogName" class="alert alert-danger disabled-alert"></div>
+						<div id="errorDogId" class="alert alert-danger disabled-alert"></div>
 					</div>
 					<div class="form-group col-md-7">
 						<label for="responsibleName" class="col-form-label">Nome do responsável</label>
-						<input type="text" id="volName" name="responsibleName" class="form-control" maxlength="50" placeholder="Nome do voluntário responsável" disabled>
-						<div id="errorVolName" class="alert alert-danger disabled-alert"></div>
+						<input type="text" id="responsibleName" name="responsibleName" class="form-control" maxlength="50" placeholder="Nome do voluntário responsável" disabled>
+						<div id="errorResponsibleName" class="alert alert-danger disabled-alert"></div>
 					</div>
 				</div>
 				<div class="form-row">
@@ -54,8 +54,8 @@
 				</div>
 				<div class="form-row">
 					<div class="form-group col-md-2">
-						<label for="price" class="col-form-label">Preço</label>
-						<input type="text" id="totalCost" name="price" class="form-control" maxlength="10" disabled>
+						<label for="totalCost" class="col-form-label">Preço</label>
+						<input type="text" id="totalCost" name="totalCost" class="form-control" maxlength="10" disabled>
 						<div id="errorTotalCost" class="alert alert-danger disabled-alert"></div>
 					</div>
 					<div class="form-group col-md-10">
@@ -66,28 +66,28 @@
 				</div>
 				<div class="form-row">
 					<div class="form-group col-md-1">
-						<label for="exam" class="col-form-label">Exames</label>
-						<input type="checkbox" id="checkboxExam" name="exam" class="form-control" value=true disabled>
+						<label for="examinated" class="col-form-label">Exames</label>
+						<input type="checkbox" id="examinated" name="examinated" class="form-control" value=true disabled>
 					</div>
 					<div class="form-group col-md-11">
 						<label for="examDescription" class="col-form-label">Descrição dos exames</label>
 						<input type="text" id="examDescription" name="examDescription" class="form-control" maxlength="80" disabled>
-						<div id="errorExam" class="alert alert-danger disabled-alert"></div>
+						<div id="errorExamDescription" class="alert alert-danger disabled-alert"></div>
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="appointmentDescription" class="col-form-label">Descrição da consulta</label>
 					<input type="text" id="appointmentDescription" name="appointmentDescription" class="form-control" maxlength="255" disabled>
-					<div id="errorDescription" class="alert alert-danger disabled-alert"></div>
+					<div id="errorAppointmentDescription" class="alert alert-danger disabled-alert"></div>
 				</div>	
 				<div class="form-group">
-					<input type="button" id="prescriptionsBtn" name="prescriptionsBtn" value="Adicionar receita de medicação" class="btn" disabled>
-					<input type="button" id="resultsBtn" name="resultsBtn" value="Adicionar resultados de exames" class="btn" disabled>
-					<input type="button" id="receiptsBtn" name="receiptsBtn" value="Adicionar comprovante de pagamento" class="btn" disabled>		
-					<input type="button" id="editBtn" name="editBtn" value="Editar" class="btn">
-					<input type="submit" id="saveBtn" name="saveBtn" value="Salvar" class="btn" disabled>
-					<input type="button" id="deleteBtn" name="deleteBtn" value="Excluir" class="btn">
-					<a href="../index.html" id="return" name="return" class="btn" role="button">Voltar</a>	
+					<input type="button" id="prescriptionsBtn" value="Anexar receita de medicação" class="btn" disabled>
+					<input type="button" id="examResultsBtn" value="Anexar resultados de exames" class="btn" disabled>
+					<input type="button" id="receiptsBtn" value="Anexar comprovante de pagamento" class="btn" disabled>		
+					<input type="button" id="editBtn" value="Editar" class="btn">
+					<input type="submit" id="saveBtn" value="Salvar" class="btn" disabled>
+					<input type="button" id="deleteBtn" value="Excluir" class="btn">
+					<a href="../index.html" id="return" class="btn">Voltar</a>	
 				</div>
 			</form>
 		</div>

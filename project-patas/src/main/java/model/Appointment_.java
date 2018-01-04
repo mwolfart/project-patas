@@ -13,9 +13,9 @@ public abstract class Appointment_ {
 	public static volatile SingularAttribute<Appointment, Date> appointmentDate;
 	public static volatile SingularAttribute<Appointment, String> location;
 	public static volatile SingularAttribute<Appointment, String> vetName;
-	public static volatile SingularAttribute<Appointment, Float> price;
+	public static volatile SingularAttribute<Appointment, Float> totalCost;
 	public static volatile SingularAttribute<Appointment, String> reason;
-	public static volatile SingularAttribute<Appointment, Boolean> exam;
+	public static volatile SingularAttribute<Appointment, Boolean> examinated;
 	public static volatile SingularAttribute<Appointment, String> examDescription;
 	public static volatile SingularAttribute<Appointment, String> appointmentDescription;
 }

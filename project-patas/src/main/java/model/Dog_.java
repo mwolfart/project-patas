@@ -22,8 +22,10 @@ public abstract class Dog_ {
 	public static volatile SingularAttribute<Dog, Date> castrationDate;
 	public static volatile SingularAttribute<Dog, Availability> status;
 	public static volatile SingularAttribute<Dog, String> ration;
-	public static volatile SingularAttribute<Dog, String> rationPortions;
-	public static volatile SingularAttribute<Dog, Boolean> disease;
+	public static volatile SingularAttribute<Dog, String> rationCustomDescription;
+	public static volatile SingularAttribute<Dog, Double> rationAmount;
+	public static volatile SingularAttribute<Dog, Integer> rationMeasurement;
+	public static volatile SingularAttribute<Dog, Boolean> hasDiseases;
 	public static volatile SingularAttribute<Dog, String> diseaseDescriptions;
 	public static volatile SingularAttribute<Dog, String> sponsors;
 }

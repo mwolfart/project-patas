@@ -385,7 +385,7 @@ function hideAlert(element) {
 //dogName combobox (vacination, vermifugation, appointments)
 function putDogsInComboBox(dogs) {
 	$.each(dogs, function(i, dog) {
-		$( "#dogName" ).append($("<option>", {
+		$( "#dogId" ).append($("<option>", {
 			value: dog[0],
 			text: dog[1]
 		}));

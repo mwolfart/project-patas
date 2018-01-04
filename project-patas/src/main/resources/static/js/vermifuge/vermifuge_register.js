@@ -2,22 +2,22 @@ $(document).ready(function() {
 	$( "#vermRegisterForm" ).submit(function(event) {
 		event.preventDefault();
 		
-		if ( validateStringField( $( "#dogName" )[0] ) == 0 )
-			showAlert($( "#errorDogName" ), "Nome do cachorro deve ser informado.");
-		else if ( validateStringField( $( "#vermName" )[0] ) == 0 )
-			showAlert($( "#errorVermName" ), "Nome do vermifugo deve ser informado.");
-		else if ( validateDateField( $( "#appDate" )[0] ) == 0 )
-			showAlert($( "#errorAppDate" ), "Data deve ser informada.");
-		else if ( validateNatNumberField( $( "#amount" )[0] ) == 0 )
-			showAlert($( "#errorAmount" ), "Dosagem deve ser informada.");
-		else if ( validateStringField( $( "#vermName" )[0] ) == -1 )
-			showAlert($( "#errorVermName" ), "Nome inválido.");
-		else if ( validateDateField( $( "#appDate" )[0] ) == -1 )
-			showAlert($( "#errorAppDate" ), "Data inválida.");
-		else if ( validateNatNumberField( $( "#amount" )[0] ) == -1 )
-			showAlert($( "#errorAmount" ), "Dosagem inválida.");
-		else if ( validateDateField( $( "#nextAppDate" )[0] ) == -1 )
-			showAlert($( "#errorNextAppDate" ), "Data inválida.");
+		if ( validateStringField( $( "#dogId" )[0] ) == 0 )
+			showAlert($( "#errorDogId" ), "Nome do cachorro deve ser informado.");
+		else if ( validateStringField( $( "#vermifugeName" )[0] ) == 0 )
+			showAlert($( "#errorVermifugeName" ), "Nome do vermifugo deve ser informado.");
+		else if ( validateDateField( $( "#applicationDate" )[0] ) == 0 )
+			showAlert($( "#errorApplicationDate" ), "Data deve ser informada.");
+		else if ( validateNatNumberField( $( "#dosage" )[0] ) == 0 )
+			showAlert($( "#errorDosage" ), "Dosagem deve ser informada.");
+		else if ( validateStringField( $( "#vermifugeName" )[0] ) == -1 )
+			showAlert($( "#errorVermifugeName" ), "Nome inválido.");
+		else if ( validateDateField( $( "#applicationDate" )[0] ) == -1 )
+			showAlert($( "#errorApplicationDate" ), "Data inválida.");
+		else if ( validateNatNumberField( $( "#dosage" )[0] ) == -1 )
+			showAlert($( "#errorDosage" ), "Dosagem inválida.");
+		else if ( validateDateField( $( "#nextApplicationDate" )[0] ) == -1 )
+			showAlert($( "#errorNextApplicationDate" ), "Data inválida.");
 		else if ( validateStringField( $( "#obs" )[0] ) == -1 )
 			showAlert($( "#errorObs" ), "Observações contém caracteres inválidos.");
 		else {

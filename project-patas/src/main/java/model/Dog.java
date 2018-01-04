@@ -29,9 +29,10 @@ public class Dog {
 	private Date castrationDate;
 	private Availability status;
 	private String ration;
-	private String rationOther;
-	private Double rationPortions;
-	private Boolean disease;
+	private String rationCustomDescription;
+	private Double rationAmount;
+	private Integer rationMeasurement;
+	private Boolean hasDiseases;
 	private String diseaseDescription;
 	private String sponsors;	
 	public byte[] photo;
@@ -42,8 +43,8 @@ public class Dog {
 	public Dog(Long id, String name, Double weight, String sex, String size,
 			String furColor, Date birthDate, Date arrivalDate,
 			Boolean castrated, Date castrationDate, Availability status,
-			String ration, String rationOther, Double rationPortions, 
-			Boolean disease, String diseaseDescription, String sponsors) {
+			String ration, String rationCustomDescription, Double rationAmount, Integer rationMeasurement,
+			Boolean hasDiseases, String diseaseDescription, String sponsors) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -57,13 +58,13 @@ public class Dog {
 		this.castrationDate = castrationDate;
 		this.status = status;
 		this.ration = ration;
-		this.rationOther = rationOther;
-		this.rationPortions = rationPortions;
-		this.disease = disease;
+		this.rationCustomDescription = rationCustomDescription;
+		this.rationAmount = rationAmount;
+		this.rationMeasurement = rationMeasurement;
+		this.hasDiseases = hasDiseases;
 		this.diseaseDescription = diseaseDescription;
 		this.sponsors = sponsors;
 	}
-
 
 	public Long getId() {
 		return id;
@@ -161,28 +162,36 @@ public class Dog {
 		this.ration = ration;
 	}
 	
-	public String getRationOther() {
-		return this.rationOther;
+	public String getRationCustomDescription() {
+		return this.rationCustomDescription;
 	}
 	
-	public void setRationOther(String rationOther) {
-		this.rationOther = rationOther;
+	public void setRationCustomDescription(String rationCustomDescription) {
+		this.rationCustomDescription = rationCustomDescription;
 	}
 	
-	public Double getRationPortions() {
-		return this.rationPortions;
+	public Double getRationAmount() {
+		return this.rationAmount;
 	}
 	
-	public void setRationPortions(Double rationPortions) {
-		this.rationPortions = rationPortions;
+	public void setRationAmount(Double rationAmount) {
+		this.rationAmount = rationAmount;
 	}
 
-	public Boolean getDisease() {
-		return disease;
+	public Integer getRationMeasurement() {
+		return rationMeasurement;
 	}
 
-	public void setDisease(Boolean disease) {
-		this.disease = disease;
+	public void setRationMeasurement(Integer rationMeasurement) {
+		this.rationMeasurement = rationMeasurement;
+	}
+
+	public Boolean getHasDiseases() {
+		return hasDiseases;
+	}
+
+	public void setHasDiseases(Boolean hasDiseases) {
+		this.hasDiseases = hasDiseases;
 	}
 
 	public String getDiseaseDescription() {
@@ -217,23 +226,10 @@ public class Dog {
 				+ ", birthDate=" + birthDate
 				+ ", arrivalDate=" + arrivalDate + ", castrated=" + castrated
 				+ ", castrationDate=" + castrationDate + ", status=" + status
-				+ ", rationId=" + ration + ", rationOther=" + rationOther
-				+ ", rationPortions=" + rationPortions
-				+ ", disease=" + disease + ", diseaseDescription="
-				+ diseaseDescription + ", sponsors=" + sponsors + ", getId()="
-				+ getId() + ", getName()=" + getName() + ", getWeight()="
-				+ getWeight() + ", getSex()=" + getSex() + ", getSize()="
-				+ getSize() + ", getFurColor()=" + getFurColor()
-				+ ", getBirthDate()=" + getBirthDate() + ", getArrivalDate()=" + getArrivalDate()
-				+ ", getCastrated()=" + getCastrated()
-				+ ", getCastrationDate()=" + getCastrationDate()
-				+ ", getStatus()=" + getStatus() + ", getRation()="
-				+ getRation() + ", getRationOther()=" + getRationOther() 
-				+ ", getRationPortions()=" + getRationPortions()
-				+ ", getDisease()=" + getDisease() + ", getDiseaseDescription()="
-				+ getDiseaseDescription() + ", getSponsors()=" + getSponsors()
-				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
-				+ ", toString()=" + super.toString() + "]";
+				+ ", rationId=" + ration + ", rationCustomDescription=" + rationCustomDescription
+				+ ", rationAmount=" + rationAmount + ", rationMeasurement=" + rationMeasurement
+				+ ", hasDiseases=" + hasDiseases + ", diseaseDescription="
+				+ diseaseDescription + ", sponsors=" + sponsors + "]";
 	}
 
 }

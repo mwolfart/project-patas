@@ -4,25 +4,25 @@ function jsonToForm(json) {
 	var app_date = new Date();
 	app_date.setTime(json.applicationDate);
 	
-	$(" #dogName ").val(json.dogId);
-	$(" #vacName ").val(json.vaccineName);
-	$(" #appDate ").val(dateToString(app_date));
+	$(" #dogId ").val(json.dogId);
+	$(" #vaccineName ").val(json.vaccineName);
+	$(" #applicationDate ").val(dateToString(app_date));
 	$(" #obs ").val(json.obs);
 	
 	if (json.nextApplicationDate) {
 		var next_app_date = new Date();
 		next_app_date.setTime(json.nextApplicationDate);
-		$(" #nextAppDate ").val(dateToString(next_app_date));
+		$(" #nextApplicationDate ").val(dateToString(next_app_date));
 	}
 }
 
 $(document).ready(function() {
 	// Edit button onClick handler
 	$(" #editBtn ").click(function() {		
-		$(" #dogName ").prop('disabled', false);
-		$(" #vacName ").prop('disabled', false);
-		$(" #appDate ").prop('disabled', false);
-		$(" #nextAppDate ").prop('disabled', false);
+		$(" #dogId ").prop('disabled', false);
+		$(" #vaccineName ").prop('disabled', false);
+		$(" #applicationDate ").prop('disabled', false);
+		$(" #nextApplicationDate ").prop('disabled', false);
 		$(" #obs ").prop('disabled', false);
 		
 		$(" #editBtn ").prop('disabled', true);
@@ -56,20 +56,20 @@ $(document).ready(function() {
 	$( "#vacEditForm" ).submit(function(event) {
 		event.preventDefault();
 		
-		if ( validateStringField( $( "#dogName" )[0] ) == 0 )
-			showAlert($( "#errorDogName" ), "Nome do cachorro deve ser informado.");
-		else if ( validateStringField( $( "#vacName" )[0] ) == 0 )
-			showAlert($( "#errorVacName" ), "Nome da vacina deve ser informado.");
-		else if ( validateDateField( $( "#appDate" )[0] ) == 0 )
-			showAlert($( "#errorAppDate" ), "Data deve ser informada.");
-		else if ( validateStringField( $( "#vacName" )[0] ) == -1 )
-			showAlert($( "#errorVacName" ), "Nome inv·lido.");
-		else if ( validateDateField( $( "#appDate" )[0] ) == -1 )
-			showAlert($( "#errorAppDate" ), "Data inv·lida.");
-		else if ( validateDateField( $( "#nextAppDate" )[0] ) == -1 )
-			showAlert($( "#errorNextAppDate" ), "Data inv·lida.");
+		if ( validateStringField( $( "#dogId" )[0] ) == 0 )
+			showAlert($( "#errorDogId" ), "Nome do cachorro deve ser informado.");
+		else if ( validateStringField( $( "#vaccineName" )[0] ) == 0 )
+			showAlert($( "#errorVaccineName" ), "Nome da vacina deve ser informado.");
+		else if ( validateDateField( $( "#applicationDate" )[0] ) == 0 )
+			showAlert($( "#errorApplicationDate" ), "Data deve ser informada.");
+		else if ( validateStringField( $( "#vaccineName" )[0] ) == -1 )
+			showAlert($( "#errorVaccineName" ), "Nome inv√°lido.");
+		else if ( validateDateField( $( "#applicationDate" )[0] ) == -1 )
+			showAlert($( "#errorApplicationDate" ), "Data inv√°lida.");
+		else if ( validateDateField( $( "#nextApplicationDate" )[0] ) == -1 )
+			showAlert($( "#errorNextApplicationDate" ), "Data inv√°lida.");
 		else if ( validateStringField( $( "#obs" )[0] ) == -1 )
-			showAlert($( "#errorObs" ), "ObservaÁıes contÈm caracteres inv·lidos.");
+			showAlert($( "#errorObs" ), "Observa√ß√µes cont√©m caracteres inv√°lidos.");
 		else {
 			// Convert form to json and fix its format
 			var jsonData = formToJson(this);	
@@ -91,10 +91,10 @@ $(document).ready(function() {
 				success: function() {
 					/* UNIQUE PART */
 					// Reset the form to previous state
-					$(" #dogName ").prop('disabled', true);
-					$(" #vacName ").prop('disabled', true);
-					$(" #appDate ").prop('disabled', true);
-					$(" #nextAppDate ").prop('disabled', true);
+					$(" #dogId ").prop('disabled', true);
+					$(" #vaccineName ").prop('disabled', true);
+					$(" #applicationDate ").prop('disabled', true);
+					$(" #nextApplicationDate ").prop('disabled', true);
 					$(" #obs ").prop('disabled', true);
 					
 					$(" #editBtn ").prop('disabled', false);

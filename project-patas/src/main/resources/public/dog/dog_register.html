@@ -118,13 +118,13 @@
 						</select>
 					</div>
 					<div class="form-group col-md-5">
-						<label for="rationOther" class="col-form-label">Descrição da Ração</label> 
-						<input type="text" id="rationOther" name="rationOther" class="form-control" maxlength="50" placeholder="Descrição da ração" disabled>
-						<div id="errorRation" class="alert alert-danger disabled-alert"></div>
+						<label for="rationCustomDescription" class="col-form-label">Descrição da Ração</label> 
+						<input type="text" id="rationCustomDescription" name="rationCustomDescription" class="form-control" maxlength="50" placeholder="Descrição da ração" disabled>
+						<div id="errorRationCustomDescription" class="alert alert-danger disabled-alert"></div>
 					</div>
-					<div class="form-group col-md-3">
-						<label for="ration" class="col-form-label">Porções</label> 
-						<select id="rationPortions" name="rationPortions" class="form-control">
+					<div class="form-group col-md-2">
+						<label for="rationAmount" class="col-form-label">Porções</label> 
+						<select id="rationAmount" name="rationAmount" class="form-control">
 							<option value=""></option>
 							<option value="0.5">1/2</option>
 							<option value="1">1</option>
@@ -138,11 +138,20 @@
 							<option value="5">5</option>
 						</select>
 					</div>
+					<div class="form-group col-md-1">
+						<label for="rationMeasurement" class="col-form-label">Medida</label>
+						<select id="rationMeasurement" name="rationMeasurement" class="form-control">
+							<option value="0"></option>
+							<option value="1">g</option>
+							<option value="2">mg</option>
+						</select>
+					</div>
 				</div>
 				<div class="form-row">
 					<div class="form-group col-md-1">
 						<label for="castrated" class="col-form-label">Castrado</label> 
-						<input type="checkbox" id="checkboxCastr" name="castrated" value="True" class="form-control">
+						<!--- TODO: IS VALUE TRUE NEEDED? --->
+						<input type="checkbox" id="castrated" name="castrated" value="True" class="form-control">
 					</div>
 					<div class="form-group col-md-11">
 						<label for="castrationDate" class="col-form-label">Data de castração</label> 
@@ -152,13 +161,13 @@
 				</div>
 				<div class="form-row">
 					<div class="form-group col-md-1">
-						<label for="diseases" class="col-form-label">Doenças</label> 
-						<input type="checkbox" id="checkboxDis" name="disease" class="form-control" value=true>
+						<label for="hasDiseases" class="col-form-label">Doenças</label> 
+						<input type="checkbox" id="hasDiseases" name="hasDiseases" class="form-control" value=true>
 					</div>
 					<div class="form-group col-md-11">
 						<label for="diseaseDescription" class="col-form-label">Descrição</label>
 						<input type="text" id="diseaseDescription" name="diseaseDescription" class="form-control" maxlength="80" placeholder="Doença do cachorro" disabled>
-						<div id="errorDisease" class="alert alert-danger disabled-alert"></div>
+						<div id="errorDiseaseDescription" class="alert alert-danger disabled-alert"></div>
 					</div>
 				</div>
 				<div class="form-group">
@@ -167,8 +176,8 @@
 					<div id="errorSponsors" class="alert alert-danger disabled-alert"></div>
 				</div>
 				<div class="form-group">
-					<input type="submit" name="register" value="Cadastrar" class="btn">
-					<a href="../index.html" id="cancel" name="cancel" class="btn" role="button">Voltar</a>
+					<input type="submit" name="registerBtn" value="Cadastrar" class="btn">
+					<a href="../index.html" id="cancel" class="btn">Voltar</a>
 				</div>
 			</form>
 		</div>
