@@ -156,8 +156,9 @@ function formToJson(form){
 		else if (isDateValid(input.value) && input.value != "")
 			JSON_data[input.name] = stringToDate(input.value).getTime();
 		//Else, if not empty, it's a string
-		else if (input.value != "")
+		else if (input.value != "") {
 			JSON_data[input.name] = input.value;
+		}
 	});
 
 	return JSON_data;
@@ -404,4 +405,14 @@ function readURL(input) {
 		};
 		reader.readAsDataURL(input.files[0]);		
 	}
+}
+
+// Helper function for image reading
+function changeimg(str) {
+    if(typeof str === "object") {
+        str = str.target.result; // file reader
+    }
+    
+    $(".unknown").css({"background-size":  "100px 100px",
+                       "background-image": "url(" + str + ")"});
 }

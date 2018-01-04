@@ -8,6 +8,7 @@ function jsonToForm(json) {
 	$(" #name ").val(json.name);
 	$(" #weight ").val(json.weight);
 	$(" #sex ").val(json.sex);
+	$(" #image-input ").val(json.photo);
 	$(" #size ").val(json.size);
 	$(" #furColor ").val(json.furColor);
 	$(" #status ").val(json.status);
@@ -124,8 +125,8 @@ $(document).ready(function() {
 			showAlert($( "#errorArrivalDate" ), "Data de chegada inválida.");
 		else if ( validateDateField( $( "#arrivalDate" )[0] ) == 0 ) 
 			showAlert($( "#errorArrivalDate" ), "Preencha a data de chegada.");
-		else if ( validateStringField( $( "#rationOther" )[0] ) == -1 ) 
-			showAlert($( "#errorRation" ), "Tipo de ração inválido.");
+		else if ( validateStringField( $( "#rationCustomDescription" )[0] ) == -1 ) 
+			showAlert($( "#errorRationCustomDescription" ), "Tipo de ração inválido.");
 		else if ( validateDateField( $( "#castrationDate" )[0] ) == -1 ) 
 			showAlert($( "#errorCastrationDate" ), "Data de chegada inválida.");
 		else if ( validateStringField( $( "#diseaseDescription" )[0] ) == -1 ) 
@@ -148,6 +149,12 @@ $(document).ready(function() {
 			if ( $(" #castrated ").prop("checked") )
 				jsonData["castrated"] = true;
 			else jsonData["castrated"] = false;
+			
+			// Save photo
+			if ( $(" #image-input ").val() ) {
+				console.log($(" #image-input ").val());
+				jsonData["photo"] = $(" #image-input ").val();
+			}
 			
 			// Fix JSON so it's in the right format
 			jsonData = JSON.stringify(jsonData);
