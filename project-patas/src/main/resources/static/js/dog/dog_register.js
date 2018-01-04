@@ -42,12 +42,18 @@ $(document).ready(function() {
 			else jsonData["castrated"] = false;
 			
 			// Save photo
-			if ( $(" #image-input ").val() ) {
-				var file = document.getElementById("image-input").files[0];
-				var fr = new FileReader();
-				fr.onloadend = changeimg;
-				console.log(fr.readAsText(file));
-				//jsonData["photo"] = $(" #image-input ").val();
+			var image_path = document.getElementById("image-input").files[0].name;
+			console.log(image_path);
+			if (image_path) {
+				$.ajax({
+					url: "/dog/photo_to_array",
+					type: "POST",
+					data: image_path,
+					contentType: "application/json; charset=UTF-8",
+					success: function(response) {
+						jsonData["photo"] = response;
+					}
+				});
 			}
 			
 			// Fix JSON so it's in the right format

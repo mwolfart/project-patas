@@ -4,11 +4,10 @@
 function jsonToForm(json) {
 	var arrival_date = new Date();
 	arrival_date.setTime(json.arrivalDate);
-
+	
 	$(" #name ").val(json.name);
 	$(" #weight ").val(json.weight);
 	$(" #sex ").val(json.sex);
-	$(" #image-input ").val(json.photo);
 	$(" #size ").val(json.size);
 	$(" #furColor ").val(json.furColor);
 	$(" #status ").val(json.status);
@@ -42,6 +41,18 @@ function jsonToForm(json) {
 	
 	if (json.ration == "OUTRO") {
 		(json.rationCustomDescription ? $(" #rationCustomDescription ").val(json.rationCustomDescription) : false );
+	}
+	
+	if (json.photo) {
+		$.ajax({
+			url: "/dog/array_to_photo",
+			type: "POST",
+			data: json.photo,
+			contentType: "application/json; charset=UTF-8",
+			success: function(response) {
+				$(" #image-input ").val(response);
+			}
+		});
 	}
 }
 
@@ -151,9 +162,17 @@ $(document).ready(function() {
 			else jsonData["castrated"] = false;
 			
 			// Save photo
-			if ( $(" #image-input ").val() ) {
-				console.log($(" #image-input ").val());
-				jsonData["photo"] = $(" #image-input ").val();
+			var image_path = document.getElementById("image-input").files[0].name;
+			if (image_path) {
+				$.ajax({
+					url: "/dog/photo_to_array",
+					type: "POST",
+					data: image_path,
+					contentType: "application/json; charset=UTF-8",
+					success: function(response) {
+						jsonData["photo"] = response;
+					}
+				});
 			}
 			
 			// Fix JSON so it's in the right format

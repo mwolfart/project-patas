@@ -63,7 +63,7 @@ public class Helper {
 			//.setIcon(new ImageIcon(img));	
 			 
 		    // TODO: eh soh pra teste TIRAR ISSO
-			ImageIO.write(img, "PNG", new File("D:/Documentos/patas.png"));
+			//ImageIO.write(img, "PNG", new File("D:/Documentos/patas.png"));
 			return img;
 		} catch (IOException e) {
 			e.printStackTrace();
