@@ -25,7 +25,7 @@ $(document).ready(function() {
 		else if ( validateDateField( $( "#castrationDate" )[0] ) == -1 ) 
 			showAlert($( "#errorCastrationDate" ), "Data de chegada inválida.");
 		else if ( validateStringField( $( "#diseaseDescription" )[0] ) == -1 ) 
-			showAlert($( "#errorDisease" ), "Descrição inv�lida.");
+			showAlert($( "#errorDisease" ), "Descrição inválida.");
 		else if ( validateStringField( $( "#sponsors" )[0] ) == -1 ) 
 			showAlert($( "#errorSponsors" ), "Nome do(s) padrinho(s) inválido.");
 		else {

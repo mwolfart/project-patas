@@ -24,7 +24,6 @@ public class Dog {
 	private String size;
 	private String furColor;
 	private Date birthDate;
-	private Integer age;
 	private Date arrivalDate;
 	private Boolean castrated;
 	private Date castrationDate;
@@ -41,7 +40,7 @@ public class Dog {
     }
     
 	public Dog(Long id, String name, Double weight, String sex, String size,
-			String furColor, Date birthDate, Integer age, Date arrivalDate,
+			String furColor, Date birthDate, Date arrivalDate,
 			Boolean castrated, Date castrationDate, Availability status,
 			String ration, String rationOther, Double rationPortions, 
 			Boolean disease, String diseaseDescription, String sponsors) {
@@ -53,7 +52,6 @@ public class Dog {
 		this.size = size;
 		this.furColor = furColor;
 		this.birthDate = birthDate;
-		this.age = age;
 		this.arrivalDate = arrivalDate;
 		this.castrated = castrated;
 		this.castrationDate = castrationDate;
@@ -121,14 +119,6 @@ public class Dog {
 
 	public void setBirthDate(Date birthDate) {
 		this.birthDate = birthDate;
-	}
-
-	public Integer getAge() {
-		return age;
-	}
-
-	public void setAge(Integer age) {
-		this.age = age;
 	}
 
 	public Date getArrivalDate() {
@@ -224,7 +214,7 @@ public class Dog {
 	public String toString() {
 		return "Dog [id=" + id + ", name=" + name + ", weight=" + weight
 				+ ", sex=" + sex + ", size=" + size + ", furColor=" + furColor
-				+ ", birthDate=" + birthDate + ", age=" + age
+				+ ", birthDate=" + birthDate
 				+ ", arrivalDate=" + arrivalDate + ", castrated=" + castrated
 				+ ", castrationDate=" + castrationDate + ", status=" + status
 				+ ", rationId=" + ration + ", rationOther=" + rationOther
@@ -234,8 +224,7 @@ public class Dog {
 				+ getId() + ", getName()=" + getName() + ", getWeight()="
 				+ getWeight() + ", getSex()=" + getSex() + ", getSize()="
 				+ getSize() + ", getFurColor()=" + getFurColor()
-				+ ", getBirthDate()=" + getBirthDate() + ", getAge()="
-				+ getAge() + ", getArrivalDate()=" + getArrivalDate()
+				+ ", getBirthDate()=" + getBirthDate() + ", getArrivalDate()=" + getArrivalDate()
 				+ ", getCastrated()=" + getCastrated()
 				+ ", getCastrationDate()=" + getCastrationDate()
 				+ ", getStatus()=" + getStatus() + ", getRation()="

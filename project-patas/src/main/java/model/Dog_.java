@@ -17,7 +17,6 @@ public abstract class Dog_ {
 	public static volatile SingularAttribute<Dog, String> size;
 	public static volatile SingularAttribute<Dog, String> furColor;
 	public static volatile SingularAttribute<Dog, Date> birthDate;
-	public static volatile SingularAttribute<Dog, Integer> age;
 	public static volatile SingularAttribute<Dog, Date> arrivalDate;
 	public static volatile SingularAttribute<Dog, Boolean> castrated;
 	public static volatile SingularAttribute<Dog, Date> castrationDate;

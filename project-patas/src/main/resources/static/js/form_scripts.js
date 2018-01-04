@@ -111,7 +111,7 @@ function integerToDate(date_as_int) {
 	return date;
 }
 
-// computeAge := Date -> Integer
+// computeAge := Date -> String
 // given an arbitrary date, computes the age (difference between this date and the current one).
 // If the given date is greater (more recent) than the current date, it uses the given date as "current date"
 function computeAge(datee) {
@@ -126,9 +126,18 @@ function computeAge(datee) {
 	var diff_month = cur_date.getMonth() - datee.getMonth();
 	var diff_days = cur_date.getDate() - datee.getDate();
 	
-	if (diff_month > 0 || (diff_month == 0 && diff_days >= 0))
-		return diff_year;
-	else return diff_year - 1;
+	if (diff_month > 0 || (diff_month == 0 && diff_days >= 0)) {
+		if (diff_year > 0)
+			return diff_year + " anos";
+		else if (diff_month > 0)
+			return diff_month + " meses";
+		else return diff_days + " dias";
+	}
+	else {
+		if (diff_year - 1 > 0)
+			return (diff_year - 1) + " anos";
+		else return (12 - Math.abs(diff_month)) + " meses";
+	}
 }
 
 // formToJson := Object -> Object
