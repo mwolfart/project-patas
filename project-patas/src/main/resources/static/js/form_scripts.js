@@ -407,12 +407,21 @@ function readURL(input) {
 	}
 }
 
-// Helper function for image reading
-function changeimg(str) {
-    if(typeof str === "object") {
-        str = str.target.result; // file reader
-    }
-    
-    $(".unknown").css({"background-size":  "100px 100px",
-                       "background-image": "url(" + str + ")"});
+//Store an image as byte arrays
+function storeImage(input, callback) {
+	if (input.files && input.files[0]) {
+		var imageByteArray = [];
+		var reader = new FileReader();
+		reader.onloadend = function(evt) {
+			if (evt.target.readyState == FileReader.DONE) {
+		        var arrayBuffer = evt.target.result,
+		        array = new Uint8Array(arrayBuffer);
+		        for (var i = 0; i < array.length; i++) {
+		        	imageByteArray.push(array[i]);
+		        }
+		        callback(imageByteArray);
+			}
+		}
+		reader.readAsArrayBuffer(input.files[0]);
+	} else callback([]);
 }

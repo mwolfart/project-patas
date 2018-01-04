@@ -38,7 +38,7 @@ public class Helper {
 
 		return criteria_list;
 	}
-	
+	/*
 	public static byte[] saveImage(String path){
 		BufferedImage img;
 		try {
@@ -71,6 +71,7 @@ public class Helper {
 			return null;
 		}
 	}
+	*/
 	
 	// Checks if a string is numeric
 	public static boolean isNumeric(String s) {  

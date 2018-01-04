@@ -17,6 +17,9 @@ function jsonToForm(json) {
 	$(" #rationMeasurement ").val(json.rationMeasurement);
 	$(" #sponsors ").val(json.sponsors);
 	
+	if(json.photo)
+		$(" #dogPhoto ").attr("src", "data:image/png;base64," + json.photo);
+	
 	if (json.birthDate) {
 		var birth_date = new Date();
 		birth_date.setTime(json.birthDate);
@@ -162,58 +165,50 @@ $(document).ready(function() {
 			else jsonData["castrated"] = false;
 			
 			// Save photo
-			var image_path = document.getElementById("image-input").files[0].name;
-			if (image_path) {
+			var photo_as_bytes = [];
+			storeImage(document.getElementById("image-input"), function(photo_as_bytes) {
+				jsonData["photo"] = photo_as_bytes;
+				
+				// Fix JSON so it's in the right format
+				jsonData = JSON.stringify(jsonData);
+				
+				// Post the data
 				$.ajax({
-					url: "/dog/photo_to_array",
+					url: "/dog/update",
 					type: "POST",
-					data: image_path,
+					data: jsonData,
 					contentType: "application/json; charset=UTF-8",
-					success: function(response) {
-						jsonData["photo"] = response;
+					error: function(response) {
+						console.log(response);
+					},
+					success: function() {
+						/* UNIQUE PART */
+						// Reset the form to previous state
+						$(" #name ").prop('disabled', true);
+						$(" #birthDate ").prop('disabled', true);
+						$(" #weight ").prop('disabled', true);
+						$(" #sex ").prop('disabled', true);
+						$(" #size ").prop('disabled', true);
+						$(" #furColor ").prop('disabled', true);
+						$(" #status ").prop('disabled', true);
+						$(" #arrivalDate ").prop('disabled', true);
+						$(" #ration ").prop('disabled', true);
+						$(" #rationAmount ").prop('disabled', true);
+						$(" #rationCustomDescription ").prop('disabled', true);
+						$(" #castrated ").prop('disabled', true);
+						$(" #hasDiseases ").prop('disabled', true);
+						$(" #sponsors ").prop('disabled', true);
+						$(" #castrationDate ").prop('disabled', true);
+						$(" #diseaseDescription ").prop('disabled', true);
+						
+						$(" #editBtn ").prop('disabled', false);
+						$(" #appointmentBtn ").prop('disabled', false);
+						$(" #vaccinationBtn ").prop('disabled', false);
+						$(" #vermifugeBtn ").prop('disabled', false);
+						$(" #saveBtn ").prop('disabled', true);
+						$(" #deleteBtn ").prop('disabled', false);
 					}
 				});
-			}
-			
-			// Fix JSON so it's in the right format
-			jsonData = JSON.stringify(jsonData);
-			
-			// Post the data
-			$.ajax({
-				url: "/dog/update",
-				type: "POST",
-				data: jsonData,
-				contentType: "application/json; charset=UTF-8",
-				error: function(response) {
-					console.log(response);
-				},
-				success: function() {
-					/* UNIQUE PART */
-					// Reset the form to previous state
-					$(" #name ").prop('disabled', true);
-					$(" #birthDate ").prop('disabled', true);
-					$(" #weight ").prop('disabled', true);
-					$(" #sex ").prop('disabled', true);
-					$(" #size ").prop('disabled', true);
-					$(" #furColor ").prop('disabled', true);
-					$(" #status ").prop('disabled', true);
-					$(" #arrivalDate ").prop('disabled', true);
-					$(" #ration ").prop('disabled', true);
-					$(" #rationAmount ").prop('disabled', true);
-					$(" #rationCustomDescription ").prop('disabled', true);
-					$(" #castrated ").prop('disabled', true);
-					$(" #hasDiseases ").prop('disabled', true);
-					$(" #sponsors ").prop('disabled', true);
-					$(" #castrationDate ").prop('disabled', true);
-					$(" #diseaseDescription ").prop('disabled', true);
-					
-					$(" #editBtn ").prop('disabled', false);
-					$(" #appointmentBtn ").prop('disabled', false);
-					$(" #vaccinationBtn ").prop('disabled', false);
-					$(" #vermifugeBtn ").prop('disabled', false);
-					$(" #saveBtn ").prop('disabled', true);
-					$(" #deleteBtn ").prop('disabled', false);
-				}
 			});
 		}
 	});

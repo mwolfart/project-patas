@@ -42,37 +42,28 @@ $(document).ready(function() {
 			else jsonData["castrated"] = false;
 			
 			// Save photo
-			var image_path = document.getElementById("image-input").files[0].name;
-			console.log(image_path);
-			if (image_path) {
+			var photo_as_bytes = [];
+			storeImage(document.getElementById("image-input"), function(photo_as_bytes) {
+				jsonData["photo"] = photo_as_bytes;
+			
+				// Fix JSON so it's in the right format
+				jsonData = JSON.stringify(jsonData);
+	
+				// Post the data
 				$.ajax({
-					url: "/dog/photo_to_array",
+					url: "/dog/register",
 					type: "POST",
-					data: image_path,
+					dataType: "json",
+					data: jsonData,
 					contentType: "application/json; charset=UTF-8",
 					success: function(response) {
-						jsonData["photo"] = response;
+						alert("Cachorro cadastrado com sucesso!");
+						window.location.replace("/dog/dog_view.html?id=" + response);
+					},
+					error: function(response) {
+						alert(response.responseText);
 					}
 				});
-			}
-			
-			// Fix JSON so it's in the right format
-			jsonData = JSON.stringify(jsonData);
-
-			// Post the data
-			$.ajax({
-				url: "/dog/register",
-				type: "POST",
-				dataType: "json",
-				data: jsonData,
-				contentType: "application/json; charset=UTF-8",
-				success: function(response) {
-					alert("Cachorro cadastrado com sucesso!");
-					window.location.replace("/dog/dog_view.html?id=" + response);
-				},
-				error: function(response) {
-					alert(response.responseText);
-				}
 			});
 		}
 	});
