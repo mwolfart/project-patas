@@ -11,6 +11,7 @@ $(document).ready(function() {
 		var userData = {};
 		userData["username"] = $("#username").val();
 		userData["password"] = $("#password").val();
+		var user = userData["username"];
 		userData = JSON.stringify(userData);
 		
 		$.ajax({
@@ -21,7 +22,7 @@ $(document).ready(function() {
 			success: function(response) {
 				// TODO: set current user or session
 				if (response == true) {
-					setCookie("username", userData["username"], 3);
+					$.session.set("username", user);
 					window.location.replace("/index.html");	
 				}
 				else {

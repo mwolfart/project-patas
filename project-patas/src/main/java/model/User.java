@@ -11,6 +11,8 @@ import javax.persistence.Table;
 @Table(name = "userPatas")
 public class User {
 	
+	//TODO: DO WE NEED ID?
+	
 	@Id 
 	@GeneratedValue
 	private Long id;
