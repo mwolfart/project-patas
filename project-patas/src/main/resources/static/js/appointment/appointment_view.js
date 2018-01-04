@@ -6,10 +6,12 @@ function jsonToForm(json) {
 	$(" #volName ").val(json.responsibleName);
 	$(" #location ").val(json.location);
 	$(" #vetName ").val(json.vetName);
-	$(" #totalCost ").val((json.price).toFixed(2));
 	$(" #reason ").val(json.reason);
 	$(" #examDescription ").val(json.examDescription);
 	$(" #appointmentDescription ").val(json.appointmentDescription);
+
+	if (json.price)
+		$(" #totalCost ").val((json.price).toFixed(2));
 	
 	if (json.appointmentDate) {
 		var appointment_date = new Date();
