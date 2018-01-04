@@ -51,7 +51,7 @@ $(document).ready(function() {
 			showAlert($( "#errorVacName" ), "Nome inválido.");
 		else if ( validateDateField( $("#appDate")[0] ) == -1 )
 			showAlert($( "#errorAppDate" ), "Data inválida.");
-		else if ( validateNatNumberField( $("#nextAppDate")[0] ) == -1 )
+		else if ( validateDateField( $("#nextAppDate")[0] ) == -1 )
 			showAlert($( "#errorNextAppDate" ), "Data inválida.");
 		else {
 			jsonData = formToJson(this);
