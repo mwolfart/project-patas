@@ -19,9 +19,9 @@ public class Appointment {
 	private Date appointmentDate;
 	private String location;
 	private String vetName;
-	private Float price;
+	private Float totalCost;
 	private String reason;
-	private Boolean exam;
+	private Boolean examinated;
 	private String examDescription;
 	private String appointmentDescription;
 	/*
@@ -33,7 +33,7 @@ public class Appointment {
 	
 	public Appointment(Long id, Long dogId, String responsibleName,
 			Date appointmentDate, String location, String vetName,
-			Float price, String reason, Boolean exam,
+			Float totalCost, String reason, Boolean examinated,
 			String examDescription, String appointmentDescription) {
 		super();
 		this.id = id;
@@ -42,9 +42,9 @@ public class Appointment {
 		this.appointmentDate = appointmentDate;
 		this.location = location;
 		this.vetName = vetName;
-		this.price = price;
+		this.totalCost = totalCost;
 		this.reason = reason;
-		this.exam = exam;
+		this.examinated = examinated;
 		this.examDescription = examDescription;
 		this.appointmentDescription = appointmentDescription;
 	}	
@@ -97,12 +97,12 @@ public class Appointment {
 		this.vetName = vetName;
 	}
 	
-	public Float getPrice() {
-		return price;
+	public Float getTotalCost() {
+		return totalCost;
 	}
 	
-	public void setPrice(Float price) {
-		this.price = price;
+	public void setTotalCost(Float totalCost) {
+		this.totalCost = totalCost;
 	}
 	
 	public String getReason() {
@@ -113,12 +113,12 @@ public class Appointment {
 		this.reason = reason;
 	}
 	
-	public Boolean getExam() {
-		return exam;
+	public Boolean getExaminated() {
+		return examinated;
 	}
 	
-	public void setExam(Boolean exam) {
-		this.exam = exam;
+	public void setExaminated(Boolean examinated) {
+		this.examinated = examinated;
 	}
 	
 	public String getExamDescription() {
@@ -142,8 +142,8 @@ public class Appointment {
 		return "Appointment [id=" + id + ", dogId=" + dogId
 				+ ", responsibleName=" + responsibleName + ", appointmentDate="
 				+ appointmentDate + ", location=" + location + ", vetName="
-				+ vetName + ", price=" + price + ", reason=" + reason
-				+ ", exam=" + exam + ", examDescription=" + examDescription
+				+ vetName + ", totalCost=" + totalCost + ", reason=" + reason
+				+ ", examinated=" + examinated + ", examDescription=" + examDescription
 				+ ", appointmentDescription=" + appointmentDescription + "]";
 	}
 }

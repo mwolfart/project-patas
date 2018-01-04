@@ -62,7 +62,7 @@ $(document).ready(function() {
 	});
 	
 	//Enable/disable the castration date field
-	$( "#checkboxCastr" ).click(function() {
+	$( "#castrated" ).click(function() {
 		if (this.checked)
 			$( "#castrationDate" ).prop("disabled", false);
 		else {
@@ -74,7 +74,7 @@ $(document).ready(function() {
 	});
 	
 	//Enable/disable the disease description field
-	$( "#checkboxDis" ).click(function() {
+	$( "#hasDiseases" ).click(function() {
 		if (this.checked)
 			$( "#diseaseDescription" ).prop("disabled", false);
 		else {
@@ -86,11 +86,11 @@ $(document).ready(function() {
 	
 	$( "#ration" ).change(function() {
 		if (this.value == "OUTRO") 
-			$( "#rationOther" ).prop("disabled", false);
+			$( "#rationCustomDescription" ).prop("disabled", false);
 		else {
-			$( "#rationOther" ).prop("disabled", true);
-			$( "#rationOther" ).val("");
-			hideAlert($( "#errorRationOther" ));
+			$( "#rationCustomDescription" ).prop("disabled", true);
+			$( "#rationCustomDescription" ).val("");
+			hideAlert($( "#errorRationCustomDescription" ));
 		}
 	});
 	

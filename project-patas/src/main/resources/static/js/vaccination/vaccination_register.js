@@ -4,18 +4,18 @@ $(document).ready(function() {
 	$( "#vacRegisterForm" ).submit(function(event) {
 		event.preventDefault();
 		
-		if ( validateStringField( $( "#dogName" )[0] ) == 0 )
-			showAlert($( "#errorDogName" ), "Nome do cachorro deve ser informado.");
-		else if ( validateStringField( $( "#vacName" )[0] ) == 0 )
-			showAlert($( "#errorVacName" ), "Nome da vacina deve ser informado.");
-		else if ( validateDateField( $( "#appDate" )[0] ) == 0 )
-			showAlert($( "#errorAppDate" ), "Data deve ser informada.");
-		else if ( validateStringField( $( "#vacName" )[0] ) == -1 )
-			showAlert($( "#errorVacName" ), "Nome inválido.");
-		else if ( validateDateField( $( "#appDate" )[0] ) == -1 )
-			showAlert($( "#errorAppDate" ), "Data inválida.");
-		else if ( validateDateField( $( "#nextAppDate" )[0] ) == -1 )
-			showAlert($( "#errorNextAppDate" ), "Data inválida.");
+		if ( validateStringField( $( "#dogId" )[0] ) == 0 )
+			showAlert($( "#errorDogId" ), "Nome do cachorro deve ser informado.");
+		else if ( validateStringField( $( "#vaccineName" )[0] ) == 0 )
+			showAlert($( "#errorVaccineName" ), "Nome da vacina deve ser informado.");
+		else if ( validateDateField( $( "#applicationDate" )[0] ) == 0 )
+			showAlert($( "#errorApplicationDate" ), "Data deve ser informada.");
+		else if ( validateStringField( $( "#vaccineName" )[0] ) == -1 )
+			showAlert($( "#errorVaccineName" ), "Nome inválido.");
+		else if ( validateDateField( $( "#applicationDate" )[0] ) == -1 )
+			showAlert($( "#errorApplicationDate" ), "Data inválida.");
+		else if ( validateDateField( $( "#nextApplicationDate" )[0] ) == -1 )
+			showAlert($( "#errorNextApplicationDate" ), "Data inválida.");
 		else if ( validateStringField( $( "#obs" )[0] ) == -1 )
 			showAlert($( "#errorObs" ), "Observações contém caracteres inválidos.");
 		else {

@@ -118,9 +118,9 @@ public final class VaccinationSpecifications {
 			Date nextAppDate = new Date(Long.parseLong(criterion.getValue()));
 			cal.setTime(nextAppDate);
 			
-			Specification<Vaccination> specNextAppDay = applicationDayEquals(cal.get(Calendar.DAY_OF_MONTH));
-			Specification<Vaccination> specNextAppMonth = applicationMonthEquals(cal.get(Calendar.MONTH) + 1);
-			Specification<Vaccination> specNextAppYear = applicationYearEquals(cal.get(Calendar.YEAR));
+			Specification<Vaccination> specNextAppDay = nextApplicationDayEquals(cal.get(Calendar.DAY_OF_MONTH));
+			Specification<Vaccination> specNextAppMonth = nextApplicationMonthEquals(cal.get(Calendar.MONTH) + 1);
+			Specification<Vaccination> specNextAppYear = nextApplicationYearEquals(cal.get(Calendar.YEAR));
 			
 			return Specifications.where(specNextAppDay).and(specNextAppMonth).and(specNextAppYear);
 		default:

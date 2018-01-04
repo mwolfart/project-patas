@@ -40,24 +40,25 @@
 					</div>
 					<div class="form-group col-md-8">
 						<div class="form-row">
-							<label for="name" class="col-form-label required">Nome</label>
-							<input type="text" id="name" name="name" class="form-control" maxlength="80" disabled>
-							<div id="errorName" class="alert alert-danger disabled-alert"></div>
+							<div class="form-group col-md-9">
+								<label for="name" class="col-form-label required">Nome</label>
+								<input type="text" id="name" name="name" class="form-control" maxlength="80" disabled>
+								<div id="errorName" class="alert alert-danger disabled-alert"></div>
+							</div>
+							<div class="form-group col-md-3">
+								<label for="sex" class="col-form-label">Sexo</label>
+								<select id="sex" name="sex" class="form-control" disabled>
+									<option value=""></option>
+									<option value="F">Fêmea</option>
+									<option value="M">Macho</option>
+								</select>				
+							</div>
 						</div>
 						<div class="form-row">
-							<div class="form-group col-md-3">
-								<label for="birthDate" class="col-form-label">Data de nascimento</label>
-								<input type="text" id="birthDate" name="birthDate" class="form-control" maxlength="10" placeholder="dd/mm/aaaa" disabled>
-								<div id="errorBirthDate" class="alert alert-danger disabled-alert"></div>
-							</div>
-							<div class="form-group col-md-1">
-								<label for="age" class="col-form-label">Idade</label>
-								<input type="text" id="age" name="age" value="" class="form-control" disabled>
-							</div>
-							<div class="form-group col-md-3">
-								<label for="weight" class="col-form-label">Peso</label>
-								<input type="text" id="weight" name="weight" class="form-control" maxlength="6" disabled>
-								<div id="errorWeight" class="alert alert-danger disabled-alert"></div>
+							<div class="form-group col-md-2">
+								<label for="furColor" class="col-form-label">Cor do pelo</label>
+								<input type="text" id="furColor" name="furColor" class="form-control" maxlength="30" disabled>
+								<div id="errorFurColor" class="alert alert-danger disabled-alert"></div>
 							</div>
 							<div class="form-group col-md-2">
 								<label for="size" class="col-form-label">Porte</label>
@@ -69,20 +70,21 @@
 								</select>
 							</div>
 							<div class="form-group col-md-3">
-								<label for="sex" class="col-form-label">Sexo</label>
-								<select id="sex" name="sex" class="form-control" disabled>
-									<option value=""></option>
-									<option value="F">Fêmea</option>
-									<option value="M">Macho</option>
-								</select>				
+								<label for="birthDate" class="col-form-label">Data de nascimento</label>
+								<input type="text" id="birthDate" name="birthDate" class="form-control" maxlength="10" placeholder="dd/mm/aaaa" disabled>
+								<div id="errorBirthDate" class="alert alert-danger disabled-alert"></div>
 							</div>
+							<div class="form-group col-md-2">
+								<label for="age" class="col-form-label">Idade</label>
+								<input type="text" id="age" name="age" value="" class="form-control" form="blank" disabled>
+							</div>
+							<div class="form-group col-md-3">
+								<label for="weight" class="col-form-label">Peso</label>
+								<input type="text" id="weight" name="weight" class="form-control" maxlength="6" disabled>
+								<div id="errorWeight" class="alert alert-danger disabled-alert"></div>
+							</div>					
 						</div>
 						<div class="form-row">										
-							<div class="form-group col-md-4">
-								<label for="furColor" class="col-form-label">Cor do pelo</label>
-								<input type="text" id="furColor" name="furColor" class="form-control" maxlength="30" disabled>
-								<div id="errorFurColor" class="alert alert-danger disabled-alert"></div>
-							</div>
 							<div class="form-group col-md-3">
 								<label for="arrivalDate" class="col-form-label required">Data de chegada</label>
 								<input type="text" id="arrivalDate" name="arrivalDate" class="form-control" maxlength="10" placeholder="dd/mm/aaaa" disabled>
@@ -100,29 +102,16 @@
 									<option value="DESAPARECIDO">Desaparecido</option>
 								</select>
 							</div>
+							<div class="form-group col-md-5">
+								<label for="sponsors" class="col-form-label">Padrinhos</label>
+								<input type="text" id="sponsors" name="sponsors" class="form-control" maxlength="200" disabled>
+								<div id="errorSponsors" class="alert alert-danger disabled-alert"></div>
+							</div>
 						</div>
 					</div>
 				</div>			
 				<div class="form-row">
-					<div class="form-group col-md-1">
-						<label for="castrated" class="col-form-label">Castrado</label>
-						<input type="checkbox" id="checkboxCastr" name="castrated" value=true class="form-control" disabled>
-					</div>
-					<div class="form-group col-md-2">
-						<label for="castrationDate" class="col-form-label">Data de castração</label>
-						<input type="text" id="castrationDate" name="castrationDate" class="form-control" maxlength="10" placeholder="dd/mm/aaaa" disabled>
-						<div id="errorCastrationDate" class="alert alert-danger disabled-alert"></div>
-					</div>
-					<div class="form-group col-md-1">
-						<label for="diseases" class="col-form-label">Doenças</label>
-						<input type="checkbox" id="checkboxDis" name="disease" class="form-control" value=true disabled>
-					</div>
-					<div class="form-group col-md-2">
-						<label for="diseaseDescription" class="col-form-label">Descrição</label>
-						<input type="text" id="diseaseDescription" name="diseaseDescription" class="form-control" maxlength="80" disabled>
-						<div id="errorDisease" class="alert alert-danger disabled-alert"></div>
-					</div>
-					<div class="form-group col-md-2">
+					<div class="form-group col-md-3">
 						<label for="ration" class="col-form-label">Ração</label>
 						<select id="ration" name="ration" class="form-control" disabled>
 							<option value=""></option>
@@ -132,14 +121,14 @@
 							<option value="OUTRO">Outro</option>
 						</select>
 					</div>
-					<div class="form-group col-md-2">
-						<label for="rationOther" class="col-form-label">Descrição da Ração</label>
-						<input type="text" id="rationOther" name="rationOther" class="form-control" maxlength="50" placeholder="Descrição da ração" disabled>
-						<div id="errorRation" class="alert alert-danger disabled-alert"></div>
+					<div class="form-group col-md-5">
+						<label for="rationCustomDescription" class="col-form-label">Descrição da Ração</label>
+						<input type="text" id="rationCustomDescription" name="rationCustomDescription" class="form-control" maxlength="50" placeholder="Descrição da ração" disabled>
+						<div id="errorRationCustomDescription" class="alert alert-danger disabled-alert"></div>
 					</div>
-					<div class="form-group col-md-2">
-						<label for="ration" class="col-form-label">Porções</label>
-						<select id="rationPortions" name="rationPortions" class="form-control" disabled>
+					<div class="form-group col-md-3">
+						<label for="rationAmount" class="col-form-label">Porções</label>
++						<select id="rationAmount" name="rationAmount" class="form-control" disabled>
 							<option value=""></option>
 							<option value="0.5">1/2</option>
 							<option value="1">1</option>
@@ -153,20 +142,43 @@
 							<option value="5">5</option>
 						</select>
 					</div>
+					<div class="form-group col-md-1">
+						<label for="rationMeasurement" class="col-form-label">Medida</label>
+						<select id="rationMeasurement" name="rationMeasurement" class="form-control" disabled>
+							<option value="0"></option>
+							<option value="1">g</option>
+							<option value="2">mg</option>
+						</select>
+					</div>
 				</div>
-				<div class="form-group">
-					<label for="sponsors" class="col-form-label">Padrinhos</label>
-					<input type="text" id="sponsors" name="sponsors" class="form-control" maxlength="200" disabled>
-					<div id="errorSponsors" class="alert alert-danger disabled-alert"></div>
+				<div class="form-row">
+					<div class="form-group col-md-1">
+						<label for="castrated" class="col-form-label">Castrado</label>
+						<input type="checkbox" id="castrated" name="castrated" value=true class="form-control" disabled>
+					</div>
+					<div class="form-group col-md-5">
+						<label for="castrationDate" class="col-form-label">Data de castração</label>
+						<input type="text" id="castrationDate" name="castrationDate" class="form-control" maxlength="10" placeholder="dd/mm/aaaa" disabled>
+						<div id="errorCastrationDate" class="alert alert-danger disabled-alert"></div>
+					</div>
+					<div class="form-group col-md-1">
+						<label for="hasDiseases" class="col-form-label">Doenças</label>
+						<input type="checkbox" id="hasDiseases" name="hasDiseases" class="form-control" value=true disabled>
+					</div>
+					<div class="form-group col-md-5">
+						<label for="diseaseDescription" class="col-form-label">Descrição</label>
+						<input type="text" id="diseaseDescription" name="diseaseDescription" class="form-control" maxlength="80" disabled>
+						<div id="errorDiseaseDescription" class="alert alert-danger disabled-alert"></div>
+					</div>
 				</div>	
 				<div class="form-group">	
-					<input type="button" id="editBtn" name="edit" value="Editar" class="btn">
-					<input type="button" id="appointmentBtn" name="appointment" value="Ver consultas" class="btn">
-					<input type="button" id="vaccinationBtn" name="vaccination" value="Ver vacinas" class="btn">
-					<input type="button" id="vermifugationBtn" name="vermifugation" value="Ver vermífugos" class="btn">
-					<input type="submit" id="saveBtn" name="save" value="Salvar" class="btn" disabled>
-					<input type="button" id="deleteBtn" name="delete" value="Excluir" class="btn">
-					<a href="../index.html" id="return" name="return" class="btn" role="button">Voltar</a>
+					<input type="button" id="editBtn" value="Editar" class="btn">
+					<input type="button" id="appointmentBtn" value="Ver consultas" class="btn">
+					<input type="button" id="vaccinationBtn" value="Ver vacinas" class="btn">
+					<input type="button" id="vermifugeBtn" value="Ver vermífugos" class="btn">
+					<input type="submit" id="saveBtn" value="Salvar" class="btn" disabled>
+					<input type="button" id="deleteBtn" value="Excluir" class="btn">
+					<a href="../index.html" id="return" class="btn">Voltar</a>
 				</div>
 			</form>
 		</div>

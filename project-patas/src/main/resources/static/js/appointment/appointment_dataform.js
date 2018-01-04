@@ -1,7 +1,7 @@
 // Document load script
 $(document).ready(function() {
 	// Prevent user from typing letters and other symbols into numeric fields
-	$( "#volName" ).keydown(protectStringField);
+	$( "#responsibleName" ).keydown(protectStringField);
 	$( "#appointmentDate" ).keydown(protectNumericField);
 	$( "#location" ).keydown(protectStringField);
 	$( "#vetName" ).keydown(protectStringField);
@@ -11,14 +11,14 @@ $(document).ready(function() {
 	$( "#description" ).keydown(protectStringField);
 	
 	// Validate numeric and date fields
-	$( "#dogName" ).focusout(function () { 
+	$( "#dogId" ).focusout(function () { 
 		if (validateStringField(this) > 0)
-			hideAlert($( "#errorDogName" ));
+			hideAlert($( "#errorDogId" ));
 	});
 	
-	$( "#volName" ).focusout(function () { 
+	$( "#responsibleName" ).focusout(function () { 
 		if (validateStringField(this) >= 0)
-			hideAlert($( "#errorVolName" ));
+			hideAlert($( "#errorResponsibleName" ));
 	});
 	
 	$( "#appointmentDate" ).focusout(function () { 
@@ -51,13 +51,13 @@ $(document).ready(function() {
 			hideAlert($( "#errorExamDescription" ));
 	});
 	
-	$( "#description" ).focusout(function () { 
+	$( "#appointmentDescription" ).focusout(function () { 
 		if (validateStringField(this) >= 0)
-			hideAlert($( "#errorDescription" ));
+			hideAlert($( "#errorAppointmentDescription" ));
 	});
 	
 	//Enable/disable the exam field
-	$( "#checkboxExam" ).click(function() {
+	$( "#examinated" ).click(function() {
 		if (this.checked)
 			$( "#examDescription" ).prop("disabled", false);
 		else {

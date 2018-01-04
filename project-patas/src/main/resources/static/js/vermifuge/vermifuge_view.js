@@ -4,27 +4,29 @@ function jsonToForm(json) {
 	var app_date = new Date();
 	app_date.setTime(json.applicationDate);
 	
-	$(" #dogName ").val(json.dogId);
-	$(" #vermName ").val(json.vermifugeName);
-	$(" #amount ").val(json.dosage);
-	$(" #appDate ").val(dateToString(app_date));
+	$(" #dogId ").val(json.dogId);
+	$(" #vermifugeName ").val(json.vermifugeName);
+	$(" #dosage ").val(json.dosage);
+	$(" #dosageMeasurement ").val(json.dosageMeasurement);
+	$(" #applicationDate ").val(dateToString(app_date));
 	$(" #obs ").val(json.obs);
 	
 	if (json.nextApplicationDate) {
 		var next_app_date = new Date();
 		next_app_date.setTime(json.nextApplicationDate);
-		$(" #nextAppDate ").val(dateToString(next_app_date));
+		$(" #nextApplicationDate ").val(dateToString(next_app_date));
 	}
 }
 
 $(document).ready(function() {
 	// Edit button onClick handler
 	$(" #editBtn ").click(function() {		
-		$(" #dogName ").prop('disabled', false);
-		$(" #vermName ").prop('disabled', false);
-		$(" #amount ").prop('disabled', false);
-		$(" #appDate ").prop('disabled', false);
-		$(" #nextAppDate ").prop('disabled', false);
+		$(" #dogId ").prop('disabled', false);
+		$(" #vermifugeName ").prop('disabled', false);
+		$(" #dosage ").prop('disabled', false);
+		$(" #dosageMeasurement ").prop('disabled', false);
+		$(" #applicationDate ").prop('disabled', false);
+		$(" #nextApplicationDate ").prop('disabled', false);
 		$(" #obs ").prop('disabled', false);
 		
 		$(" #editBtn ").prop('disabled', true);
@@ -58,22 +60,22 @@ $(document).ready(function() {
 	$( "#vermEditForm" ).submit(function(event) {
 		event.preventDefault();
 		
-		if ( validateStringField( $( "#dogName" )[0] ) == 0 )
-			showAlert($( "#errorDogName" ), "Nome do cachorro deve ser informado.");
-		else if ( validateStringField( $( "#vermName" )[0] ) == 0 )
-			showAlert($( "#errorVermName" ), "Nome do vermífugo deve ser informado.");
-		else if ( validateDateField( $( "#appDate" )[0] ) == 0 )
-			showAlert($( "#errorAppDate" ), "Data deve ser informada.");
-		else if ( validateNatNumberField( $( "#amount" )[0] ) == 0 )
-			showAlert($( "#errorAmount" ), "Dosagem deve ser informada.");
-		else if ( validateStringField( $( "#vermName" )[0] ) == -1 )
-			showAlert($( "#errorVermName" ), "Nome inválido.");
-		else if ( validateDateField( $( "#appDate" )[0] ) == -1 )
-			showAlert($( "#errorAppDate" ), "Data inválida.");
-		else if ( validateNatNumberField( $( "#amount" )[0] ) == -1 )
-			showAlert($( "#errorAmount" ), "Dosagem inválida.");
-		else if ( validateDateField( $( "#nextAppDate" )[0] ) == -1 )
-			showAlert($( "#errorNextAppDate" ), "Data inválida.");
+		if ( validateStringField( $( "#dogId" )[0] ) == 0 )
+			showAlert($( "#errorDogId" ), "Nome do cachorro deve ser informado.");
+		else if ( validateStringField( $( "#vermifugeName" )[0] ) == 0 )
+			showAlert($( "#errorVermifugeName" ), "Nome do vermífugo deve ser informado.");
+		else if ( validateDateField( $( "#applicationDate" )[0] ) == 0 )
+			showAlert($( "#errorApplicationDate" ), "Data deve ser informada.");
+		else if ( validateNatNumberField( $( "#dosage" )[0] ) == 0 )
+			showAlert($( "#errorDosage" ), "Dosagem deve ser informada.");
+		else if ( validateStringField( $( "#vermifugeName" )[0] ) == -1 )
+			showAlert($( "#errorVermifugeName" ), "Nome inválido.");
+		else if ( validateDateField( $( "#applicationDate" )[0] ) == -1 )
+			showAlert($( "#errorApplicationDate" ), "Data inválida.");
+		else if ( validateNatNumberField( $( "#dosage" )[0] ) == -1 )
+			showAlert($( "#errorDosage" ), "Dosagem inválida.");
+		else if ( validateDateField( $( "#nextApplicationDate" )[0] ) == -1 )
+			showAlert($( "#errorNextApplicationDate" ), "Data inválida.");
 		else if ( validateStringField( $( "#obs" )[0] ) == -1 )
 			showAlert($( "#errorObs" ), "Observações contém caracteres inválidos.");
 		else {
@@ -97,11 +99,12 @@ $(document).ready(function() {
 				success: function() {
 					/* UNIQUE PART */
 					// Reset the form to previous state
-					$(" #dogName ").prop('disabled', true);
-					$(" #vermName ").prop('disabled', true);
-					$(" #amount ").prop('disabled', true);
-					$(" #appDate ").prop('disabled', true);
-					$(" #nextAppDate ").prop('disabled', true);
+					$(" #dogId ").prop('disabled', true);
+					$(" #vermifugeName ").prop('disabled', true);
+					$(" #dosage ").prop('disabled', true);
+					$(" #dosageMeasurement ").prop('disabled', true);
+					$(" #applicationDate ").prop('disabled', true);
+					$(" #nextApplicationDate ").prop('disabled', true);
 					$(" #obs ").prop('disabled', true);
 					
 					$(" #editBtn ").prop('disabled', false);

@@ -13,8 +13,8 @@ function jsonToForm(json) {
 	$(" #status ").val(json.status);
 	$(" #arrivalDate ").val(dateToString(arrival_date));
 	$(" #ration ").val(json.ration);
-	$(" #rationPortions ").val(json.rationPortions);
-	$(" #amount ").val(json.amount);
+	$(" #rationAmount ").val(json.rationAmount);
+	$(" #rationMeasurement ").val(json.rationMeasurement);
 	$(" #sponsors ").val(json.sponsors);
 	
 	if (json.birthDate) {
@@ -25,7 +25,7 @@ function jsonToForm(json) {
 	}
 	
 	if (json.castrated == true) {
-		$(" #checkboxCastr ").prop('checked', true);
+		$(" #castrated ").prop('checked', true);
 
 		if (json.castrationDate) {
 			var castration_date = new Date();
@@ -34,13 +34,13 @@ function jsonToForm(json) {
 		}
 	}
 	
-	if (json.disease == true) {
-		$(" #checkboxDis ").prop('checked', true);
+	if (json.hasDiseases == true) {
+		$(" #hasDiseases ").prop('checked', true);
 		(json.diseaseDescription ? $(" #diseaseDescription ").val(json.diseaseDescription) : false );
 	}
 	
 	if (json.ration == "OUTRO") {
-		(json.rationOther ? $(" #rationOther ").val(json.rationOther) : false );
+		(json.rationCustomDescription ? $(" #rationCustomDescription ").val(json.rationCustomDescription) : false );
 	}
 }
 
@@ -62,30 +62,31 @@ $(document).ready(function() {
 		$(" #status ").prop('disabled', false);
 		$(" #arrivalDate ").prop('disabled', false);
 		$(" #ration ").prop('disabled', false);
-		$(" #rationPortions ").prop('disabled', false);
-		$(" #checkboxCastr ").prop('disabled', false);
-		$(" #checkboxDis ").prop('disabled', false);
+		$(" #rationAmount ").prop('disabled', false);
+		$(" #rationMeasurement ").prop('disabled', false);
+		$(" #castrated ").prop('disabled', false);
+		$(" #hasDiseases ").prop('disabled', false);
 		$(" #sponsors ").prop('disabled', false);
 		
-		if ( $(" #checkboxCastr ").prop("checked") )
+		if ( $(" #castrated ").prop("checked") )
 			$(" #castrationDate ").prop('disabled', false);
 		
-		if ( $(" #checkboxDis ").prop("checked") )
+		if ( $(" #hasDiseases ").prop("checked") )
 			$(" #diseaseDescription ").prop('disabled', false);
 		
 		if ( $(" #ration ").value == "OUTRO" )
-			$(" #rationOther ").prop('disabled', false);
+			$(" #rationCustomDescription ").prop('disabled', false);
 		
 		$(" #editBtn ").prop('disabled', true);
 		$(" #appointmentBtn ").prop('disabled', false);
 		$(" #vaccinationBtn ").prop('disabled', true);
-		$(" #vermifugationBtn ").prop('disabled', true);
+		$(" #vermifugeBtn ").prop('disabled', true);
 		$(" #saveBtn ").prop('disabled', false);
 		$(" #deleteBtn ").prop('disabled', true);
 	});
 	
-	// Vermifugation button onClick handler
-	$(" #vermifugationBtn ").click(function() {
+	// Vermifuge button onClick handler
+	$(" #vermifugeBtn ").click(function() {
 		window.location.replace("/vermifuge/vermifuge_search.html?dogName=" + $("#name").val());
 	});
 	
@@ -128,7 +129,7 @@ $(document).ready(function() {
 		else if ( validateDateField( $( "#castrationDate" )[0] ) == -1 ) 
 			showAlert($( "#errorCastrationDate" ), "Data de chegada inválida.");
 		else if ( validateStringField( $( "#diseaseDescription" )[0] ) == -1 ) 
-			showAlert($( "#errorDisease" ), "Descrição inválida.");
+			showAlert($( "#errorDiseaseDescription" ), "Descrição inválida.");
 		else if ( validateStringField( $( "#sponsors" )[0] ) == -1 ) 
 			showAlert($( "#errorSponsors" ), "Nome do(s) padrinho(s) inválido.");
 		else {
@@ -140,11 +141,11 @@ $(document).ready(function() {
 			jsonData["id"] = parseInt(getUrlParameter('id'));
 			
 			// Fix the checkbox values within the json
-			if ( $(" #checkboxDis ").prop("checked") )
-				jsonData["disease"] = true;
-			else jsonData["disease"] = false;
+			if ( $(" #hasDiseases ").prop("checked") )
+				jsonData["hasDiseases"] = true;
+			else jsonData["hasDiseases"] = false;
 			
-			if ( $(" #checkboxCastr ").prop("checked") )
+			if ( $(" #castrated ").prop("checked") )
 				jsonData["castrated"] = true;
 			else jsonData["castrated"] = false;
 			
@@ -172,10 +173,10 @@ $(document).ready(function() {
 					$(" #status ").prop('disabled', true);
 					$(" #arrivalDate ").prop('disabled', true);
 					$(" #ration ").prop('disabled', true);
-					$(" #rationPortions ").prop('disabled', true);
-					$(" #rationOther ").prop('disabled', true);
-					$(" #checkboxCastr ").prop('disabled', true);
-					$(" #checkboxDis ").prop('disabled', true);
+					$(" #rationAmount ").prop('disabled', true);
+					$(" #rationCustomDescription ").prop('disabled', true);
+					$(" #castrated ").prop('disabled', true);
+					$(" #hasDiseases ").prop('disabled', true);
 					$(" #sponsors ").prop('disabled', true);
 					$(" #castrationDate ").prop('disabled', true);
 					$(" #diseaseDescription ").prop('disabled', true);
@@ -183,7 +184,7 @@ $(document).ready(function() {
 					$(" #editBtn ").prop('disabled', false);
 					$(" #appointmentBtn ").prop('disabled', false);
 					$(" #vaccinationBtn ").prop('disabled', false);
-					$(" #vermifugationBtn ").prop('disabled', false);
+					$(" #vermifugeBtn ").prop('disabled', false);
 					$(" #saveBtn ").prop('disabled', true);
 					$(" #deleteBtn ").prop('disabled', false);
 				}
@@ -214,7 +215,7 @@ $(document).ready(function() {
 			alert(response.responseText);
 			$(" #editBtn ").prop("disabled", true);
 			$(" #vaccinationBtn ").prop("disabled", true);
-			$(" #vermifugationBtn ").prop("disabled", true);
+			$(" #vermifugeBtn ").prop("disabled", true);
 			$(" #appointmentBtn ").prop("disabled", true);
 			$(" #deleteBtn ").prop("disabled", true);
 		}

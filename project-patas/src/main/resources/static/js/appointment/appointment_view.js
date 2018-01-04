@@ -2,16 +2,16 @@
 // jsonToForm := Object -> Void
 // sends all the obtained values to the form.
 function jsonToForm(json) {
-	$(" #dogName ").val(json.dogId);
-	$(" #volName ").val(json.responsibleName);
+	$(" #dogId ").val(json.dogId);
+	$(" #responsibleName ").val(json.responsibleName);
 	$(" #location ").val(json.location);
 	$(" #vetName ").val(json.vetName);
 	$(" #reason ").val(json.reason);
 	$(" #examDescription ").val(json.examDescription);
 	$(" #appointmentDescription ").val(json.appointmentDescription);
 
-	if (json.price)
-		$(" #totalCost ").val((json.price).toFixed(2));
+	if (json.totalCost)
+		$(" #totalCost ").val((json.totalCost).toFixed(2));
 	
 	if (json.appointmentDate) {
 		var appointment_date = new Date();
@@ -19,8 +19,8 @@ function jsonToForm(json) {
 		$(" #appointmentDate ").val(dateToString(appointment_date));
 	}
 	
-	if (json.exam == true)
-		$(" #checkboxExam ").prop('checked', true);
+	if (json.examinated == true)
+		$(" #examinated ").prop('checked', true);
 }
 
 // Document load script
@@ -32,17 +32,17 @@ $(document).ready(function() {
 	
 	// Edit button onClick handler
 	$(" #editBtn ").click(function() {		
-		$(" #dogName ").prop('disabled', false);
-		$(" #volName ").prop('disabled', false);	
+		$(" #dogId ").prop('disabled', false);
+		$(" #responsibleName ").prop('disabled', false);	
 		$(" #location ").prop('disabled', false);
 		$(" #appointmentDate ").prop('disabled', false);
 		$(" #vetName ").prop('disabled', false);
 		$(" #totalCost ").prop('disabled', false);
 		$(" #reason ").prop('disabled', false);
-		$(" #checkboxExam ").prop('disabled', false);
-		$(" #description ").prop('disabled', false);
+		$(" #examinated ").prop('disabled', false);
+		$(" #appointmentDescription ").prop('disabled', false);
 		
-		if ( $(" #checkboxExam ").prop("checked") )
+		if ( $(" #examinated ").prop("checked") )
 			$(" #examDescription ").prop('disabled', false);
 		
 		$(" #prescriptionsBtn ").prop('disabled', false);
@@ -82,10 +82,10 @@ $(document).ready(function() {
 		event.preventDefault();
 		
 		// Form validation
-		if ( validateStringField( $( "#dogName" )[0] ) == 0 )
-			showAlert($( "#errorDogName" ), "Nome do cachorro deve ser informado.");
-		else if ( validateStringField( $( "#volName" )[0] ) == -1 )
-			showAlert($( "#errorVolName" ), "Nome inválido.");
+		if ( validateStringField( $( "#dogId" )[0] ) == 0 )
+			showAlert($( "#errorDogId" ), "Nome do cachorro deve ser informado.");
+		else if ( validateStringField( $( "#responsibleName" )[0] ) == -1 )
+			showAlert($( "#errorResponsibleName" ), "Nome inválido.");
 		else if ( validateDateField( $( "#appointmentDate" )[0] ) == 0 ) 
 			showAlert($( "#errorAppointmentDate" ), "Data deve ser informada.");
 		else if ( validateDateField( $( "#appointmentDate" )[0] ) == -1 ) 
@@ -102,8 +102,8 @@ $(document).ready(function() {
 			showAlert($( "#errorReason" ), "Descrição inválida.");
 		else if ( validateStringField( $( "#examDescription" )[0] ) == -1 )
 			showAlert($( "#errorExamDescription" ), "Descrição inválida.");
-		else if ( validateStringField( $( "#description" )[0] ) == -1 )
-			showAlert($( "#errorDescription" ), "Descrição inválida.");
+		else if ( validateStringField( $( "#appointmentDescription" )[0] ) == -1 )
+			showAlert($( "#errorAppointmentDescription" ), "Descrição inválida.");
 		else {
 			// Convert form to json
 			var jsonData = formToJson(this);
@@ -112,9 +112,9 @@ $(document).ready(function() {
 			jsonData["id"] = parseInt(getUrlParameter('id'));
 		
 			// Fix the checkbox values within the json
-			if ( $(" #checkboxExam ").prop("checked") )
-				jsonData["exam"] = true;
-			else jsonData["exam"] = false;
+			if ( $(" #examinated ").prop("checked") )
+				jsonData["examinated"] = true;
+			else jsonData["examinated"] = false;
 			
 			// Fix JSON so it's in the right format
 			jsonData = JSON.stringify(jsonData);
@@ -131,15 +131,15 @@ $(document).ready(function() {
 				success: function() {
 					/* UNIQUE PART */
 					// Reset the form to previous state
-					$(" #dogName ").prop('disabled', true);
-					$(" #volName ").prop('disabled', true);	
+					$(" #dogId ").prop('disabled', true);
+					$(" #responsibleName ").prop('disabled', true);	
 					$(" #location ").prop('disabled', true);
 					$(" #appointmentDate ").prop('disabled', true);
 					$(" #vetName ").prop('disabled', true);
 					$(" #totalCost ").prop('disabled', true);
 					$(" #reason ").prop('disabled', true);
-					$(" #checkboxExam ").prop('disabled', true);
-					$(" #description ").prop('disabled', true);
+					$(" #examinated ").prop('disabled', true);
+					$(" #appointmentDescription ").prop('disabled', true);
 					$(" #examDescription ").prop('disabled', true);
 					
 					$(" #prescriptionsBtn ").prop('disabled', true);

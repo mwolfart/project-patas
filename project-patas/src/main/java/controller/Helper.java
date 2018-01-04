@@ -44,7 +44,7 @@ public class Helper {
 		try {
 			img = ImageIO.read(new File(path));
 			ByteArrayOutputStream bytesImg = new ByteArrayOutputStream();
-			ImageIO.write(img, "jpg", bytesImg); // eh soh pra teste TIRAR ISSO
+			ImageIO.write(img, "jpg", bytesImg); // TODO: eh soh pra teste TIRAR ISSO
 			bytesImg.flush();
 			byte[] imgArray = bytesImg.toByteArray();
 			bytesImg.close();
@@ -62,7 +62,7 @@ public class Helper {
 			img = ImageIO.read(new ByteArrayInputStream(image));
 			//.setIcon(new ImageIcon(img));	
 			 
-		    // eh soh pra teste TIRAR ISSO
+		    // TODO: eh soh pra teste TIRAR ISSO
 			ImageIO.write(img, "PNG", new File("D:/Documentos/patas.png"));
 			return img;
 		} catch (IOException e) {

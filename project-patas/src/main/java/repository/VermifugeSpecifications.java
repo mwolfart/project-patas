@@ -26,14 +26,14 @@ public final class VermifugeSpecifications {
 	} 
 
 	//Filter dog id
-	public static Specification<Vermifuge> vermifugeDogIdEquals(Long dogId) {
+	public static Specification<Vermifuge> dogIdEquals(Long dogId) {
 		return (root, query, cb) -> {
 			return cb.equal(root.get(Vermifuge_.dogId), dogId);
 		};
 	} 
 	
 	//Filter application day
-	public static Specification<Vermifuge> vermifugeApplicationDayEquals(Integer applicationDay) {
+	public static Specification<Vermifuge> applicationDayEquals(Integer applicationDay) {
 		return (root, query, cb) -> {
 			Expression<Integer> day = cb.function("day", Integer.class, root.get(Vermifuge_.applicationDate));
 			return cb.equal(day, applicationDay);
@@ -41,7 +41,7 @@ public final class VermifugeSpecifications {
 	}
 
 	//Filter application month
-	public static Specification<Vermifuge> vermifugeApplicationMonthEquals(Integer applicationMonth) {
+	public static Specification<Vermifuge> applicationMonthEquals(Integer applicationMonth) {
 		return (root, query, cb) -> {
 			Expression<Integer> month = cb.function("month", Integer.class, root.get(Vermifuge_.applicationDate));
 			return cb.equal(month, applicationMonth);
@@ -49,7 +49,7 @@ public final class VermifugeSpecifications {
 	}
 
 	//Filter application year
-	public static Specification<Vermifuge> vermifugeApplicationYearEquals(Integer applicationYear) {
+	public static Specification<Vermifuge> applicationYearEquals(Integer applicationYear) {
 		return (root, query, cb) -> {
 			Expression<Integer> year = cb.function("year", Integer.class, root.get(Vermifuge_.applicationDate));
 			return cb.equal(year, applicationYear);
@@ -57,7 +57,7 @@ public final class VermifugeSpecifications {
 	}
 
 	//Filter next application day
-	public static Specification<Vermifuge> vermifugeNextApplicationDayEquals(Integer nextApplicationDay) {
+	public static Specification<Vermifuge> nextApplicationDayEquals(Integer nextApplicationDay) {
 		return (root, query, cb) -> {
 			Expression<Integer> day = cb.function("day", Integer.class, root.get(Vermifuge_.nextApplicationDate));
 			return cb.equal(day, nextApplicationDay);
@@ -65,7 +65,7 @@ public final class VermifugeSpecifications {
 	}
 
 	//Filter next application month
-	public static Specification<Vermifuge> vermifugeNextApplicationMonthEquals(Integer applicationMonth) {
+	public static Specification<Vermifuge> nextApplicationMonthEquals(Integer applicationMonth) {
 		return (root, query, cb) -> {
 			Expression<Integer> month = cb.function("month", Integer.class, root.get(Vermifuge_.nextApplicationDate));
 			return cb.equal(month, applicationMonth);
@@ -73,7 +73,7 @@ public final class VermifugeSpecifications {
 	}
 
 	//Filter next application year
-	public static Specification<Vermifuge> vermifugeNextApplicationYearEquals(Integer nextApplicationYear) {
+	public static Specification<Vermifuge> nextApplicationYearEquals(Integer nextApplicationYear) {
 		return (root, query, cb) -> {
 			Expression<Integer> year = cb.function("year", Integer.class, root.get(Vermifuge_.nextApplicationDate));
 			return cb.equal(year, nextApplicationYear);
@@ -104,23 +104,23 @@ public final class VermifugeSpecifications {
 		case "vermifugeName":
 			return vermifugeNameEquals(criterion.getValue());
 		case "dogId":
-			return vermifugeDogIdEquals(Long.parseLong(criterion.getValue()));
+			return dogIdEquals(Long.parseLong(criterion.getValue()));
 		case "applicationDate":
 			Date appDate = new Date(Long.parseLong(criterion.getValue()));
 			cal.setTime(appDate);
 			
-			Specification<Vermifuge> specAppDay = vermifugeApplicationDayEquals(cal.get(Calendar.DAY_OF_MONTH));
-			Specification<Vermifuge> specAppMonth = vermifugeApplicationMonthEquals(cal.get(Calendar.MONTH) + 1);
-			Specification<Vermifuge> specAppYear = vermifugeApplicationYearEquals(cal.get(Calendar.YEAR));
+			Specification<Vermifuge> specAppDay = applicationDayEquals(cal.get(Calendar.DAY_OF_MONTH));
+			Specification<Vermifuge> specAppMonth = applicationMonthEquals(cal.get(Calendar.MONTH) + 1);
+			Specification<Vermifuge> specAppYear = applicationYearEquals(cal.get(Calendar.YEAR));
 			
 			return Specifications.where(specAppDay).and(specAppMonth).and(specAppYear);
 		case "nextApplicationDate":
 			Date nextAppDate = new Date(Long.parseLong(criterion.getValue()));
 			cal.setTime(nextAppDate);
 			
-			Specification<Vermifuge> specNextAppDay = vermifugeApplicationDayEquals(cal.get(Calendar.DAY_OF_MONTH));
-			Specification<Vermifuge> specNextAppMonth = vermifugeApplicationMonthEquals(cal.get(Calendar.MONTH) + 1);
-			Specification<Vermifuge> specNextAppYear = vermifugeApplicationYearEquals(cal.get(Calendar.YEAR));
+			Specification<Vermifuge> specNextAppDay = nextApplicationDayEquals(cal.get(Calendar.DAY_OF_MONTH));
+			Specification<Vermifuge> specNextAppMonth = nextApplicationMonthEquals(cal.get(Calendar.MONTH) + 1);
+			Specification<Vermifuge> specNextAppYear = nextApplicationYearEquals(cal.get(Calendar.YEAR));
 			
 			return Specifications.where(specNextAppDay).and(specNextAppMonth).and(specNextAppYear);
 		default:
