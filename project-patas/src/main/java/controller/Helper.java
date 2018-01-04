@@ -44,7 +44,7 @@ public class Helper {
 		try {
 			img = ImageIO.read(new File(path));
 			ByteArrayOutputStream bytesImg = new ByteArrayOutputStream();
-			ImageIO.write(img, "jpg", bytesImg); // TODO: eh soh pra teste TIRAR ISSO
+			ImageIO.write(img, "jpg", bytesImg);
 			bytesImg.flush();
 			byte[] imgArray = bytesImg.toByteArray();
 			bytesImg.close();
@@ -64,6 +64,7 @@ public class Helper {
 			 
 		    // TODO: eh soh pra teste TIRAR ISSO
 			ImageIO.write(img, "PNG", new File("D:/Documentos/patas.png"));
+			
 			return img;
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -75,4 +76,22 @@ public class Helper {
 	public static boolean isNumeric(String s) {  
 	    return s != null && s.matches("[-+]?\\d*\\.?\\d+");  
 	}
+	
+	/*
+	public static byte[] savePrescription(String path){
+		try { 
+			FileOutputStream file = new FileOutputStream(path); 
+			ByteArrayOutputStream bytesFile = new ByteArrayOutputStream();
+			bytesFile.flush();
+			byte[] fileArray = bytesFile.toByteArray();
+			file.write(fileArray);
+			bytesFile.close();
+			file.close();
+			return fileArray;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	*/ 
 }
