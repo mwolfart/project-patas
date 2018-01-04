@@ -7,6 +7,7 @@ function jsonToForm(json) {
 	$(" #dogName ").val(json.dogId);
 	$(" #vermName ").val(json.vermifugeName);
 	$(" #amount ").val(json.dosage);
+	$(" #dosageType ").val(json.dosageType);
 	$(" #appDate ").val(dateToString(app_date));
 	$(" #obs ").val(json.obs);
 	
@@ -23,6 +24,7 @@ $(document).ready(function() {
 		$(" #dogName ").prop('disabled', false);
 		$(" #vermName ").prop('disabled', false);
 		$(" #amount ").prop('disabled', false);
+		$(" #dosageType ").prop('disabled', false);
 		$(" #appDate ").prop('disabled', false);
 		$(" #nextAppDate ").prop('disabled', false);
 		$(" #obs ").prop('disabled', false);
@@ -100,6 +102,7 @@ $(document).ready(function() {
 					$(" #dogName ").prop('disabled', true);
 					$(" #vermName ").prop('disabled', true);
 					$(" #amount ").prop('disabled', true);
+					$(" #dosageType ").prop('disabled', true);
 					$(" #appDate ").prop('disabled', true);
 					$(" #nextAppDate ").prop('disabled', true);
 					$(" #obs ").prop('disabled', true);

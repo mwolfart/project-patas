@@ -17,6 +17,7 @@ public class Vermifuge {
 	private Long dogId;
 	private String vermifugeName;
 	private Double dosage;
+	private Integer dosageType;
 	private Date applicationDate;
 	private Date nextApplicationDate;
 	private String obs;
@@ -24,13 +25,14 @@ public class Vermifuge {
 	public Vermifuge() {
 	}
 
-	public Vermifuge(Long id, Long dogId, String vermifugeName, Double dosage,
+	public Vermifuge(Long id, Long dogId, String vermifugeName, Double dosage, Integer dosageType,
 			Date applicationDate, Date nextApplicationDate, String obs) {
 		super();
 		this.id = id;
 		this.dogId = dogId;
 		this.vermifugeName = vermifugeName;
 		this.dosage = dosage;
+		this.dosageType = dosageType;
 		this.applicationDate = applicationDate;
 		this.nextApplicationDate = nextApplicationDate;
 		this.obs = obs;
@@ -67,6 +69,14 @@ public class Vermifuge {
 	public void setDosage(Double dosage) {
 		this.dosage = dosage;
 	}
+	
+	public Integer getDosageType() {
+		return dosageType;
+	}
+
+	public void setDosageType(Integer dosageType) {
+		this.dosageType = dosageType;
+	}
 
 	public Date getApplicationDate() {
 		return applicationDate;
@@ -95,9 +105,10 @@ public class Vermifuge {
 	@Override
 	public String toString() {
 		return "Vermifuge [id=" + id + ", dogId=" + dogId + ", vermifugeName="
-				+ vermifugeName + ", dosage=" + dosage + ", applicationDate="
-				+ applicationDate + ", nextApplicationDate="
-				+ nextApplicationDate + ", obs=" + obs + "]";
+				+ vermifugeName + ", dosage=" + dosage + ", dosageType="
+				+ dosageType + ", applicationDate=" + applicationDate
+				+ ", nextApplicationDate=" + nextApplicationDate + ", obs=" 
+				+ obs + "]";
 	}
 
 }
