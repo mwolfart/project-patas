@@ -16,16 +16,18 @@ public class User {
 	private Long id;
 	private String username;
 	private byte[] passwordHash;
+	private byte[] salt;
 	private Integer userType;
 	private String fullName;
 	
 	public User() {}
 	
-	public User(Long id, String username, byte[] passwordHash, Integer userType, String fullName) {
+	public User(Long id, String username, byte[] passwordHash, byte[] salt, Integer userType, String fullName) {
 		super();
 		this.id = id;
 		this.username = username;
 		this.passwordHash = passwordHash;
+		this.salt = salt;
 		this.userType = userType;
 		this.fullName = fullName;
 	}
@@ -54,6 +56,14 @@ public class User {
 		this.passwordHash = passwordHash;
 	}
 	
+	public byte[] getSalt() {
+		return salt;
+	}
+
+	public void setSalt(byte[] salt) {
+		this.salt = salt;
+	}
+
 	public Integer getUserType() {
 		return userType;
 	}
@@ -73,7 +83,8 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", passwordHash="
-				+ Arrays.toString(passwordHash) + ", userType=" + userType +
+				+ Arrays.toString(passwordHash) + ", salt="
+				+ Arrays.toString(salt) + ", userType=" + userType +
 				", fullName=" + fullName + "]";
 	}
 }

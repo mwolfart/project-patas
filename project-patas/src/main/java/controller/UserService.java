@@ -44,7 +44,9 @@ public class UserService {
 					new_user.setUserType(Integer.parseInt(datum.getValue()));
 					break;
 				case "password":
-					byte[] hashedPassword = Password.hash((datum.getValue()).toCharArray(), Password.getNextSalt());
+					byte[] newSalt = Password.getNextSalt();
+					new_user.setSalt(newSalt);
+					byte[] hashedPassword = Password.hash((datum.getValue()).toCharArray(), newSalt);
 					new_user.setPasswordHash(hashedPassword);
 					break;
 				case "fullName":
@@ -85,7 +87,9 @@ public class UserService {
 					user.setUserType(Integer.parseInt(datum.getValue()));
 					break;
 				case "password":
-					byte[] hashedPassword = Password.hash((datum.getValue()).toCharArray(), Password.getNextSalt());
+					byte[] newSalt = Password.getNextSalt();
+					user.setSalt(newSalt);
+					byte[] hashedPassword = Password.hash((datum.getValue()).toCharArray(), newSalt);
 					user.setPasswordHash(hashedPassword);
 					break;
 				case "fullName":
@@ -118,11 +122,12 @@ public class UserService {
 			User user = userRepository.findById(userId);
 			char[] password = userDataHashMap.get("password").toCharArray();
 			
-			// TODO: UNDERSTAND HOW SALTING WORKS
-			if (Password.isExpectedPassword(password, Password.getNextSalt(), user.getPasswordHash())) {
+			if (Password.isExpectedPassword(password, user.getSalt(), user.getPasswordHash())) {
+				byte[] new_salt = Password.getNextSalt();
 				char[] new_password = userDataHashMap.get("new_password").toCharArray();
-				byte[] new_password_hash = Password.hash(new_password, Password.getNextSalt());
+				byte[] new_password_hash = Password.hash(new_password, new_salt);
 				user.setPasswordHash(new_password_hash);
+				user.setSalt(new_salt);
 				return new ResponseEntity<String>(HttpStatus.OK);
 			} else {
 				return new ResponseEntity<String>("Senha incorreta.", HttpStatus.BAD_REQUEST);
@@ -140,18 +145,19 @@ public class UserService {
 		Map<String, String> userDataHashMap = Helper.splitCriteriaFromKeys(pairs);
 		
 		try {
-			Long userId = Long.parseLong(userDataHashMap.get("id"));
-			User user = userRepository.findById(userId);
-			char[] password = userDataHashMap.get("password").toCharArray();
+			String username = userDataHashMap.get("username");
+			User user = userRepository.findByUsername(username);
+			char[] password = (userDataHashMap.get("password")).toCharArray();
 			
-			if (Password.isExpectedPassword(password, Password.getNextSalt(), user.getPasswordHash())) {
+			if (Password.isExpectedPassword(password, user.getSalt(), user.getPasswordHash())) {
 				return new ResponseEntity<Boolean>(true, HttpStatus.OK);
 			} else {
 				return new ResponseEntity<Boolean>(false, HttpStatus.OK);
 			}
 		} catch (Exception e) {
+			System.out.println(e);
 			return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
-		}		
+		}
 	}
 	
 	// View 
