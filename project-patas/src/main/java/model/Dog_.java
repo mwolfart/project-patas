@@ -28,4 +28,5 @@ public abstract class Dog_ {
 	public static volatile SingularAttribute<Dog, Boolean> hasDiseases;
 	public static volatile SingularAttribute<Dog, String> diseaseDescriptions;
 	public static volatile SingularAttribute<Dog, String> sponsors;
+	//precisa colocar o campo de foto?
 }

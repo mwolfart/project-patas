@@ -52,13 +52,13 @@ public class VaccinationService {
 	@RequestMapping(value = "/vaccination/register", method = RequestMethod.POST)
 	public ResponseEntity<?> vaccinationRegister(@RequestBody Vaccination vaccination) {
 		if(vaccination.getVaccineName() == null)
-			return new ResponseEntity<String>("Nome da vacina est� em branco", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>("Nome da vacina está em branco", HttpStatus.BAD_REQUEST);
 
 		if(vaccination.getDogId() == null)
-			return new ResponseEntity<String>("Id do cachorro est� em branco", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>("Id do cachorro está em branco", HttpStatus.BAD_REQUEST);
 
 		if(vaccination.getApplicationDate() == null)
-			return new ResponseEntity<String>("Data da aplica��o est� em branco", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>("Data da aplicação está em branco", HttpStatus.BAD_REQUEST);
 
 		vaccinationRepository.saveAndFlush(vaccination);
 		return new ResponseEntity<Long>(vaccination.getId(), HttpStatus.OK);
@@ -69,7 +69,7 @@ public class VaccinationService {
 	public ResponseEntity<?> vaccinationView(@RequestBody String vaccinationId) {		
 		Vaccination vaccination = vaccinationRepository.findOne(Long.parseLong(vaccinationId));
 		if (vaccination == null)
-			return new ResponseEntity<String>("Registro de vacina��o n�o encontrado.", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>("Registro de vacinação não encontrado.", HttpStatus.BAD_REQUEST);
 
 		return new ResponseEntity<Vaccination>(vaccination, HttpStatus.OK);
 	}

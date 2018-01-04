@@ -52,16 +52,16 @@ public class VermifugeService {
 	@RequestMapping(value = "/vermifuge/register", method = RequestMethod.POST)
 	public ResponseEntity<?> vermifugeRegister(@RequestBody Vermifuge vermifuge) {
 		if(vermifuge.getVermifugeName() == null)
-			return new ResponseEntity<String>("Nome est· em branco", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>("Nome est√° em branco", HttpStatus.BAD_REQUEST);
 
 		if(vermifuge.getDogId() == null)
-			return new ResponseEntity<String>("Id do cachorro est· em branco", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>("Id do cachorro est√° em branco", HttpStatus.BAD_REQUEST);
 
 		if(vermifuge.getDosage() == null)
-			return new ResponseEntity<String>("Dosagem est· em branco", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>("Dosagem est√° em branco", HttpStatus.BAD_REQUEST);
 
 		if(vermifuge.getApplicationDate() == null)
-			return new ResponseEntity<String>("Data da aplicaÁ„o est· em branco", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>("Data da aplica√ß√£o est√° em branco", HttpStatus.BAD_REQUEST);
 
 		vermifugeRepository.saveAndFlush(vermifuge);
 		return new ResponseEntity<Long>(vermifuge.getId(), HttpStatus.OK);
@@ -72,7 +72,7 @@ public class VermifugeService {
 	public ResponseEntity<?> vermifugeView(@RequestBody String vermifugeId) {		
 		Vermifuge vermifuge = vermifugeRepository.findOne(Long.parseLong(vermifugeId));
 		if (vermifuge == null)
-			return new ResponseEntity<String>("Vermifugo n„o encontrado.", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>("Vermifugo n√£o encontrado.", HttpStatus.BAD_REQUEST);
 
 		return new ResponseEntity<Vermifuge>(vermifuge, HttpStatus.OK);
 	}
