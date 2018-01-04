@@ -7,7 +7,7 @@ function processResponseJson(response) {
 	$('#vacinations').append(
 			$.map(response, function (vac_info) {				
 				return '<tr><td>' + vac_info[1] + '</td><td>'+ vac_info[2] +'</td><td>'+ dateToString(integerToDate(vac_info[3])) +'</td><td>'
-				+'<a href="vaccination_view.html?id='+ vac_info[0] +'" class="btn btn-info" role="button">Visualizar</a></td></tr>';
+				+'<a href="vaccination_view.html?id='+ vac_info[0] +'" class="btn" role="button">Visualizar</a></td></tr>';
 			}).join());
 	$( "#vacinations" ).removeClass("disabled-table");
 
