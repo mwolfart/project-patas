@@ -20,8 +20,8 @@ $(document).ready(function() {
 			showAlert($( "#errorArrivalDate" ), "Data de chegada inválida.");
 		else if ( validateDateField( $( "#arrivalDate" )[0] ) == 0 ) 
 			showAlert($( "#errorArrivalDate" ), "Preencha a data de chegada.");
-		else if ( validateStringField( $( "#rationOther" )[0] ) == -1 ) 
-			showAlert($( "#errorRation" ), "Tipo de ração inválido.");
+		else if ( validateStringField( $( "#rationCustomDescription" )[0] ) == -1 ) 
+			showAlert($( "#errorRationCustomDescription" ), "Tipo de ração inválido.");
 		else if ( validateDateField( $( "#castrationDate" )[0] ) == -1 ) 
 			showAlert($( "#errorCastrationDate" ), "Data de chegada inválida.");
 		else if ( validateStringField( $( "#diseaseDescription" )[0] ) == -1 ) 
@@ -40,6 +40,21 @@ $(document).ready(function() {
 			if ( $(" #castrated ").prop("checked") )
 				jsonData["castrated"] = true;
 			else jsonData["castrated"] = false;
+			
+			// Save photo
+			var image_path = document.getElementById("image-input").files[0].name;
+			console.log(image_path);
+			if (image_path) {
+				$.ajax({
+					url: "/dog/photo_to_array",
+					type: "POST",
+					data: image_path,
+					contentType: "application/json; charset=UTF-8",
+					success: function(response) {
+						jsonData["photo"] = response;
+					}
+				});
+			}
 			
 			// Fix JSON so it's in the right format
 			jsonData = JSON.stringify(jsonData);

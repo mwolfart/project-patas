@@ -1,8 +1,11 @@
 package controller;
 
+import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.Map;
+
 import model.Dog;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
 import repository.DogRepository;
 import repository.DogSpecifications;
 
@@ -101,4 +105,17 @@ public class DogService {
 		return new ResponseEntity<List<List<Object>>>(filtered_info_list, HttpStatus.OK);
 	}
 
+	// Convert dog photo to byte array
+	@RequestMapping(value = "/dog/photo_to_array", method = RequestMethod.POST, produces = {"application/json"})
+	public ResponseEntity<byte[]> dogPhotoToByteArray(@RequestBody String path) {
+		byte[] photo_in_bytes = Helper.saveImage(path);
+		return new ResponseEntity<byte[]>(photo_in_bytes, HttpStatus.OK);
+	}
+	
+	// Convert byte array to dog photo
+	@RequestMapping(value = "/dog/array_to_photo", method = RequestMethod.POST, produces = {"application/json"})
+	public ResponseEntity<BufferedImage> byteArrayToDogPhoto(@RequestBody byte[] bytea) {
+		BufferedImage image = Helper.displayImage(bytea);
+		return new ResponseEntity<BufferedImage>(image, HttpStatus.OK);
+	}
 }

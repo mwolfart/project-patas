@@ -4,7 +4,7 @@
 function jsonToForm(json) {
 	var arrival_date = new Date();
 	arrival_date.setTime(json.arrivalDate);
-
+	
 	$(" #name ").val(json.name);
 	$(" #weight ").val(json.weight);
 	$(" #sex ").val(json.sex);
@@ -41,6 +41,18 @@ function jsonToForm(json) {
 	
 	if (json.ration == "OUTRO") {
 		(json.rationCustomDescription ? $(" #rationCustomDescription ").val(json.rationCustomDescription) : false );
+	}
+	
+	if (json.photo) {
+		$.ajax({
+			url: "/dog/array_to_photo",
+			type: "POST",
+			data: json.photo,
+			contentType: "application/json; charset=UTF-8",
+			success: function(response) {
+				$(" #image-input ").val(response);
+			}
+		});
 	}
 }
 
@@ -124,8 +136,8 @@ $(document).ready(function() {
 			showAlert($( "#errorArrivalDate" ), "Data de chegada inválida.");
 		else if ( validateDateField( $( "#arrivalDate" )[0] ) == 0 ) 
 			showAlert($( "#errorArrivalDate" ), "Preencha a data de chegada.");
-		else if ( validateStringField( $( "#rationOther" )[0] ) == -1 ) 
-			showAlert($( "#errorRation" ), "Tipo de ração inválido.");
+		else if ( validateStringField( $( "#rationCustomDescription" )[0] ) == -1 ) 
+			showAlert($( "#errorRationCustomDescription" ), "Tipo de ração inválido.");
 		else if ( validateDateField( $( "#castrationDate" )[0] ) == -1 ) 
 			showAlert($( "#errorCastrationDate" ), "Data de chegada inválida.");
 		else if ( validateStringField( $( "#diseaseDescription" )[0] ) == -1 ) 
@@ -148,6 +160,20 @@ $(document).ready(function() {
 			if ( $(" #castrated ").prop("checked") )
 				jsonData["castrated"] = true;
 			else jsonData["castrated"] = false;
+			
+			// Save photo
+			var image_path = document.getElementById("image-input").files[0].name;
+			if (image_path) {
+				$.ajax({
+					url: "/dog/photo_to_array",
+					type: "POST",
+					data: image_path,
+					contentType: "application/json; charset=UTF-8",
+					success: function(response) {
+						jsonData["photo"] = response;
+					}
+				});
+			}
 			
 			// Fix JSON so it's in the right format
 			jsonData = JSON.stringify(jsonData);
