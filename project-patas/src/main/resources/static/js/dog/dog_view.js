@@ -71,7 +71,8 @@ $(document).ready(function() {
 	/**************/
 	
 	// Edit button onClick handler
-	$(" #editBtn ").click(function() {		
+	$(" #editBtn ").click(function() {	
+		$(" #checker ").prop('disabled', false);
 		$(" #name ").prop('disabled', false);
 		$(" #birthDate ").prop('disabled', false);
 		$(" #weight ").prop('disabled', false);
