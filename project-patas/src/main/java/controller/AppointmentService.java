@@ -25,19 +25,6 @@ public class AppointmentService {
 	private AppointmentRepository appointmentRepository;
 	@Autowired
 	private DogRepository dogRepository;
-
-	// Given the criteria for an appointment, which contains the name of the dog,
-	//  find the id of the given dog.
-	// TODO: REFACTOR!!
-	private Long getDogIdFromCriteria(Map<String, String> criteria) {
-		for(Map.Entry<String, String> criterion : criteria.entrySet()) {
-			if (criterion.getKey().equals("dogName")) {
-				return dogRepository.findByName(criterion.getValue()).getId();
-			}
-		}
-		
-		return null;
-	}
 	
 	// Given a list containing the appointment data, which has the dog ids,
 	//  retrieve the dog names from each id.
@@ -82,11 +69,7 @@ public class AppointmentService {
 	public ResponseEntity<List<List<Object>>> appointmentSearch(@RequestBody String search_query) {
 		String[] pairs = search_query.split("\\{|,|\\}");
 		Map<String, String> criteria_list = Helper.splitCriteriaFromKeys(pairs);
-		
-		Long dog_id = getDogIdFromCriteria(criteria_list);
-		if (dog_id != null)
-			criteria_list.put("dogId", Long.toString(dog_id));
-		
+
 		List<Specification<Appointment>> spec_list = AppointmentSpecifications.buildSpecListFromCriteria(criteria_list);
 		Specification<Appointment> final_specification = AppointmentSpecifications.buildSpecFromSpecList(spec_list);
 
@@ -101,6 +84,20 @@ public class AppointmentService {
 	@RequestMapping(value = "/appointment/delete", method = RequestMethod.POST)
 	public ResponseEntity<String> appointmentDelete(@RequestBody String appointmentId) {
 		appointmentRepository.delete(Long.parseLong(appointmentId));
+		return new ResponseEntity<String>(HttpStatus.OK);
+	}
+	
+	// Delete by dog
+	@RequestMapping(value = "/appointment/delete_by_dog", method = RequestMethod.POST)
+	public ResponseEntity<String> appointmentDeleteByDog(@RequestBody String dogId) {
+		// TODO: ERROR TREATMENT
+		ResponseEntity<List<List<Object>>> search_result = appointmentSearch("{\"dogId\":\""+dogId+"\"}");
+		List<List<Object>> found_entries = search_result.getBody();
+		// TODO: MAP FUNCTION?
+		List<Long> ids_to_delete = Helper.getIds(found_entries);
+		for(Long id : ids_to_delete) {
+			appointmentDelete(Long.toString(id));
+		}		
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 }

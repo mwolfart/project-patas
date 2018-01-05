@@ -26,6 +26,7 @@ public class VermifugeService {
 	@Autowired
 	private DogRepository dogRepository;
 	
+	/*
 	// Given the criteria for a vermifuge, which contains the name of the dog,
 	//  find the id of the given dog.
 	private Long getDogIdFromCriteria(Map<String, String> criteria) {
@@ -37,6 +38,7 @@ public class VermifugeService {
 		
 		return null;
 	}
+	*/
 	
 	// Given a list containing the vermifuge data, which has the dog ids,
 	//  retrieve the dog names from each id.
@@ -83,12 +85,6 @@ public class VermifugeService {
 		String[] pairs = search_query.split("\\{|,|\\}");
 		Map<String, String> criteria_list = Helper.splitCriteriaFromKeys(pairs);
 		
-		Long dog_id = getDogIdFromCriteria(criteria_list);
-		if (dog_id != null)
-			criteria_list.put("dogId", Long.toString(dog_id));
-		
-		System.out.println(criteria_list);
-		
 		List<Specification<Vermifuge>> spec_list = VermifugeSpecifications.buildSpecListFromCriteria(criteria_list);
 		Specification<Vermifuge> final_specification = VermifugeSpecifications.buildSpecFromSpecList(spec_list);
 
@@ -103,6 +99,20 @@ public class VermifugeService {
 	@RequestMapping(value = "/vermifuge/delete", method = RequestMethod.POST)
 	public ResponseEntity<String> vermifugeDelete(@RequestBody String vermifugeId) {
 		vermifugeRepository.delete(Long.parseLong(vermifugeId));
+		return new ResponseEntity<String>(HttpStatus.OK);
+	}
+	
+	// Delete by dog
+	@RequestMapping(value = "/vermifuge/delete_by_dog", method = RequestMethod.POST)
+	public ResponseEntity<String> vermifugeDeleteByDog(@RequestBody String dogId) {
+		// TODO: ERROR TREATMENT
+		ResponseEntity<List<List<Object>>> search_result = vermifugeSearch("{\"dogId\":\""+dogId+"\"}");
+		List<List<Object>> found_entries = search_result.getBody();
+		// TODO: MAP FUNCTION?
+		List<Long> ids_to_delete = Helper.getIds(found_entries);
+		for(Long id : ids_to_delete) {
+			vermifugeDelete(Long.toString(id));
+		}		
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 }

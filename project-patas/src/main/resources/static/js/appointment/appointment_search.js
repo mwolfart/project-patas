@@ -23,16 +23,10 @@ function processResponseJson(response) {
 
 // Document load script
 $(document).ready(function() {
-	// Prevent user from typing letters and other symbols into numeric fields	
-	$( "#dogName" ).keydown(protectSearchStringField);
+	// Prevent user from typing letters and other symbols into numeric fields
 	$( "#location" ).keydown(protectSearchStringField);
 	$( "#vetName" ).keydown(protectSearchStringField);
 	$( "#appointmentDate" ).keydown(protectNumericField);
-	
-	$( "#dogName" ).focusout( function() { 
-		validateSearchStringField(this);
-		hideAlert($("#errorDogName"));
-	});
 	
 	$( "#location" ).focusout( function() { 
 		validateSearchStringField(this);
@@ -53,9 +47,7 @@ $(document).ready(function() {
 	$( "#appointmentSearchForm" ).submit(function(event) {
 		event.preventDefault();
 		
-		if ( validateSearchStringField( $("#dogName")[0] ) == -1 )
-			showAlert($( "#errorDogName" ), "Nome inválido.");
-		else if ( validateSearchStringField( $("#vetName")[0] ) == -1 )
+		if ( validateSearchStringField( $("#vetName")[0] ) == -1 )
 			showAlert($( "#errorVetName" ), "Nome inválido.");
 		else if ( validateSearchStringField( $("#location")[0] ) == -1 )
 			showAlert($( "#errorLocation" ), "Nome inválido.");
@@ -82,12 +74,12 @@ $(document).ready(function() {
 	/** INIT STATE **/
 	/****************/
 	 
-	var dog_name = getUrlParameter("dogName");
-	var jsonData;
+	var dog_id = getUrlParameter("dogId");
+	var jsonData = {};
 	
-	if (dog_name != 0) {
-		$( "#dogName" ).val(dog_name);
-		jsonData = {"dogName": dog_name};
+	if (dog_id != 0) {
+		$( "#dogId" ).val(dogId);
+		jsonData = {"dogId": dogId};
 		jsonData = JSON.stringify(jsonData);
 	}
 	
@@ -99,6 +91,15 @@ $(document).ready(function() {
 		contentType: "application/json; charset=UTF-8",
 		success: function(response) {
 			processResponseJson(response);
+		}
+	});
+	
+	// Configure dog combobox
+	$.ajax({
+		url: "/dog/get",
+		type: "GET",
+		success: function(data) {
+			putDogsInComboBox(data);
 		}
 	});
 });
