@@ -3,20 +3,23 @@
 //returns another json, containing only the fields we are interested in.
 function processResponseJson(response) {
 	$("tbody > tr").remove();
-	
-	$('#appointments').append(
-			$.map(response, function (appoint_info) {
-				var location = "";
-				var vetName = "";
-				
-				if (appoint_info[3] != null) location = appoint_info[3];
-				if (appoint_info[4] != null) vetName = appoint_info[4];
-				
-				return '<tr><td>' + appoint_info[1] + '</td><td>'+ dateToString(integerToDate(appoint_info[2])) +'</td><td>'+
-					location +'</td><td>'+ vetName +'</td><td>'+
-					'<a href="appointment_view.html?id='+ appoint_info[0] +
-					'" class="btn" role="button">Visualizar</a></td></tr>';
-			}).join());
+	if (response.length>0){
+		$('#appointments').append(
+				$.map(response, function (appoint_info) {
+					var location = "";
+					var vetName = "";
+					
+					if (appoint_info[3] != null) location = appoint_info[3];
+					if (appoint_info[4] != null) vetName = appoint_info[4];
+					
+					return '<tr><td>' + appoint_info[1] + '</td><td>'+ dateToString(integerToDate(appoint_info[2])) +'</td><td>'+
+						location +'</td><td>'+ vetName +'</td><td>'+
+						'<a href="appointment_view.html?id='+ appoint_info[0] +
+						'" class="btn" role="button">Visualizar</a></td></tr>';
+				}).join());
+	}else{
+		$('#appointments').append('<tr><td colspan="5"> Nenhum registro encontrado. </td></tr>');
+	}
 	$( "#appointments" ).removeClass("disabled-table");
 
 }

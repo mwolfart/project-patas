@@ -2,18 +2,22 @@
 //function used to filter the json returned by the query
 //returns another json, containing only the fields we are interested in.
 function processResponseJson(response) {
-		$("tbody > tr").remove();		
-		$('#dogs').append(
-				$.map(response, function (dog_info) {
-					if (dog_info[2] == "F")
-						dog_sex = "Fêmea";
-					else if (dog_info[2] == "M")
-						dog_sex = "Macho";
-					else dog_sex = "";
-					
-					return '<tr><td>' + dog_info[1] + '</td><td>'+ dog_sex +'</td><td>'+ dateToString(integerToDate(dog_info[3])) +'</td><td>'
-					+'<a href="dog_view.html?id='+ dog_info[0] +'" class="btn" role="button">Visualizar</a></td></tr>';
-				}).join());
+		$("tbody > tr").remove();
+		if (response.length>0){
+			$('#dogs').append(
+					$.map(response, function (dog_info) {
+						if (dog_info[2] == "F")
+							dog_sex = "Fêmea";
+						else if (dog_info[2] == "M")
+							dog_sex = "Macho";
+						else dog_sex = "";
+						
+						return '<tr><td>' + dog_info[1] + '</td><td>'+ dog_sex +'</td><td>'+ dateToString(integerToDate(dog_info[3])) +'</td><td>'
+						+'<a href="dog_view.html?id='+ dog_info[0] +'" class="btn" role="button">Visualizar</a></td></tr>';
+					}).join());
+		}else{
+			$('#dogs').append('<tr><td colspan="4"> Nenhum registro encontrado. </td></tr>');
+		}
 		$( "#dogs" ).removeClass("disabled-table");	
 }
 

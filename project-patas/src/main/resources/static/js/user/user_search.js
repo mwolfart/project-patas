@@ -3,17 +3,20 @@
 //returns another json, containing only the fields we are interested in.
 function processResponseJson(response) {
 	$("tbody > tr").remove();
-	
-	$('#users').append(			
-			$.map(response, function (user_info) {	
-				var user_type;
-				if (user_info[3] == "1")
-					user_type = "Administrador";
-				else user_type = "Membro";
-				
-				return '<tr><td>' + user_info[1] + '</td><td>'+ user_info[2] +'</td><td>'+ user_type +'</td><td>'
-				+'<a href="user_view.html?id='+ user_info[0] +'" class="btn" role="button">Visualizar</a></td></tr>';
-			}).join());
+	if (response.length>0){
+		$('#users').append(			
+				$.map(response, function (user_info) {	
+					var user_type;
+					if (user_info[3] == "1")
+						user_type = "Administrador";
+					else user_type = "Membro";
+					
+					return '<tr><td>' + user_info[1] + '</td><td>'+ user_info[2] +'</td><td>'+ user_type +'</td><td>'
+					+'<a href="user_view.html?id='+ user_info[0] +'" class="btn" role="button">Visualizar</a></td></tr>';
+				}).join());
+	}else{
+		$('#users').append('<tr><td colspan="4"> Nenhum registro encontrado. </td></tr>');
+	}
 	$( "#users" ).removeClass("disabled-table");
 
 }

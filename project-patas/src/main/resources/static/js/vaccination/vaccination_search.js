@@ -3,12 +3,15 @@
 //returns another json, containing only the fields we are interested in.
 function processResponseJson(response) {
 	$("tbody > tr").remove();
-	
-	$('#vacinations').append(
-			$.map(response, function (vac_info) {				
-				return '<tr><td>' + vac_info[1] + '</td><td>'+ vac_info[2] +'</td><td>'+ dateToString(integerToDate(vac_info[3])) +'</td><td>'
-				+'<a href="vaccination_view.html?id='+ vac_info[0] +'" class="btn" role="button">Visualizar</a></td></tr>';
-			}).join());
+	if (response.length>0){
+		$('#vacinations').append(
+				$.map(response, function (vac_info) {				
+					return '<tr><td>' + vac_info[1] + '</td><td>'+ vac_info[2] +'</td><td>'+ dateToString(integerToDate(vac_info[3])) +'</td><td>'
+					+'<a href="vaccination_view.html?id='+ vac_info[0] +'" class="btn" role="button">Visualizar</a></td></tr>';
+				}).join());
+	}else{
+		$('#vacinations').append('<tr><td colspan="4"> Nenhum registro encontrado. </td></tr>');
+	}
 	$( "#vacinations" ).removeClass("disabled-table");
 
 }
