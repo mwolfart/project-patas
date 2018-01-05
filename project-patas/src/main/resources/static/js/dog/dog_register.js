@@ -20,10 +20,10 @@ $(document).ready(function() {
 			showAlert($( "#errorArrivalDate" ), "Data de chegada inválida.");
 		else if ( validateDateField( $( "#arrivalDate" )[0] ) == 0 ) 
 			showAlert($( "#errorArrivalDate" ), "Preencha a data de chegada.");
-		else if ( validateStringField( $( "#rationOther" )[0] ) == -1 ) 
+		else if ( validateStringField( $( "#ration" )[0] ) == -1 ) 
 			showAlert($( "#errorRation" ), "Tipo de ração inválido.");
 		else if ( validateDateField( $( "#castrationDate" )[0] ) == -1 ) 
-			showAlert($( "#errorCastrationDate" ), "Data de chegada inválida.");
+			showAlert($( "#errorCastrationDate" ), "Data de castração inválida.");
 		else if ( validateStringField( $( "#diseaseDescription" )[0] ) == -1 ) 
 			showAlert($( "#errorDiseaseDescription" ), "Descrição inválida.");
 		else if ( validateStringField( $( "#sponsors" )[0] ) == -1 ) 

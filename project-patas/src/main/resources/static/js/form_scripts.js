@@ -50,7 +50,7 @@ function isDateValid(date_as_string) {
 
 	var day_is_valid;
 	var long_months = new Array(1,3,5,7,8,10,12);
-	var short_months = new Array(4,6,9,10);
+	var short_months = new Array(4,6,9,11);
 
 	if (arrayContains(long_months, month) && day < 32 && day > 0)
 		return true;
@@ -404,4 +404,15 @@ function readURL(input) {
 		};
 		reader.readAsDataURL(input.files[0]);		
 	}
+}
+
+function formatDate(event, input){
+    var key = event.keyCode || event.charCode;
+    if (key == 8 || key == 46) return false;
+    var strokes = input.val().length;
+    if(strokes === 2 || strokes === 5){
+        var thisVal = input.val();
+        thisVal += '/';
+        input.val(thisVal);
+    }
 }

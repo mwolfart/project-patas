@@ -40,6 +40,14 @@ $(document).ready(function() {
 			hideAlert($( "#errorObs" ));
 	})
 	
+	$("#applicationDate").bind('keyup',function(event){
+	    formatDate(event, $("#applicationDate"));
+	});
+	
+	$("#nextApplicationDate").bind('keyup',function(event){
+	    formatDate(event, $("#nextApplicationDate"));
+	});
+	
 	// Configure dog combobox
 	$.ajax({
 		url: "/dog/get",

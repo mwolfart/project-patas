@@ -66,7 +66,11 @@ $(document).ready(function() {
 			$( "#examDescription" ).removeClass("error_input");
 			hideAlert($( "#errorExamDescription" ));
 		}
-	});	
+	});
+	
+	$("#appointmentDate").bind('keyup',function(event){
+	    formatDate(event, $("#appointmentDate"));
+	});
 	
 	// Configure dog combobox
 	$.ajax({

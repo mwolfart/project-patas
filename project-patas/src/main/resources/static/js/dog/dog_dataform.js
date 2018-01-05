@@ -102,7 +102,19 @@ $(document).ready(function() {
 	
 	// Read image file and show it
 	$("#image-input").change(function() {
-			readURL(this);
-			$("#picup-load").toggle(this.checked);
+		readURL(this);
+		$("#picup-load").toggle(this.checked);
 	});	
+	
+	$("#birthDate").bind('keyup',function(event){
+	    formatDate(event, $("#birthDate"));
+	});
+	
+	$("#arrivalDate").bind('keyup',function(event){
+	    formatDate(event, $("#arrivalDate"));
+	});
+	
+	$("#castrationDate").bind('keyup',function(event){
+	    formatDate(event, $("#castrationDate"));
+	});
 })
