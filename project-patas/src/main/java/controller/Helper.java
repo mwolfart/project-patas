@@ -1,14 +1,8 @@
 package controller;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
-
-import javax.imageio.ImageIO;
-
+import java.util.List;
 
 // Class containing the helper functions
 public class Helper {
@@ -77,6 +71,15 @@ public class Helper {
 	// Checks if a string is numeric
 	public static boolean isNumeric(String s) {  
 	    return s != null && s.matches("[-+]?\\d*\\.?\\d+");  
+	}
+	
+	// Get all the registries ids from a set
+	public static List<Long> getIds(List<List<Object>> entries) {
+		List<Long> ids = new ArrayList<Long>();
+		for(List<Object> entry : entries) {
+			ids.add(Helper.objectToLong(entry.get(0)));
+		}
+		return ids;
 	}
 	
 	/*

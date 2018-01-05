@@ -107,17 +107,70 @@ $(document).ready(function() {
 	
 	// Vermifuge button onClick handler
 	$(" #vermifugeBtn ").click(function() {
-		window.location.replace("/vermifuge/vermifuge_search.html?dogName=" + $("#name").val());
+		window.location.replace("/vermifuge/vermifuge_search.html?dogId=" + getUrlParameter('id'));
 	});
 	
 	// Vaccination button onClick handler
 	$(" #vaccinationBtn ").click(function() {
-		window.location.replace("/vaccination/vaccination_search.html?dogName=" + $("#name").val());
+		window.location.replace("/vaccination/vaccination_search.html?dogId=" + getUrlParameter('id'));
 	});
 	
 	// Appointment button onClick handler
 	$(" #appointmentBtn ").click(function() {
-		window.location.replace("/appointment/appointment_search.html?dogName=" + $("#name").val());
+		window.location.replace("/appointment/appointment_search.html?dogId=" + getUrlParameter('id'));
+	});
+	
+	// Delete button onClick handler
+	$(" #deleteBtn ").click(function(event) {
+		event.preventDefault();
+		
+		if (confirm("Tem certeza que deseja excluir este cachorro? Todos os registros relacionados à ele (vacinações, vermifugações, consultas) serão também excluídos.")) {
+			var dog_id = getUrlParameter('id');
+			
+			$.ajax({
+				url: "/vaccination/delete_by_dog",
+				type: "POST",
+				data: dog_id,
+				contentType: "application/json; charset=UTF-8",
+				error: function(response) {
+					alert(response.responseText);
+				}
+			});
+			
+			$.ajax({
+				url: "/vermifuge/delete_by_dog",
+				type: "POST",
+				data: dog_id,
+				contentType: "application/json; charset=UTF-8",
+				error: function(response) {
+					alert(response.responseText);
+				}
+			});
+			
+			$.ajax({
+				url: "/appointment/delete_by_dog",
+				type: "POST",
+				data: dog_id,
+				contentType: "application/json; charset=UTF-8",
+				error: function(response) {
+					alert(response.responseText);
+				}
+			});
+
+			$.ajax({
+				url: "/dog/delete",
+				type: "POST",
+				data: dog_id,
+				contentType: "application/json; charset=UTF-8",
+				success: function(response) {
+					alert("Registro removido com sucesso!");
+					window.location.replace("/dog/dog_search.html");
+				},
+				error: function(response) {
+					alert(response.responseText);
+				}
+			});
+		}
 	});
 	
 	// Set the submit configuration for the form
@@ -190,6 +243,7 @@ $(document).ready(function() {
 						/* UNIQUE PART */
 						// Reset the form to previous state
 						$(" #name ").prop('disabled', true);
+						$(" #checker ").prop('disabled', true);
 						$(" #birthDate ").prop('disabled', true);
 						$(" #weight ").prop('disabled', true);
 						$(" #sex ").prop('disabled', true);

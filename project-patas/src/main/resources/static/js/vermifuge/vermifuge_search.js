@@ -20,14 +20,8 @@ function processResponseJson(response) {
 $(document).ready(function() {
 	// Prevent user from typing letters and other symbols into numeric fields	
 	$( "#vermifugeName" ).keydown(protectSearchStringField);
-	$( "#dogName" ).keydown(protectSearchStringField);
 	$( "#applicationDate" ).keydown(protectNumericField);
 	$( "#nextApplicationDate" ).keydown(protectNumericField);
-	
-	$( "#dogName" ).focusout( function() { 
-		validateSearchStringField(this);
-		hideAlert($("#errorDogName"));
-	});
 	
 	$( "#vermifugeName" ).focusout( function() { 
 		validateSearchStringField(this);
@@ -48,9 +42,7 @@ $(document).ready(function() {
 	$( "#vermifugeSearchForm" ).submit(function(event) {
 		event.preventDefault();
 		
-		if ( validateSearchStringField( $("#dogName")[0] ) == -1 )
-			showAlert($( "#errorDogName" ), "Nome inválido.");
-		else if ( validateSearchStringField( $("#vermifugeName")[0] ) == -1 )
+		if ( validateSearchStringField( $("#vermifugeName")[0] ) == -1 )
 			showAlert($( "#errorVermifugeName" ), "Nome inválido.");
 		else if ( validateDateField( $("#applicationDate")[0] ) == -1 )
 			showAlert($( "#errorApplicationDate" ), "Data inválida.");
@@ -77,23 +69,32 @@ $(document).ready(function() {
 	/** INIT STATE **/
 	/****************/
 	 
-	var dog_name = getUrlParameter("dogName");
-	var jsonData;
-	
-	if (dog_name != 0) {
-		$( "#dogName" ).val(dog_name);
-		jsonData = {"dogName": dog_name};
-		jsonData = JSON.stringify(jsonData);
-	}
-	
+	// Configure dog combobox and load if specified
 	$.ajax({
-		url: "/vermifuge/search",
-		type: "POST",
-		dataType: "json",
-		data: jsonData,
-		contentType: "application/json; charset=UTF-8",
-		success: function(response) {
-			processResponseJson(response);
+		url: "/dog/get",
+		type: "GET",
+		success: function(data) {
+			putDogsInComboBox(data);
+			
+			var dog_id = getUrlParameter("dogId");
+			var jsonData = {};
+			
+			if (dog_id != 0) {
+				$( "#dogId" ).val(dog_id);
+				jsonData = {"dogId": dog_id};
+				jsonData = JSON.stringify(jsonData);
+			}
+			
+			$.ajax({
+				url: "/vermifuge/search",
+				type: "POST",
+				dataType: "json",
+				data: jsonData,
+				contentType: "application/json; charset=UTF-8",
+				success: function(response) {
+					processResponseJson(response);
+				}
+			});
 		}
 	});
 });

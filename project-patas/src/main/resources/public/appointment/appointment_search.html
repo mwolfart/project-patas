@@ -12,7 +12,6 @@
     	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
 		<script type="text/javascript" src="../js/form_scripts.js"></script>
 		<script type="text/javascript" src="../js/jquerysession.js"></script>
-		<script type="text/javascript" src="../js/appointment/appointment_dataform.js"></script>
 		<script type="text/javascript" src="../js/appointment/appointment_search.js"></script>
 		<script type="text/javascript" src="../js/user_check.js"></script>
 	</head>
@@ -25,9 +24,10 @@
 			<form action="" id="appointmentSearchForm" method="post">
 				<div class="form-row">
 					<div class="form-group col-md-3">
-						<label for="dogName" class="col-form-label">Nome do cachorro</label>
-						<input type="text" id="dogName" name="dogName" class="form-control" maxlength="80" placeholder="Nome do cachorro">
-						<div id="errorDogName" class="alert alert-danger disabled-alert"></div>
+						<label for="dogId" class="col-form-label required">Nome do cachorro</label>
+						<select id="dogId" name="dogId" class="form-control">
+							<option value=""></option>
+						</select>
 					</div>
 					<div class="form-group col-md-3">
 						<label for="location" class="col-form-label">Local</label>

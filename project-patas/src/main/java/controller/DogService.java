@@ -1,6 +1,5 @@
 package controller;
 
-import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.Map;
 
@@ -103,5 +102,12 @@ public class DogService {
 		List<List<Object>> filtered_info_list = DogSpecifications.filterDogInfo(filtered_dog_list, new String[] {"id", "name", "sex", "arrivalDate"});
 
 		return new ResponseEntity<List<List<Object>>>(filtered_info_list, HttpStatus.OK);
+	}
+	
+	// Delete
+	@RequestMapping(value = "/dog/delete", method = RequestMethod.POST)
+	public ResponseEntity<String> dogDelete(@RequestBody String dogId) {
+		dogRepository.delete(Long.parseLong(dogId));
+		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 }

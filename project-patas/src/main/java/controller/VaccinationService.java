@@ -26,18 +26,6 @@ public class VaccinationService {
 	@Autowired
 	private DogRepository dogRepository;
 	
-	// Given the criteria for a vaccination, which contains the name of the dog,
-	//  find the id of the given dog.
-	private Long getDogIdFromCriteria(Map<String, String> criteria) {
-		for(Map.Entry<String, String> criterion : criteria.entrySet()) {
-			if (criterion.getKey().equals("dogName")) {
-				return dogRepository.findByName(criterion.getValue()).getId();
-			}
-		}
-		
-		return null;
-	}
-	
 	// Given a list containing the vaccination data, which has the dog ids,
 	//  retrieve the dog names from each id.
 	private void getDogNamesFromIds(List<List<Object>> data_list) {
@@ -80,10 +68,6 @@ public class VaccinationService {
 		String[] pairs = search_query.split("\\{|,|\\}");
 		Map<String, String> criteria_list = Helper.splitCriteriaFromKeys(pairs);
 		
-		Long dog_id = getDogIdFromCriteria(criteria_list);
-		if (dog_id != null)
-			criteria_list.put("dogId", Long.toString(dog_id));
-		
 		List<Specification<Vaccination>> spec_list = VaccinationSpecifications.buildSpecListFromCriteria(criteria_list);
 		Specification<Vaccination> final_specification = VaccinationSpecifications.buildSpecFromSpecList(spec_list);
 
@@ -98,6 +82,20 @@ public class VaccinationService {
 	@RequestMapping(value = "/vaccination/delete", method = RequestMethod.POST)
 	public ResponseEntity<String> vaccinationDelete(@RequestBody String vaccinationId) {
 		vaccinationRepository.delete(Long.parseLong(vaccinationId));
+		return new ResponseEntity<String>(HttpStatus.OK);
+	}
+	
+	// Delete by dog
+	@RequestMapping(value = "/vaccination/delete_by_dog", method = RequestMethod.POST)
+	public ResponseEntity<String> vaccinationDeleteByDog(@RequestBody String dogId) {
+		// TODO: ERROR TREATMENT
+		ResponseEntity<List<List<Object>>> search_result = vaccinationSearch("{\"dogId\":\""+dogId+"\"}");
+		List<List<Object>> found_entries = search_result.getBody();
+		// TODO: MAP FUNCTION?
+		List<Long> ids_to_delete = Helper.getIds(found_entries);
+		for(Long id : ids_to_delete) {
+			vaccinationDelete(Long.toString(id));
+		}		
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 }
