@@ -156,8 +156,9 @@ function formToJson(form){
 		else if (isDateValid(input.value) && input.value != "")
 			JSON_data[input.name] = stringToDate(input.value).getTime();
 		//Else, if not empty, it's a string
-		else if (input.value != "")
+		else if (input.value != "") {
 			JSON_data[input.name] = input.value;
+		}
 	});
 
 	return JSON_data;
@@ -406,6 +407,7 @@ function readURL(input) {
 	}
 }
 
+//Format a date input
 function formatDate(event, input){
     var key = event.keyCode || event.charCode;
     if (key == 8 || key == 46) return false;
@@ -416,3 +418,23 @@ function formatDate(event, input){
         input.val(thisVal);
     }
 }
+
+//Store an image as byte arrays
+function storeImage(input, callback) {
+	if (input.files && input.files[0]) {
+		var imageByteArray = [];
+		var reader = new FileReader();
+		reader.onloadend = function(evt) {
+			if (evt.target.readyState == FileReader.DONE) {
+		        var arrayBuffer = evt.target.result,
+		        array = new Uint8Array(arrayBuffer);
+		        for (var i = 0; i < array.length; i++) {
+		        	imageByteArray.push(array[i]);
+		        }
+		        callback(imageByteArray);
+			}
+		}
+		reader.readAsArrayBuffer(input.files[0]);
+	} else callback([]);
+}
+

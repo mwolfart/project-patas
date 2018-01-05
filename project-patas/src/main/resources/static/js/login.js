@@ -8,10 +8,12 @@ $(document).ready(function() {
 	$("#loginForm").submit(function(event) {
 		event.preventDefault();
 		
+		var username = $("#username").val();
+		var password = $("#password").val();
+		
 		var userData = {};
-		userData["username"] = $("#username").val();
-		userData["password"] = $("#password").val();
-		var user = userData["username"];
+		if(username) userData["username"] = username;
+		if(password) userData["password"] = password;
 		userData = JSON.stringify(userData);
 		
 		$.ajax({
@@ -22,7 +24,7 @@ $(document).ready(function() {
 			success: function(response) {
 				// TODO: set current user or session
 				if (response == true) {
-					$.session.set("username", user);
+					$.session.set("username", username);
 					window.location.replace("/index.html");	
 				}
 				else {

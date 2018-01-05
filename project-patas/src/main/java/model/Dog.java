@@ -35,7 +35,7 @@ public class Dog {
 	private Boolean hasDiseases;
 	private String diseaseDescription;
 	private String sponsors;	
-	public byte[] photo;
+	private byte[] photo;
 
     public Dog() {
     }

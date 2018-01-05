@@ -142,16 +142,28 @@ public class UserService {
 	
 	// Password check
 	@RequestMapping(value = "/user/check_password", method = RequestMethod.POST)
-	public ResponseEntity<Boolean> userPasswordCheck(@RequestBody String userData) {
+	public ResponseEntity<?> userPasswordCheck(@RequestBody String userData) {
 		String[] pairs = userData.split("\\{|,|\\}");
 		Map<String, String> userDataHashMap = Helper.splitCriteriaFromKeys(pairs);
 		
 		try {
 			String username = userDataHashMap.get("username");
-			User user = userRepository.findByUsername(username);
-			char[] password = (userDataHashMap.get("password")).toCharArray();
+			String password = userDataHashMap.get("password");
 			
-			if (Password.isExpectedPassword(password, user.getSalt(), user.getPasswordHash())) {
+			if (username == null)
+				return new ResponseEntity<String>("Usuário está em branco", HttpStatus.BAD_REQUEST);
+			
+			if (password == null)
+				return new ResponseEntity<String>("Senha está em branco", HttpStatus.BAD_REQUEST);
+				
+			User user = userRepository.findByUsername(username);
+			
+			if (user == null)
+				return new ResponseEntity<String>("Usuário inexistente", HttpStatus.BAD_REQUEST);
+				
+			char[] password_as_char = (password).toCharArray();
+			
+			if (Password.isExpectedPassword(password_as_char, user.getSalt(), user.getPasswordHash())) {
 				return new ResponseEntity<Boolean>(true, HttpStatus.OK);
 			} else {
 				return new ResponseEntity<Boolean>(false, HttpStatus.OK);
