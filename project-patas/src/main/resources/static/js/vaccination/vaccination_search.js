@@ -66,32 +66,32 @@ $(document).ready(function() {
 	/** INIT STATE **/
 	/****************/
 	 
-	var dog_id = getUrlParameter("dogId");
-	var jsonData = {};
-	
-	if (dog_id != 0) {
-		$( "#dogId" ).val(dogId);
-		jsonData = {"dogId": dogId};
-		jsonData = JSON.stringify(jsonData);
-	}
-	
-	$.ajax({
-		url: "/vaccination/search",
-		type: "POST",
-		dataType: "json",
-		data: jsonData,
-		contentType: "application/json; charset=UTF-8",
-		success: function(response) {
-			processResponseJson(response);
-		}
-	});
-	
-	// Configure dog combobox
+	// Configure dog combobox and load if specified
 	$.ajax({
 		url: "/dog/get",
 		type: "GET",
 		success: function(data) {
 			putDogsInComboBox(data);
+			
+			var dog_id = getUrlParameter("dogId");
+			var jsonData = {};
+			
+			if (dog_id != 0) {
+				$( "#dogId" ).val(dog_id);
+				jsonData = {"dogId": dog_id};
+				jsonData = JSON.stringify(jsonData);
+			}
+			
+			$.ajax({
+				url: "/vaccination/search",
+				type: "POST",
+				dataType: "json",
+				data: jsonData,
+				contentType: "application/json; charset=UTF-8",
+				success: function(response) {
+					processResponseJson(response);
+				}
+			});
 		}
 	});
 });
