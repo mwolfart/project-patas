@@ -74,8 +74,6 @@ $(document).ready(function() {
 	$(" #editBtn ").click(function() {	
 		$(" #checker ").prop('disabled', false);
 		$(" #name ").prop('disabled', false);
-		$(" #checker ").prop('disabled', false);
-		$(" #image-input ").prop('disabled', false);
 		$(" #birthDate ").prop('disabled', false);
 		$(" #weight ").prop('disabled', false);
 		$(" #sex ").prop('disabled', false);
@@ -246,7 +244,6 @@ $(document).ready(function() {
 						// Reset the form to previous state
 						$(" #name ").prop('disabled', true);
 						$(" #checker ").prop('disabled', true);
-						$(" #image-input ").prop('disabled', true);
 						$(" #birthDate ").prop('disabled', true);
 						$(" #weight ").prop('disabled', true);
 						$(" #sex ").prop('disabled', true);
