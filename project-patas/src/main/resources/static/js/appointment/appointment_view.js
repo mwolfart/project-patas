@@ -157,6 +157,8 @@ $(document).ready(function() {
 	/** INIT STATE **/
 	/****************/
 	
+	putDogsInComboBox();
+	
 	// Load the data using id (specified in URL)
 	var appointment_id = getUrlParameter('id');
 	

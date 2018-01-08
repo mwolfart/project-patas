@@ -381,17 +381,22 @@ function hideAlert(element) {
 	element.addClass("disabled-alert");	
 }
 
-//putDogsInComboBox := Object -> Void
+//putDogsInComboBox := Void -> Void
 //given a list of dog ids and names, put them into the
 //dogName combobox (vacination, vermifugation, appointments)
-function putDogsInComboBox(dogs) {
-	$.each(dogs, function(i, dog) {
-		$( "#dogId" ).append($("<option>", {
-			value: dog[0],
-			text: dog[1]
-		}));
+function putDogsInComboBox() {
+	$.ajax({
+		url: "/dog/get",
+		type: "GET",
+		success: function(dogs) {
+			$.each(dogs, function(i, dog) {
+				$( "#dogId" ).append($("<option>", {
+					value: dog[0],
+					text: dog[1]
+				}));
+			});
+		}
 	});
-
 }
 
 //readURL : Object -> Void

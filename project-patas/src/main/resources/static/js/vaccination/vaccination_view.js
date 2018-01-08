@@ -105,6 +105,8 @@ $(document).ready(function() {
 		}
 	});
 	
+	putDogsInComboBox();
+	
 	// Load the data using dog id (specified in URL)
 	var vac_id = getUrlParameter('id');
 	

@@ -71,13 +71,4 @@ $(document).ready(function() {
 	$("#appointmentDate").bind('keyup',function(event){
 	    formatDate(event, $("#appointmentDate"));
 	});
-	
-	// Configure dog combobox
-	$.ajax({
-		url: "/dog/get",
-		type: "GET",
-		success: function(data) {
-			putDogsInComboBox(data);
-		}
-	});
 })
