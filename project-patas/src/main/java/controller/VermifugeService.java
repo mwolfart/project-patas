@@ -69,47 +69,60 @@ public class VermifugeService {
 
 	// View 
 	@RequestMapping(value = "/vermifuge/view", method = RequestMethod.POST)
-	public ResponseEntity<?> vermifugeView(@RequestBody String vermifugeId) {		
-		Vermifuge vermifuge = vermifugeRepository.findOne(Long.parseLong(vermifugeId));
-		if (vermifuge == null)
-			return new ResponseEntity<String>("Vermifugo não encontrado.", HttpStatus.BAD_REQUEST);
-
-		return new ResponseEntity<Vermifuge>(vermifuge, HttpStatus.OK);
+	public ResponseEntity<?> vermifugeView(@RequestBody String vermifugeId) {	
+		try {
+			Vermifuge vermifuge = vermifugeRepository.findOne(Long.parseLong(vermifugeId));
+			if (vermifuge == null)
+				return new ResponseEntity<String>("Vermifugo não encontrado.", HttpStatus.BAD_REQUEST);
+	
+			return new ResponseEntity<Vermifuge>(vermifuge, HttpStatus.OK);
+		} catch(NumberFormatException e) {
+			return new ResponseEntity<String>("Id inválido.", HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	// Search
 	@RequestMapping(value = "/vermifuge/search", method = RequestMethod.POST, produces = {"application/json"})
 	public ResponseEntity<List<List<Object>>> vermifugeSearch(@RequestBody String search_query) {
-		String[] pairs = search_query.split("\\{|,|\\}");
-		Map<String, String> criteria_list = Helper.splitCriteriaFromKeys(pairs);
-		
-		List<Specification<Vermifuge>> spec_list = VermifugeSpecifications.buildSpecListFromCriteria(criteria_list);
-		Specification<Vermifuge> final_specification = VermifugeSpecifications.buildSpecFromSpecList(spec_list);
-
-		List<Vermifuge> filtered_vermifuge_list = vermifugeRepository.findAll(final_specification);
-		List<List<Object>> filtered_data = filterVermifugesInfo(filtered_vermifuge_list);
-		
-		return new ResponseEntity<List<List<Object>>>(filtered_data, HttpStatus.OK);
+		try {
+			String[] pairs = search_query.split("\\{|,|\\}");
+			Map<String, String> criteria_list = Helper.splitCriteriaFromKeys(pairs);
+			
+			List<Specification<Vermifuge>> spec_list = VermifugeSpecifications.buildSpecListFromCriteria(criteria_list);
+			Specification<Vermifuge> final_specification = Helper.buildSpecFromSpecList(spec_list);
+	
+			List<Vermifuge> filtered_vermifuge_list = vermifugeRepository.findAll(final_specification);
+			List<List<Object>> filtered_data = filterVermifugesInfo(filtered_vermifuge_list);
+			
+			return new ResponseEntity<List<List<Object>>>(filtered_data, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<List<List<Object>>>(HttpStatus.BAD_REQUEST);
+		}
 	}
 	
 	// Delete
 	@RequestMapping(value = "/vermifuge/delete", method = RequestMethod.POST)
 	public ResponseEntity<String> vermifugeDelete(@RequestBody String vermifugeId) {
-		vermifugeRepository.delete(Long.parseLong(vermifugeId));
-		return new ResponseEntity<String>(HttpStatus.OK);
+		try {
+			vermifugeRepository.delete(Long.parseLong(vermifugeId));
+			return new ResponseEntity<String>(HttpStatus.OK);
+		} catch(NumberFormatException e) {
+			return new ResponseEntity<String>("Id inválido.", HttpStatus.BAD_REQUEST);
+		}
 	}
 	
 	// Delete by dog
 	@RequestMapping(value = "/vermifuge/delete_by_dog", method = RequestMethod.POST)
 	public ResponseEntity<String> vermifugeDeleteByDog(@RequestBody String dogId) {
-		// TODO: ERROR TREATMENT
+		if (!Helper.isNumeric(dogId)) 
+			return new ResponseEntity<String>("Id inválido.", HttpStatus.BAD_REQUEST);
+		
 		ResponseEntity<List<List<Object>>> search_result = vermifugeSearch("{\"dogId\":\""+dogId+"\"}");
 		List<List<Object>> found_entries = search_result.getBody();
-		// TODO: MAP FUNCTION?
-		List<Long> ids_to_delete = Helper.getIds(found_entries);
-		for(Long id : ids_to_delete) {
-			vermifugeDelete(Long.toString(id));
-		}		
+		
+		for(List<Object> entry : found_entries)
+			vermifugeDelete(Long.toString(Helper.objectToLong(entry.get(0))));
+
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 }

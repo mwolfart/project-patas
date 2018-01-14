@@ -84,7 +84,6 @@ public final class VermifugeSpecifications {
 	// given a list of criteria in the format of a hashmap, build a list
 	//   of specifications used for the querying.
 	public static List<Specification<Vermifuge>> buildSpecListFromCriteria(Map<String, String> criteria_list) {
-		// TODO: CHECK IF REFACTORABLE (Only the list types differ)
 		List<Specification<Vermifuge>> spec_list = new ArrayList<Specification<Vermifuge>>();
 
 		for(Map.Entry<String, String> criterion : criteria_list.entrySet())
@@ -126,19 +125,5 @@ public final class VermifugeSpecifications {
 		default:
 			return null;
 		}
-	}
-
-	// buildSpecFromSpecList
-	// given a list of specification, return one specification containing all the given specs
-	public static Specification<Vermifuge> buildSpecFromSpecList(List<Specification<Vermifuge>> spec_list) {
-		// TODO: CHECK IF REFACTORABLE (Only the list types differ)
-		if (spec_list.size() < 1)
-			return null;
-
-		Specification<Vermifuge> result_spec = spec_list.get(0);
-		for (int i=1; i < spec_list.size(); i++)
-			result_spec = Specifications.where(result_spec).and(spec_list.get(i));
-
-		return result_spec;
 	}
 }

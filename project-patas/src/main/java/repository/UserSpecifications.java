@@ -9,7 +9,6 @@ import model.User;
 import model.User_;
 
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.data.jpa.domain.Specifications;
 
 public final class UserSpecifications {
 	private UserSpecifications() {}
@@ -32,7 +31,6 @@ public final class UserSpecifications {
 	// given a list of criteria in the format of a hashmap, build a list
 	//   of specifications used for the querying.
 	public static List<Specification<User>> buildSpecListFromCriteria(Map<String, String> criteria_list) {
-		// TODO: CHECK IF REFACTORABLE (Only the list types differ)
 		List<Specification<User>> spec_list = new ArrayList<Specification<User>>();
 
 		for(Map.Entry<String, String> criterion : criteria_list.entrySet())
@@ -54,19 +52,5 @@ public final class UserSpecifications {
 		default:
 			return null;
 		}
-	}
-
-	// buildSpecFromSpecList
-	// given a list of specification, return one specification containing all the given specs
-	public static Specification<User> buildSpecFromSpecList(List<Specification<User>> spec_list) {
-		// TODO: CHECK IF REFACTORABLE (Only the list types differ)
-		if (spec_list.size() < 1)
-			return null;
-
-		Specification<User> result_spec = spec_list.get(0);
-		for (int i=1; i < spec_list.size(); i++)
-			result_spec = Specifications.where(result_spec).and(spec_list.get(i));
-
-		return result_spec;
 	}
 }

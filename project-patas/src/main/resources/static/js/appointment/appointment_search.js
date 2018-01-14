@@ -33,6 +33,7 @@ $(document).ready(function() {
 		else {
 			jsonData = formToJson(this);
 			jsonData = JSON.stringify(jsonData);
+			console.log(jsonData);
 			
 			$.ajax({
 				url: "/appointment/search",

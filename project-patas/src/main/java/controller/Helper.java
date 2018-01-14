@@ -1,8 +1,10 @@
 package controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.domain.Specifications;
 
 // Class containing the helper functions
 public class Helper {
@@ -33,54 +35,23 @@ public class Helper {
 		return criteria_list;
 	}
 	
-	/*
-	public static byte[] saveImage(String path){
-		BufferedImage img;
-		try {
-			img = ImageIO.read(new File(path));
-			ByteArrayOutputStream bytesImg = new ByteArrayOutputStream();
-			ImageIO.write(img, "jpg", bytesImg);
-			bytesImg.flush();
-			byte[] imgArray = bytesImg.toByteArray();
-			bytesImg.close();
-			return imgArray;
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
-	//ps: chamar o metodo passando dog.getPhoto();
-	public static BufferedImage displayImage(byte[] image){
-		BufferedImage img = null; 	
-		try {
-			img = ImageIO.read(new ByteArrayInputStream(image));
-			//.setIcon(new ImageIcon(img));	
-			 
-		    // TODO: eh soh pra teste TIRAR ISSO
-			ImageIO.write(img, "PNG", new File("D:/Documentos/patas.png"));
-			
-			return img;
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-	*/
-	
 	// Checks if a string is numeric
 	public static boolean isNumeric(String s) {  
 	    return s != null && s.matches("[-+]?\\d*\\.?\\d+");  
 	}
-	
-	// Get all the registries ids from a set
-	public static List<Long> getIds(List<List<Object>> entries) {
-		List<Long> ids = new ArrayList<Long>();
-		for(List<Object> entry : entries) {
-			ids.add(Helper.objectToLong(entry.get(0)));
-		}
-		return ids;
-	}
+
+	// buildSpecFromSpecList
+	// given a list of specification, return one specification containing all the given specs
+	public static <T> Specification<T> buildSpecFromSpecList(List<Specification<T>> spec_list) {
+		if (spec_list.size() < 1)
+			return null;
+
+		Specification<T> result_spec = spec_list.get(0);
+		for (int i=1; i < spec_list.size(); i++)
+			result_spec = Specifications.where(result_spec).and(spec_list.get(i));
+
+		return result_spec;
+	}	
 	
 	/*
 	public static byte[] savePrescription(String path){

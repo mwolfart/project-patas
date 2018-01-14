@@ -211,7 +211,7 @@ public class UserService {
 		Map<String, String> criteria_list = Helper.splitCriteriaFromKeys(pairs);
 		
 		List<Specification<User>> spec_list = UserSpecifications.buildSpecListFromCriteria(criteria_list);
-		Specification<User> final_specification = UserSpecifications.buildSpecFromSpecList(spec_list);
+		Specification<User> final_specification = Helper.buildSpecFromSpecList(spec_list);
 
 		List<User> filtered_user_list = userRepository.findAll(final_specification);
 		List<List<Object>> filtered_data = filterUsersInfo(filtered_user_list); 

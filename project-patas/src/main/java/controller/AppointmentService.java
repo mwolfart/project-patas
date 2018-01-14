@@ -37,7 +37,7 @@ public class AppointmentService {
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 		
 		for (Appointment app : appointment_list) {
-			Long dogId = app.getDogId();
+			Long dogId = app.getDogId();			
 			String dogName = dogRepository.findById(dogId).getName();
 			String appDateAsString = df.format(app.getAppointmentDate());
 			String appLocation = app.getLocation() != null ? app.getLocation() : "";
@@ -53,7 +53,6 @@ public class AppointmentService {
 	// Register (and update)
 	@RequestMapping(value = "/appointment/register", method = RequestMethod.POST)
 	public ResponseEntity<?> appointmentRegister(@RequestBody Appointment appointment) {
-		System.out.println(appointment);
 		if(appointment.getDogId() == null)
 			return new ResponseEntity<String>("Id do cachorro está em branco", HttpStatus.BAD_REQUEST);
 
@@ -70,46 +69,59 @@ public class AppointmentService {
 	// View 
 	@RequestMapping(value = "/appointment/view", method = RequestMethod.POST)
 	public ResponseEntity<?> appointmentView(@RequestBody String appointmentId) {		
-		Appointment appointment = appointmentRepository.findOne(Long.parseLong(appointmentId));
-		if (appointment == null)
-			return new ResponseEntity<String>("Registro de consulta não encontrado.", HttpStatus.BAD_REQUEST);
-
-		return new ResponseEntity<Appointment>(appointment, HttpStatus.OK);
+		try { 
+			Appointment appointment = appointmentRepository.findOne(Long.parseLong(appointmentId)); 
+			
+			if (appointment == null)
+				return new ResponseEntity<String>("Registro de consulta não encontrado.", HttpStatus.BAD_REQUEST);
+			else return new ResponseEntity<Appointment>(appointment, HttpStatus.OK);
+		} catch(NumberFormatException e) {
+			return new ResponseEntity<String>("Id inválido.", HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	// Search
 	@RequestMapping(value = "/appointment/search", method = RequestMethod.POST, produces = {"application/json"})
 	public ResponseEntity<List<List<Object>>> appointmentSearch(@RequestBody String search_query) {
-		String[] pairs = search_query.split("\\{|,|\\}");
-		Map<String, String> criteria_list = Helper.splitCriteriaFromKeys(pairs);
-
-		List<Specification<Appointment>> spec_list = AppointmentSpecifications.buildSpecListFromCriteria(criteria_list);
-		Specification<Appointment> final_specification = AppointmentSpecifications.buildSpecFromSpecList(spec_list);
-
-		List<Appointment> filtered_appointment_list = appointmentRepository.findAll(final_specification);
-		List<List<Object>> filtered_data = filterAppointmentsInfo(filtered_appointment_list);
-
-		return new ResponseEntity<List<List<Object>>>(filtered_data, HttpStatus.OK);
+		try {
+			String[] pairs = search_query.split("\\{|,|\\}");
+			Map<String, String> criteria_list = Helper.splitCriteriaFromKeys(pairs);
+			
+			List<Specification<Appointment>> spec_list = AppointmentSpecifications.buildSpecListFromCriteria(criteria_list);
+			Specification<Appointment> final_specification = Helper.buildSpecFromSpecList(spec_list);
+	
+			List<Appointment> filtered_appointment_list = appointmentRepository.findAll(final_specification);
+			List<List<Object>> filtered_data = filterAppointmentsInfo(filtered_appointment_list);
+	
+			return new ResponseEntity<List<List<Object>>>(filtered_data, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<List<List<Object>>>(HttpStatus.BAD_REQUEST);
+		}
 	}
 	
 	// Delete
 	@RequestMapping(value = "/appointment/delete", method = RequestMethod.POST)
 	public ResponseEntity<String> appointmentDelete(@RequestBody String appointmentId) {
-		appointmentRepository.delete(Long.parseLong(appointmentId));
-		return new ResponseEntity<String>(HttpStatus.OK);
+		try {
+			appointmentRepository.delete(Long.parseLong(appointmentId));
+			return new ResponseEntity<String>(HttpStatus.OK);
+		} catch(NumberFormatException e) {
+			return new ResponseEntity<String>("Id inválido.", HttpStatus.BAD_REQUEST);
+		}
 	}
 	
 	// Delete by dog
 	@RequestMapping(value = "/appointment/delete_by_dog", method = RequestMethod.POST)
 	public ResponseEntity<String> appointmentDeleteByDog(@RequestBody String dogId) {
-		// TODO: ERROR TREATMENT
+		if (!Helper.isNumeric(dogId)) 
+			return new ResponseEntity<String>("Id inválido.", HttpStatus.BAD_REQUEST);
+	
 		ResponseEntity<List<List<Object>>> search_result = appointmentSearch("{\"dogId\":\""+dogId+"\"}");
 		List<List<Object>> found_entries = search_result.getBody();
-		// TODO: MAP FUNCTION?
-		List<Long> ids_to_delete = Helper.getIds(found_entries);
-		for(Long id : ids_to_delete) {
-			appointmentDelete(Long.toString(id));
-		}		
+		
+		for(List<Object> entry : found_entries)
+			appointmentDelete(Long.toString(Helper.objectToLong(entry.get(0))));
+
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 }

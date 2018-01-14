@@ -67,7 +67,6 @@ public final class AppointmentSpecifications {
 	// given a list of criteria in the format of a hashmap, build a list
 	//   of specifications used for the querying.
 	public static List<Specification<Appointment>> buildSpecListFromCriteria(Map<String, String> criteria_list) {
-		// TODO: CHECK IF REFACTORABLE (Only the list types differ)
 		List<Specification<Appointment>> spec_list = new ArrayList<Specification<Appointment>>();
 
 		for(Map.Entry<String, String> criterion : criteria_list.entrySet())
@@ -102,19 +101,5 @@ public final class AppointmentSpecifications {
 		default:
 			return null;
 		}
-	}
-
-	// buildSpecFromSpecList
-	// given a list of specification, return one specification containing all the given specs
-	public static Specification<Appointment> buildSpecFromSpecList(List<Specification<Appointment>> spec_list) {
-		// TODO: CHECK IF REFACTORABLE (Only the list types differ)
-		if (spec_list.size() < 1)
-			return null;
-
-		Specification<Appointment> result_spec = spec_list.get(0);
-		for (int i=1; i < spec_list.size(); i++)
-			result_spec = Specifications.where(result_spec).and(spec_list.get(i));
-
-		return result_spec;
 	}
 }

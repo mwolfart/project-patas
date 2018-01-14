@@ -38,8 +38,14 @@ public class DogService {
 		for (Dog dog : dog_list) {
 			if (search_filter) {
 				String arDateAsString = df.format(dog.getArrivalDate());
-				String dogSex = (dog.getSex() == "M") ? "Macho" : 
-								((dog.getSex() == "F") ? "Fêmea" : "");
+
+				// TODO: Refactor? Something wrong happening to Sex field.
+				String dogSex = "";
+				if (dog.getSex() != null) {
+					if (dog.getSex().charAt(0) == 'M') dogSex = "Macho";
+					else if (dog.getSex().charAt(0) == 'F') dogSex = "Fêmea";
+				}
+				
 				List<Object> entry = new ArrayList<Object>(Arrays.asList(dog.getId(), dog.getName(), dogSex, arDateAsString));
 				filtered_list.add(entry);
 			} else {
@@ -51,14 +57,14 @@ public class DogService {
 		return filtered_list;
 	}
 	
-	// Register dog
-	@RequestMapping(value = "/dog/register", method = RequestMethod.POST)
-	public ResponseEntity<?> dogRegister(@RequestBody Dog dog) {
+	// Validate a given dog accordingly to user's requirements
+	// Also save it to database
+	private ResponseEntity<?> validateAndSaveDog(Dog dog, Boolean editingDog) {
 		if(dog.getName() == null)
 			return new ResponseEntity<String>("Nome está em branco", HttpStatus.BAD_REQUEST);
 
 		Dog dogWithSameName = dogRepository.findByName(dog.getName());
-		if(dogWithSameName != null)
+		if(dogWithSameName != null && (!editingDog || dogWithSameName.getId() != dog.getId()))
 			return new ResponseEntity<String>("Já existe um cachorro com este nome", HttpStatus.BAD_REQUEST);
 
 		if(dog.getArrivalDate() == null)
@@ -70,38 +76,32 @@ public class DogService {
 		dogRepository.saveAndFlush(dog);
 		return new ResponseEntity<Long>(dog.getId(), HttpStatus.OK);
 	}
+	
+	// Register dog
+	@RequestMapping(value = "/dog/register", method = RequestMethod.POST)
+	public ResponseEntity<?> dogRegister(@RequestBody Dog dog) {
+		return validateAndSaveDog(dog, false);
+	}
 
 	// Update dog
-	// This is different from register, because we may accept a dog with the same name if unchanged
-	// TODO: CHECK IF REFACTORABLE
 	@RequestMapping(value = "/dog/update", method = RequestMethod.POST)
-	public ResponseEntity<String> dogUpdate(@RequestBody Dog dog) {
-		if(dog.getName() == null)
-			return new ResponseEntity<String>("Nome está em branco", HttpStatus.BAD_REQUEST);
-
-		Dog dogWithSameName = dogRepository.findByName(dog.getName());
-		if(dogWithSameName != null && dogWithSameName.getId() != dog.getId())
-			return new ResponseEntity<String>("Já existe um cachorro com este nome", HttpStatus.BAD_REQUEST);
-
-		if(dog.getArrivalDate() == null)
-			return new ResponseEntity<String>("Data de chegada está em branco", HttpStatus.BAD_REQUEST);
-
-		if(dog.getCastrated() == null)
-			return new ResponseEntity<String>("Flag de castrado está em branco", HttpStatus.BAD_REQUEST);
-
-		dogRepository.saveAndFlush(dog);
-		return new ResponseEntity<String>(HttpStatus.OK);
+	public ResponseEntity<?> dogUpdate(@RequestBody Dog dog) {
+		return validateAndSaveDog(dog, true);
 	}
 
 	// View dog
 	@RequestMapping(value = "/dog/view", method = RequestMethod.POST)
 	public ResponseEntity<?> dogView(@RequestBody String dogId) {		
-		Dog dog = dogRepository.findOne(Long.parseLong(dogId));
-
-		if (dog == null)
-			return new ResponseEntity<String>("Cachorro não encontrado.", HttpStatus.BAD_REQUEST);
-
-		return new ResponseEntity<Dog>(dog, HttpStatus.OK);
+		try {
+			Dog dog = dogRepository.findOne(Long.parseLong(dogId));
+	
+			if (dog == null)
+				return new ResponseEntity<String>("Cachorro não encontrado.", HttpStatus.BAD_REQUEST);
+	
+			return new ResponseEntity<Dog>(dog, HttpStatus.OK);
+		} catch(NumberFormatException e) {
+			return new ResponseEntity<String>("Id inválido.", HttpStatus.BAD_REQUEST);
+		}
 	}
 	
 	// Get all dogs
@@ -116,25 +116,33 @@ public class DogService {
 	// Search dog
 	@RequestMapping(value = "/dog/search", method = RequestMethod.POST, produces = {"application/json"})
 	public ResponseEntity<List<List<Object>>> dogSearch(@RequestBody String search_query) {
-		// We are going to split the JSON so we get each criteria separately
-		//  in the map. First we split the criteria, one from each other
-		String[] pairs = search_query.split("\\{|,|\\}");
-
-		// Then, we split each criterion from its key, and build a list from them.
-		Map<String, String> criteria_list = Helper.splitCriteriaFromKeys(pairs);
-		List<Specification<Dog>> spec_list = DogSpecifications.buildSpecListFromCriteria(criteria_list);
-		Specification<Dog> final_specification = DogSpecifications.buildSpecFromSpecList(spec_list);
-		
-		List<Dog> filtered_dog_list = dogRepository.findAll(final_specification);
-		List<List<Object>> filtered_data = filterDogsInfo(filtered_dog_list, true);
-		
-		return new ResponseEntity<List<List<Object>>>(filtered_data, HttpStatus.OK);
+		try {
+			// We are going to split the JSON so we get each criteria separately
+			//  in the map. First we split the criteria, one from each other
+			String[] pairs = search_query.split("\\{|,|\\}");
+	
+			// Then, we split each criterion from its key, and build a list from them.
+			Map<String, String> criteria_list = Helper.splitCriteriaFromKeys(pairs);
+			List<Specification<Dog>> spec_list = DogSpecifications.buildSpecListFromCriteria(criteria_list);
+			Specification<Dog> final_specification = Helper.buildSpecFromSpecList(spec_list);
+			
+			List<Dog> filtered_dog_list = dogRepository.findAll(final_specification);
+			List<List<Object>> filtered_data = filterDogsInfo(filtered_dog_list, true);
+			
+			return new ResponseEntity<List<List<Object>>>(filtered_data, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<List<List<Object>>>(HttpStatus.BAD_REQUEST);
+		}
 	}
 	
 	// Delete
 	@RequestMapping(value = "/dog/delete", method = RequestMethod.POST)
 	public ResponseEntity<String> dogDelete(@RequestBody String dogId) {
-		dogRepository.delete(Long.parseLong(dogId));
-		return new ResponseEntity<String>(HttpStatus.OK);
+		try {
+			dogRepository.delete(Long.parseLong(dogId));
+			return new ResponseEntity<String>(HttpStatus.OK);
+		} catch(NumberFormatException e) {
+			return new ResponseEntity<String>("Id inválido.", HttpStatus.BAD_REQUEST);
+		}
 	}
 }

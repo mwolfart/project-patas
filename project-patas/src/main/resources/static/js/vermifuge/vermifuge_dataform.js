@@ -25,9 +25,6 @@ function validateForm() {
 }
 
 $(document).ready(function() {
-
-	// TODO: FIX FIELDS IDS IN HTML
-	
 	// Protect fields
 	$( "#vermifugeName" ).keydown(protectStringField);
 	$( "#dosage" ).keydown(protectNumericField);
