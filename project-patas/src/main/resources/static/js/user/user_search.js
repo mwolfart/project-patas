@@ -1,26 +1,3 @@
-//processResponseJson := Object -> Object
-//function used to filter the json returned by the query
-//returns another json, containing only the fields we are interested in.
-function processResponseJson(response) {
-	$("tbody > tr").remove();
-	if (response.length>0){
-		$('#users').append(			
-				$.map(response, function (user_info) {	
-					var user_type;
-					if (user_info[3] == "1")
-						user_type = "Administrador";
-					else user_type = "Membro";
-					
-					return '<tr><td>' + user_info[1] + '</td><td>'+ user_info[2] +'</td><td>'+ user_type +'</td><td>'
-					+'<a href="user_view.html?id='+ user_info[0] +'" class="btn" role="button">Visualizar</a></td></tr>';
-				}).join());
-	}else{
-		$('#users').append('<tr><td colspan="4"> Nenhum registro encontrado. </td></tr>');
-	}
-	$( "#users" ).removeClass("disabled-table");
-
-}
-
 // Document load script
 $(document).ready(function() {
 	// Prevent user from typing letters and other symbols into numeric fields	
@@ -36,7 +13,7 @@ $(document).ready(function() {
 		event.preventDefault();
 		
 		if ( validateSearchStringField( $("#username")[0] ) == -1 )
-			showAlert($( "#errorUsername" ), "Nome de usu�rio inv�lido.");
+			showAlert($( "#errorUsername" ), "Nome de usuário inválido.");
 		else {
 			jsonData = formToJson(this);
 			jsonData = JSON.stringify(jsonData);
@@ -48,7 +25,7 @@ $(document).ready(function() {
 				data: jsonData,
 				contentType: "application/json; charset=UTF-8",
 				success: function(response) {
-					processResponseJson(response);
+					arrayToTable($('#users'), "user", response);
 				}
 			});
 		}

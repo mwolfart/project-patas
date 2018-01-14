@@ -1,5 +1,9 @@
 package controller;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -26,14 +30,22 @@ public class VaccinationService {
 	@Autowired
 	private DogRepository dogRepository;
 	
-	// Given a list containing the vaccination data, which has the dog ids,
-	//  retrieve the dog names from each id.
-	private void getDogNamesFromIds(List<List<Object>> data_list) {
-		for(int i = 0; i < data_list.size(); i++) {
-			Long dog_id = Helper.objectToLong(data_list.get(i).get(1));
-			String dog_name = dogRepository.findById(dog_id).getName();
-			data_list.get(i).set(1, dog_name);
+	// Given a list of vaccinations, return only the desired information
+	// Used in search function.
+	private List<List<Object>> filterVaccinationsInfo(List<Vaccination> vaccination_list) {
+		List<List<Object>> filtered_list = new ArrayList<List<Object>>();
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		
+		for (Vaccination vac : vaccination_list) {
+			Long dogId = vac.getDogId();
+			String dogName = dogRepository.findById(dogId).getName();
+			String appDateAsString = df.format(vac.getApplicationDate());
+			
+			List<Object> entry = new ArrayList<Object>(Arrays.asList(vac.getId(), dogName, vac.getVaccineName(), appDateAsString));
+			filtered_list.add(entry);
 		}
+		
+		return filtered_list;
 	}
 	
 	// Register (and update)
@@ -72,10 +84,9 @@ public class VaccinationService {
 		Specification<Vaccination> final_specification = VaccinationSpecifications.buildSpecFromSpecList(spec_list);
 
 		List<Vaccination> filtered_vaccination_list = vaccinationRepository.findAll(final_specification);
-		List<List<Object>> filtered_info_list = VaccinationSpecifications.filterVaccinationInfo(filtered_vaccination_list, new String[] {"id", "dogId", "vaccineName", "applicationDate"});
-		getDogNamesFromIds(filtered_info_list);
+		List<List<Object>> filtered_data = filterVaccinationsInfo(filtered_vaccination_list);
 		
-		return new ResponseEntity<List<List<Object>>>(filtered_info_list, HttpStatus.OK);
+		return new ResponseEntity<List<List<Object>>>(filtered_data, HttpStatus.OK);
 	}
 	
 	// Delete

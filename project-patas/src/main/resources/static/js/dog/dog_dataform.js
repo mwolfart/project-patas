@@ -1,3 +1,33 @@
+function validateForm() {
+	var formOK = false;
+	
+	if ( validateStringField( $( "#name" )[0] ) == 0 )
+		showAlert($( "#errorName" ), "Nome do cachorro deve ser informado.");
+	else if ( validateStringField( $( "#name" )[0] ) == -1 ) 
+		showAlert($( "#errorName" ), "Nome inválido.");
+	else if ( validateDateField( $( "#birthDate" )[0] ) == -1 ) 
+		showAlert($( "#errorBirthDate" ), "Data inválida.");
+	else if ( validateRealNumberField( $( "#weight" )[0] ) == -1 ) 
+		showAlert($( "#errorWeight" ), "Peso inválido.");
+	else if ( validateStringField( $( "#furColor" )[0] ) == -1 ) 
+		showAlert($( "#errorFurColor" ), "Cor de pelo inválida.");
+	else if ( validateDateField( $( "#arrivalDate" )[0] ) == -1 ) 
+		showAlert($( "#errorArrivalDate" ), "Data de chegada inválida.");
+	else if ( validateDateField( $( "#arrivalDate" )[0] ) == 0 ) 
+		showAlert($( "#errorArrivalDate" ), "Preencha a data de chegada.");
+	else if ( validateStringField( $( "#ration" )[0] ) == -1 ) 
+		showAlert($( "#errorRation" ), "Tipo de ração inválido.");
+	else if ( validateDateField( $( "#castrationDate" )[0] ) == -1 ) 
+		showAlert($( "#errorCastrationDate" ), "Data de chegada inválida.");
+	else if ( validateStringField( $( "#diseaseDescription" )[0] ) == -1 ) 
+		showAlert($( "#errorDiseaseDescription" ), "Descrição inválida.");
+	else if ( validateStringField( $( "#sponsors" )[0] ) == -1 ) 
+		showAlert($( "#errorSponsors" ), "Nome do(s) padrinho(s) inválido.");
+	else formOK = true;
+	
+	return formOK;
+}
+
 // Document load script
 $(document).ready(function() {
 	// Prevent user from typing letters and other symbols into numeric fields

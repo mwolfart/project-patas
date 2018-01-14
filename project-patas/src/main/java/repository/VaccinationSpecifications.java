@@ -141,40 +141,4 @@ public final class VaccinationSpecifications {
 
 		return result_spec;
 	}
-
-	// filterVaccinationInfo
-	// given a list of vaccination classes, filter the information we want
-	//   (given as a list of strings), and return it in a list.
-	public static List<List<Object>> filterVaccinationInfo(List<Vaccination> vaccination_list, String[] desired_fields) {
-		List<List<Object>> filtered_list = new ArrayList<List<Object>>();
-
-		for(Vaccination vaccination : vaccination_list) {
-			List<Object> desired_info = new ArrayList<Object>();
-
-			for(String field : desired_fields) {
-				switch(field) {
-				case "id":
-					desired_info.add(vaccination.getId());
-					break;
-				case "vaccineName":
-					desired_info.add(vaccination.getVaccineName());
-					break;
-				case "dogId":
-					desired_info.add(vaccination.getDogId());
-					break;
-				case "applicationDate":
-					desired_info.add(vaccination.getApplicationDate());
-					break;
-				case "nextApplicationDate":
-					desired_info.add(vaccination.getNextApplicationDate());
-					break;
-				}
-			}
-			filtered_list.add(desired_info);
-		}
-
-		return filtered_list;
-	}
-
-
 }

@@ -1,6 +1,7 @@
 package controller;
 
-
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +25,21 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 
+	// Given a list of users, return only the desired information
+	// Used in search function.
+	private List<List<Object>> filterUsersInfo(List<User> user_list) {
+		List<List<Object>> filtered_list = new ArrayList<List<Object>>();
+		
+		for (User user : user_list) {			
+			String userType = user.getUserType() == 1 ? "Administrador" : "Membro";
+			
+			List<Object> entry = new ArrayList<Object>(Arrays.asList(user.getId(), user.getUsername(), userType, user.getFullName()));
+			filtered_list.add(entry);
+		}
+		
+		return filtered_list;
+	}
+	
 	// Register
 	@RequestMapping(value = "/user/register", method = RequestMethod.POST)
 	public ResponseEntity<?> userRegister(@RequestBody String userData) {
@@ -198,9 +214,9 @@ public class UserService {
 		Specification<User> final_specification = UserSpecifications.buildSpecFromSpecList(spec_list);
 
 		List<User> filtered_user_list = userRepository.findAll(final_specification);
-		List<List<Object>> filtered_info_list = UserSpecifications.filterUserInfo(filtered_user_list, new String[] {"id", "username", "fullName", "userType"});
-		
-		return new ResponseEntity<List<List<Object>>>(filtered_info_list, HttpStatus.OK);
+		List<List<Object>> filtered_data = filterUsersInfo(filtered_user_list); 
+				
+		return new ResponseEntity<List<List<Object>>>(filtered_data, HttpStatus.OK);
 	}
 	
 	// Delete

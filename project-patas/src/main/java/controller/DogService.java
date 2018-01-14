@@ -1,5 +1,9 @@
 package controller;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +27,29 @@ public class DogService {
 
 	@Autowired 
 	private DogRepository dogRepository;
+	
+	// Given a list of dogs, return only the desired information
+	// Used in search function and also in the function to get all dogs.
+	//   (that's why there's a boolean parameter)
+	private List<List<Object>> filterDogsInfo(List<Dog> dog_list, Boolean search_filter) {
+		List<List<Object>> filtered_list = new ArrayList<List<Object>>();
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		
+		for (Dog dog : dog_list) {
+			if (search_filter) {
+				String arDateAsString = df.format(dog.getArrivalDate());
+				String dogSex = (dog.getSex() == "M") ? "Macho" : 
+								((dog.getSex() == "F") ? "Fêmea" : "");
+				List<Object> entry = new ArrayList<Object>(Arrays.asList(dog.getId(), dog.getName(), dogSex, arDateAsString));
+				filtered_list.add(entry);
+			} else {
+				List<Object> entry = new ArrayList<Object>(Arrays.asList(dog.getId(), dog.getName()));
+				filtered_list.add(entry);
+			}			
+		}
+		
+		return filtered_list;
+	}
 	
 	// Register dog
 	@RequestMapping(value = "/dog/register", method = RequestMethod.POST)
@@ -81,9 +108,9 @@ public class DogService {
 	@RequestMapping(value = "/dog/get", method = RequestMethod.GET)
 	public ResponseEntity<List<List<Object>>> dogGetAll() {
 		List<Dog> dog_list = dogRepository.findAll();
-		List<List<Object>> filtered_info_list = DogSpecifications.filterDogInfo(dog_list, new String[] {"id", "name"});
+		List<List<Object>> filtered_data = filterDogsInfo(dog_list, false);
 
-		return new ResponseEntity<List<List<Object>>>(filtered_info_list, HttpStatus.OK);
+		return new ResponseEntity<List<List<Object>>>(filtered_data, HttpStatus.OK);
 	}
 
 	// Search dog
@@ -99,9 +126,9 @@ public class DogService {
 		Specification<Dog> final_specification = DogSpecifications.buildSpecFromSpecList(spec_list);
 		
 		List<Dog> filtered_dog_list = dogRepository.findAll(final_specification);
-		List<List<Object>> filtered_info_list = DogSpecifications.filterDogInfo(filtered_dog_list, new String[] {"id", "name", "sex", "arrivalDate"});
-
-		return new ResponseEntity<List<List<Object>>>(filtered_info_list, HttpStatus.OK);
+		List<List<Object>> filtered_data = filterDogsInfo(filtered_dog_list, true);
+		
+		return new ResponseEntity<List<List<Object>>>(filtered_data, HttpStatus.OK);
 	}
 	
 	// Delete

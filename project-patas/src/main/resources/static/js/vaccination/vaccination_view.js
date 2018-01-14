@@ -1,19 +1,11 @@
 // jsonToForm := Object -> Void
 // sends all the obtained values to the form.
 function jsonToForm(json) {
-	var app_date = new Date();
-	app_date.setTime(json.applicationDate);
-	
-	$(" #dogId ").val(json.dogId);
+	putDogsInComboBoxAndSet(json.dogId);
 	$(" #vaccineName ").val(json.vaccineName);
-	$(" #applicationDate ").val(dateToString(app_date));
+	putDateInField($(" #applicationDate "), json.applicationDate);
 	$(" #obs ").val(json.obs);
-	
-	if (json.nextApplicationDate) {
-		var next_app_date = new Date();
-		next_app_date.setTime(json.nextApplicationDate);
-		$(" #nextApplicationDate ").val(dateToString(next_app_date));
-	}
+	putDateInField($(" #nextApplicationDate "), json.nextApplicationDate);
 }
 
 $(document).ready(function() {
@@ -35,7 +27,7 @@ $(document).ready(function() {
 		event.preventDefault();
 		
 		if (confirm("Tem certeza que deseja excluir este registro?")) {
-			var vac_id = getUrlParameter('id');
+			var vac_id = getIdFromURLasString();
 			
 			$.ajax({
 				url: "/vaccination/delete",
@@ -56,26 +48,12 @@ $(document).ready(function() {
 	$( "#vacEditForm" ).submit(function(event) {
 		event.preventDefault();
 		
-		if ( validateStringField( $( "#dogId" )[0] ) == 0 )
-			showAlert($( "#errorDogId" ), "Nome do cachorro deve ser informado.");
-		else if ( validateStringField( $( "#vaccineName" )[0] ) == 0 )
-			showAlert($( "#errorVaccineName" ), "Nome da vacina deve ser informado.");
-		else if ( validateDateField( $( "#applicationDate" )[0] ) == 0 )
-			showAlert($( "#errorApplicationDate" ), "Data deve ser informada.");
-		else if ( validateStringField( $( "#vaccineName" )[0] ) == -1 )
-			showAlert($( "#errorVaccineName" ), "Nome inválido.");
-		else if ( validateDateField( $( "#applicationDate" )[0] ) == -1 )
-			showAlert($( "#errorApplicationDate" ), "Data inválida.");
-		else if ( validateDateField( $( "#nextApplicationDate" )[0] ) == -1 )
-			showAlert($( "#errorNextApplicationDate" ), "Data inválida.");
-		else if ( validateStringField( $( "#obs" )[0] ) == -1 )
-			showAlert($( "#errorObs" ), "Observações contém caracteres inválidos.");
-		else {
+		if (validateForm()) {
 			// Convert form to json and fix its format
 			var jsonData = formToJson(this);	
 			
-			// Store the id so we know which dog to edit
-			jsonData["id"] = parseInt(getUrlParameter('id'));
+			// Store the id so we know which register to edit
+			jsonData["id"] = parseInt(getIdFromURLasString());
 			jsonData = JSON.stringify(jsonData);
 			
 			// Post the data
@@ -105,14 +83,8 @@ $(document).ready(function() {
 		}
 	});
 	
-	putDogsInComboBox();
-	
 	// Load the data using dog id (specified in URL)
-	var vac_id = getUrlParameter('id');
-	
-	// if the id isn't specified, set it to 1 by default
-	if (vac_id == 0)
-		vac_id = "1";
+	var vac_id = getIdFromURLasString();
 	
 	$.ajax({
 		url: "/vaccination/view",

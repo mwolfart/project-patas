@@ -141,40 +141,4 @@ public final class VermifugeSpecifications {
 
 		return result_spec;
 	}
-
-	// filterVermifugeInfo
-	// given a list of vermifuge classes, filter the information we want
-	//   (given as a list of strings), and return it in a list.
-	public static List<List<Object>> filterVermifugeInfo(List<Vermifuge> vermifuge_list, String[] desired_fields) {
-		List<List<Object>> filtered_list = new ArrayList<List<Object>>();
-
-		for(Vermifuge vermifuge : vermifuge_list) {
-			List<Object> desired_info = new ArrayList<Object>();
-
-			for(String field : desired_fields) {
-				switch(field) {
-				case "id":
-					desired_info.add(vermifuge.getId());
-					break;
-				case "name":
-					desired_info.add(vermifuge.getVermifugeName());
-					break;
-				case "dogId":
-					desired_info.add(vermifuge.getDogId());
-					break;
-				case "applicationDate":
-					desired_info.add(vermifuge.getApplicationDate());
-					break;
-				case "nextApplicationDate":
-					desired_info.add(vermifuge.getNextApplicationDate());
-					break;
-				}
-			}
-			filtered_list.add(desired_info);
-		}
-
-		return filtered_list;
-	}
-
-
 }

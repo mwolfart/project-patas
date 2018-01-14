@@ -1,5 +1,9 @@
 package controller;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -26,28 +30,22 @@ public class VermifugeService {
 	@Autowired
 	private DogRepository dogRepository;
 	
-	/*
-	// Given the criteria for a vermifuge, which contains the name of the dog,
-	//  find the id of the given dog.
-	private Long getDogIdFromCriteria(Map<String, String> criteria) {
-		for(Map.Entry<String, String> criterion : criteria.entrySet()) {
-			if (criterion.getKey().equals("dogName")) {
-				return dogRepository.findByName(criterion.getValue()).getId();
-			}
+	// Given a list of vermifuges, return only the desired information
+	// Used in search function.
+	private List<List<Object>> filterVermifugesInfo(List<Vermifuge> vermifuge_list) {
+		List<List<Object>> filtered_list = new ArrayList<List<Object>>();
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		
+		for (Vermifuge verm : vermifuge_list) {
+			Long dogId = verm.getDogId();
+			String dogName = dogRepository.findById(dogId).getName();
+			String appDateAsString = df.format(verm.getApplicationDate());
+			
+			List<Object> entry = new ArrayList<Object>(Arrays.asList(verm.getId(), dogName, verm.getVermifugeName(), appDateAsString));
+			filtered_list.add(entry);
 		}
 		
-		return null;
-	}
-	*/
-	
-	// Given a list containing the vermifuge data, which has the dog ids,
-	//  retrieve the dog names from each id.
-	private void getDogNamesFromIds(List<List<Object>> data_list) {
-		for(int i = 0; i < data_list.size(); i++) {
-			Long dog_id = Helper.objectToLong(data_list.get(i).get(1));
-			String dog_name = dogRepository.findById(dog_id).getName();
-			data_list.get(i).set(1, dog_name);
-		}
+		return filtered_list;
 	}
 	
 	// Register (and update)
@@ -89,10 +87,9 @@ public class VermifugeService {
 		Specification<Vermifuge> final_specification = VermifugeSpecifications.buildSpecFromSpecList(spec_list);
 
 		List<Vermifuge> filtered_vermifuge_list = vermifugeRepository.findAll(final_specification);
-		List<List<Object>> filtered_info_list = VermifugeSpecifications.filterVermifugeInfo(filtered_vermifuge_list, new String[] {"id", "dogId", "name", "applicationDate"});
-		getDogNamesFromIds(filtered_info_list);
+		List<List<Object>> filtered_data = filterVermifugesInfo(filtered_vermifuge_list);
 		
-		return new ResponseEntity<List<List<Object>>>(filtered_info_list, HttpStatus.OK);
+		return new ResponseEntity<List<List<Object>>>(filtered_data, HttpStatus.OK);
 	}
 	
 	// Delete

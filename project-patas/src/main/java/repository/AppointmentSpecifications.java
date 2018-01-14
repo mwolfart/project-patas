@@ -117,40 +117,4 @@ public final class AppointmentSpecifications {
 
 		return result_spec;
 	}
-
-	// filterAppointmentInfo
-	// given a list of appointment classes, filter the information we want
-	//   (given as a list of strings), and return it in a list.
-	public static List<List<Object>> filterAppointmentInfo(List<Appointment> appointment_list, String[] desired_fields) {
-		List<List<Object>> filtered_list = new ArrayList<List<Object>>();
-
-		for(Appointment appointment : appointment_list) {
-			List<Object> desired_info = new ArrayList<Object>();
-
-			for(String field : desired_fields) {
-				switch(field) {
-				case "id":
-					desired_info.add(appointment.getId());
-					break;
-				case "location":
-					desired_info.add(appointment.getLocation());
-					break;
-				case "dogId":
-					desired_info.add(appointment.getDogId());
-					break;
-				case "appointmentDate":
-					desired_info.add(appointment.getAppointmentDate());
-					break;
-				case "vetName":
-					desired_info.add(appointment.getVetName());
-					break;
-				}
-			}
-			filtered_list.add(desired_info);
-		}
-
-		return filtered_list;
-	}
-
-
 }

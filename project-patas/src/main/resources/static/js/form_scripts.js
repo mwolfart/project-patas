@@ -1,7 +1,5 @@
-
-// getUrlParameter := String -> String or Integer
-// gets an URL parameter. If it's absent, returns false.
-// If it's present but has no value, returns true.
+// getUrlParameter := String -> String
+// gets an URL parameter. If it's absent, returns undefined.
 function getUrlParameter(param) {
     var URL = decodeURIComponent(window.location.search.substring(1));
     var URL_variables = URL.split("&");
@@ -11,11 +9,20 @@ function getUrlParameter(param) {
     	param_name = URL_variables[i].split("=");
 
         if (param_name[0] === param) {
-            return param_name[1] === undefined ? 0 : param_name[1];
+            return param_name[1];
         }
     }
     
-    return 0;
+    return undefined;
+}
+
+// getIdFromURLasString := Void -> String
+// gets the id parameter from the URL. If absent or invalid, set default to 1.
+function getIdFromURLasString() {
+	var id = getUrlParameter('id');
+	if (id === undefined || !(id == parseInt(id, 10)))
+		return "1";
+	else return id;
 }
 
 // arrayContains := Array, Object -> Boolean
@@ -381,9 +388,9 @@ function hideAlert(element) {
 	element.addClass("disabled-alert");	
 }
 
-//putDogsInComboBox := Void -> Void
-//given a list of dog ids and names, put them into the
-//dogName combobox (vacination, vermifugation, appointments)
+// putDogsInComboBox := Void -> Void
+// given a list of dog ids and names, put them into the
+// dogName combobox (vacination, vermifugation, appointments)
 function putDogsInComboBox() {
 	$.ajax({
 		url: "/dog/get",
@@ -397,6 +404,25 @@ function putDogsInComboBox() {
 			});
 		}
 	});
+}
+
+// putDogsInComboBoxAndSet := Long -> Void
+// similar to putDogsInComboBox, but also sets the value of the combobox.
+function putDogsInComboBoxAndSet(value) {
+	$.ajax({
+		url: "/dog/get",
+		type: "GET",
+		success: function(dogs) {
+			$.each(dogs, function(i, dog) {
+				$( "#dogId" ).append($("<option>", {
+					value: dog[0],
+					text: dog[1]
+				}));
+			});
+			
+			$( "#dogId" ).val(value);
+		}
+	});	
 }
 
 //readURL : Object -> Void
@@ -443,3 +469,38 @@ function storeImage(input, callback) {
 	} else callback([]);
 }
 
+// putDateInField : Object, Date -> Void
+// Set a field to the specified date.
+function putDateInField(field, date) {
+	if (date) {
+		var date2 = new Date();
+		date2.setTime(date);
+		field.val(dateToString(date2));
+	}
+}
+
+// arrayToTable : String, Object[] -> Void
+// Send the data received from the database to a table
+// Used in search forms
+function arrayToTable(table, table_type, entry_array) {
+	$("tbody > tr").remove();
+	if (entry_array.length > 0) {
+		table.append(
+				$.map(entry_array, function (entry) {
+					if (entry.size < 2)
+						return '<tr><td>Erro no carregamento do registro</td></tr>';
+					
+					var return_string = '<tr><td>';
+					for (var iter = 1; iter < entry.length; iter++)
+						return_string += entry[iter] + '</td><td>';
+					
+					return_string += '<a href="' + table_type + '_view.html?id=' + entry[0] 
+										+ '" class="btn" role="button">Visualizar</a></td></tr>';
+					return return_string;
+				}).join());
+	} else {
+		table.append('<tr><td colspan="5"> Nenhum registro encontrado. </td></tr>');
+	}
+	table.removeClass("disabled-table");
+
+}

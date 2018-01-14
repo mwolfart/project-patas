@@ -134,37 +134,4 @@ public final class DogSpecifications {
 
 		return result_spec;
 	}
-
-	// filterDogInfo
-	// given a list of dog classes, filter the information we want
-	//   (given as a list of strings), and return it in a list.
-	public static List<List<Object>> filterDogInfo(List<Dog> dog_list, String[] desired_fields) {
-		List<List<Object>> filtered_list = new ArrayList<List<Object>>();
-
-		for(Dog dog : dog_list) {
-			List<Object> desired_info = new ArrayList<Object>();
-
-			for(String field : desired_fields) {
-				switch(field) {
-				case "id":
-					desired_info.add(dog.getId());
-					break;
-				case "name":
-					desired_info.add(dog.getName());
-					break;
-				case "arrivalDate":
-					desired_info.add(dog.getArrivalDate());
-					break;
-				case "sex":
-					desired_info.add(dog.getSex());
-					break;
-				}
-			}
-
-			filtered_list.add(desired_info);
-		}
-
-		return filtered_list;
-	}
-
 }

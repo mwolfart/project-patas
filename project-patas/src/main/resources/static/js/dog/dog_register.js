@@ -6,40 +6,13 @@ $(document).ready(function() {
 		event.preventDefault();
 		
 		// Form validation
-		if ( validateStringField( $( "#name" )[0] ) == 0 )
-			showAlert($( "#errorName" ), "Nome do cachorro deve ser informado.");
-		else if ( validateStringField( $( "#name" )[0] ) == -1 ) 
-			showAlert($( "#errorName" ), "Nome inválido.");
-		else if ( validateDateField( $( "#birthDate" )[0] ) == -1 ) 
-			showAlert($( "#errorBirthDate" ), "Data inválida.");
-		else if ( validateRealNumberField( $( "#weight" )[0] ) == -1 ) 
-			showAlert($( "#errorWeight" ), "Peso inválido.");
-		else if ( validateStringField( $( "#furColor" )[0] ) == -1 ) 
-			showAlert($( "#errorFurColor" ), "Cor de pelo inválida.");
-		else if ( validateDateField( $( "#arrivalDate" )[0] ) == -1 ) 
-			showAlert($( "#errorArrivalDate" ), "Data de chegada inválida.");
-		else if ( validateDateField( $( "#arrivalDate" )[0] ) == 0 ) 
-			showAlert($( "#errorArrivalDate" ), "Preencha a data de chegada.");
-		else if ( validateStringField( $( "#ration" )[0] ) == -1 ) 
-			showAlert($( "#errorRation" ), "Tipo de ração inválido.");
-		else if ( validateDateField( $( "#castrationDate" )[0] ) == -1 ) 
-			showAlert($( "#errorCastrationDate" ), "Data de castração inválida.");
-		else if ( validateStringField( $( "#diseaseDescription" )[0] ) == -1 ) 
-			showAlert($( "#errorDiseaseDescription" ), "Descrição inválida.");
-		else if ( validateStringField( $( "#sponsors" )[0] ) == -1 ) 
-			showAlert($( "#errorSponsors" ), "Nome do(s) padrinho(s) inválido.");
-		else {
+		if (validateForm()) {
 			// Convert form to json
 			var jsonData = formToJson(this);
 			
 			// Fix the checkbox values within the json
-			if ( $(" #hasDiseases ").prop("checked") )
-				jsonData["hasDiseases"] = true;
-			else jsonData["hasDiseases"] = false;
-			
-			if ( $(" #castrated ").prop("checked") )
-				jsonData["castrated"] = true;
-			else jsonData["castrated"] = false;
+			$(" #hasDiseases ").prop("checked") ? jsonData["hasDiseases"] = true : jsonData["hasDiseases"] = false;
+			$(" #castrated ").prop("checked") ? jsonData["castrated"] = true : jsonData["castrated"] = false;
 			
 			// Save photo
 			var photo_as_bytes = [];

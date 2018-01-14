@@ -69,37 +69,4 @@ public final class UserSpecifications {
 
 		return result_spec;
 	}
-
-	// filterUserInfo
-	// given a list of appointment classes, filter the information we want
-	//   (given as a list of strings), and return it in a list.
-	public static List<List<Object>> filterUserInfo(List<User> user_list, String[] desired_fields) {
-		List<List<Object>> filtered_list = new ArrayList<List<Object>>();
-
-		for(User user : user_list) {
-			List<Object> desired_info = new ArrayList<Object>();
-
-			for(String field : desired_fields) {
-				switch(field) {
-				case "id":
-					desired_info.add(user.getId());
-					break;
-				case "username":
-					desired_info.add(user.getUsername());
-					break;
-				case "fullName":
-					desired_info.add(user.getFullName());
-					break;
-				case "userType":
-					desired_info.add(user.getUserType());
-					break;
-				}
-			}
-			filtered_list.add(desired_info);
-		}
-
-		return filtered_list;
-	}
-
-
 }

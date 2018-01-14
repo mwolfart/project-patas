@@ -2,20 +2,24 @@
 // jsonToForm := Object -> Void
 // sends all the obtained values to the form.
 function jsonToForm(json) {
-	var arrival_date = new Date();
-	arrival_date.setTime(json.arrivalDate);
-	
 	$(" #name ").val(json.name);
 	$(" #weight ").val(json.weight);
 	$(" #sex ").val(json.sex);
 	$(" #size ").val(json.size);
 	$(" #furColor ").val(json.furColor);
 	$(" #status ").val(json.status);
-	$(" #arrivalDate ").val(dateToString(arrival_date));
+	putDateInField($(" #arrivalDate "), json.arrivalDate);
 	$(" #ration ").val(json.ration);
 	$(" #rationAmount ").val(json.rationAmount);
 	$(" #rationMeasurement ").val(json.rationMeasurement);
 	$(" #sponsors ").val(json.sponsors);
+	
+	if (json.birthDate) {
+		var bday = new Date();
+		bday.setTime(json.birthDate);
+		$(" #birthDate ").val(dateToString(bday));
+		$(" #age ").val(computeAge(bday));
+	}
 	
 	if(json.photo) {
 		var image = "data:image/png;base64," + json.photo;
@@ -23,22 +27,10 @@ function jsonToForm(json) {
 		document.getElementById("dogPhoto").width = 200;
 		document.getElementById("dogPhoto").height = 200;
 	}
-		
-	if (json.birthDate) {
-		var birth_date = new Date();
-		birth_date.setTime(json.birthDate);
-		$(" #birthDate ").val(dateToString(birth_date));
-		$(" #age ").val(computeAge(birth_date));
-	}
 	
 	if (json.castrated == true) {
 		$(" #castrated ").prop('checked', true);
-
-		if (json.castrationDate) {
-			var castration_date = new Date();
-			castration_date.setTime(json.castrationDate);
-			$(" #castrationDate ").val(dateToString(castration_date));
-		}
+		putDateInField($(" #castrationDate "), json.castrationDate);
 	}
 	
 	if (json.hasDiseases == true) {
@@ -125,7 +117,7 @@ $(document).ready(function() {
 		event.preventDefault();
 		
 		if (confirm("Tem certeza que deseja excluir este cachorro? Todos os registros relacionados à ele (vacinações, vermifugações, consultas) serão também excluídos.")) {
-			var dog_id = getUrlParameter('id');
+			var dog_id = getIdFromURLasString();
 			
 			$.ajax({
 				url: "/vaccination/delete_by_dog",
@@ -175,52 +167,19 @@ $(document).ready(function() {
 	
 	// Set the submit configuration for the form
 	$( "#dogEditForm" ).submit(function(event) {
-		
-		/* TODO: THIS PART IS EQUAL TO THE ONE IN dog_register.js
-		 * WITH EXCEPTION OF THE LATTER PART
-		 * WE SHOULD CONSIDER REFACTORING IT.
-		 */
 		event.preventDefault();
 		
 		// Form validation
-		if ( validateStringField( $( "#name" )[0] ) == 0 )
-			showAlert($( "#errorName" ), "Nome do cachorro deve ser informado.");
-		else if ( validateStringField( $( "#name" )[0] ) == -1 ) 
-			showAlert($( "#errorName" ), "Nome inválido.");
-		else if ( validateDateField( $( "#birthDate" )[0] ) == -1 ) 
-			showAlert($( "#errorBirthDate" ), "Data inválida.");
-		else if ( validateRealNumberField( $( "#weight" )[0] ) == -1 ) 
-			showAlert($( "#errorWeight" ), "Peso inválido.");
-		else if ( validateStringField( $( "#furColor" )[0] ) == -1 ) 
-			showAlert($( "#errorFurColor" ), "Cor de pelo inválida.");
-		else if ( validateDateField( $( "#arrivalDate" )[0] ) == -1 ) 
-			showAlert($( "#errorArrivalDate" ), "Data de chegada inválida.");
-		else if ( validateDateField( $( "#arrivalDate" )[0] ) == 0 ) 
-			showAlert($( "#errorArrivalDate" ), "Preencha a data de chegada.");
-		else if ( validateStringField( $( "#ration" )[0] ) == -1 ) 
-			showAlert($( "#errorRation" ), "Tipo de ração inválido.");
-		else if ( validateDateField( $( "#castrationDate" )[0] ) == -1 ) 
-			showAlert($( "#errorCastrationDate" ), "Data de chegada inválida.");
-		else if ( validateStringField( $( "#diseaseDescription" )[0] ) == -1 ) 
-			showAlert($( "#errorDiseaseDescription" ), "Descrição inválida.");
-		else if ( validateStringField( $( "#sponsors" )[0] ) == -1 ) 
-			showAlert($( "#errorSponsors" ), "Nome do(s) padrinho(s) inválido.");
-		else {
+		if (validateForm()) {
 			// Convert form to json
 			var jsonData = formToJson(this);
 			
 			// Store the id so we know which dog to edit
-			// PS.: THIS IS ALSO UNIQUE
-			jsonData["id"] = parseInt(getUrlParameter('id'));
+			jsonData["id"] = parseInt(getIdFromURLasString());
 			
 			// Fix the checkbox values within the json
-			if ( $(" #hasDiseases ").prop("checked") )
-				jsonData["hasDiseases"] = true;
-			else jsonData["hasDiseases"] = false;
-			
-			if ( $(" #castrated ").prop("checked") )
-				jsonData["castrated"] = true;
-			else jsonData["castrated"] = false;
+			$(" #hasDiseases ").prop("checked") ? jsonData["hasDiseases"] = true : jsonData["hasDiseases"] = false;
+			$(" #castrated ").prop("checked") ? jsonData["castrated"] = true : jsonData["castrated"] = false;
 			
 			// Save photo
 			var photo_as_bytes = [];
@@ -240,7 +199,6 @@ $(document).ready(function() {
 						console.log(response);
 					},
 					success: function() {
-						/* UNIQUE PART */
 						// Reset the form to previous state
 						$(" #name ").prop('disabled', true);
 						$(" #checker ").prop('disabled', true);
@@ -277,11 +235,7 @@ $(document).ready(function() {
 	/**************/
 	
 	// Load the data using dog id (specified in URL)
-	var dogId = getUrlParameter('id');
-	
-	// if the id isn't specified, set it to 1 by default
-	if (dogId == 0)
-		dogId = "1";
+	var dogId = getIdFromURLasString();
 	
 	$.ajax({
 		url: "/dog/view",

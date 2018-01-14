@@ -1,29 +1,3 @@
-//processResponseJson := Object -> Object
-//function used to filter the json returned by the query
-//returns another json, containing only the fields we are interested in.
-function processResponseJson(response) {
-	$("tbody > tr").remove();
-	if (response.length>0){
-		$('#appointments').append(
-				$.map(response, function (appoint_info) {
-					var location = "";
-					var vetName = "";
-					
-					if (appoint_info[3] != null) location = appoint_info[3];
-					if (appoint_info[4] != null) vetName = appoint_info[4];
-					
-					return '<tr><td>' + appoint_info[1] + '</td><td>'+ dateToString(integerToDate(appoint_info[2])) +'</td><td>'+
-						location +'</td><td>'+ vetName +'</td><td>'+
-						'<a href="appointment_view.html?id='+ appoint_info[0] +
-						'" class="btn" role="button">Visualizar</a></td></tr>';
-				}).join());
-	}else{
-		$('#appointments').append('<tr><td colspan="5"> Nenhum registro encontrado. </td></tr>');
-	}
-	$( "#appointments" ).removeClass("disabled-table");
-
-}
-
 // Document load script
 $(document).ready(function() {
 	// Prevent user from typing letters and other symbols into numeric fields
@@ -67,7 +41,7 @@ $(document).ready(function() {
 				dataType: "json",
 				contentType: "application/json; charset=UTF-8",
 				success: function(response) {
-					processResponseJson(response);
+					arrayToTable($('#appointments'), "appointment", response);
 				}
 			});
 		}
@@ -77,32 +51,24 @@ $(document).ready(function() {
 	/** INIT STATE **/
 	/****************/
 	 
-	// Configure dog combobox and load if specified
+	// Configure dog combobox and load if specified			
+	var dog_id = getUrlParameter("dogId");
+	var jsonData = {};
+	
+	if ((dog_id != undefined) && (dog_id == parseInt(dog_id, 10))) {
+		putDogsInComboBoxAndSet(dog_id);
+		jsonData = {"dogId": dog_id};
+		jsonData = JSON.stringify(jsonData);
+	} else putDogsInComboBox();
+	
 	$.ajax({
-		url: "/dog/get",
-		type: "GET",
-		success: function(data) {
-			putDogsInComboBox(data);
-			
-			var dog_id = getUrlParameter("dogId");
-			var jsonData = {};
-			
-			if (dog_id != 0) {
-				$( "#dogId" ).val(dog_id);
-				jsonData = {"dogId": dog_id};
-				jsonData = JSON.stringify(jsonData);
-			}
-			
-			$.ajax({
-				url: "/appointment/search",
-				type: "POST",
-				dataType: "json",
-				data: jsonData,
-				contentType: "application/json; charset=UTF-8",
-				success: function(response) {
-					processResponseJson(response);
-				}
-			});
+		url: "/appointment/search",
+		type: "POST",
+		dataType: "json",
+		data: jsonData,
+		contentType: "application/json; charset=UTF-8",
+		success: function(response) {
+			arrayToTable($('#appointments'), "appointment", response);
 		}
 	});
 });

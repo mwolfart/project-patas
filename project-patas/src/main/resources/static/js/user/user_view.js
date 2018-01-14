@@ -27,7 +27,7 @@ $(document).ready(function() {
 		
 		if (confirm("Tem certeza que deseja excluir este usu�rio?")) {
 			// TODO: TESTAR SE USUÁRIO ESTÁ LOGADO
-			var POST = getUrlParameter('id');
+			var POST = getIdFromURLasString();
 			
 			$.ajax({
 				url: "/user/delete",
@@ -74,7 +74,6 @@ $(document).ready(function() {
 					alert(response.responseText);
 				},
 				success: function() {
-					/* UNIQUE PART */
 					// Reset the form to previous state	
 					$(" #password ").val("");
 					$(" #passwordConf ").val("");
@@ -93,11 +92,7 @@ $(document).ready(function() {
 	});
 	
 	// Load the data using dog id (specified in URL)
-	var user_id = getUrlParameter('id');
-	
-	// if the id isn't specified, set it to 1 by default
-	if (user_id == 0)
-		user_id = "1";
+	var user_id = getIdFromURLasString();
 	
 	$.ajax({
 		url: "/user/view",

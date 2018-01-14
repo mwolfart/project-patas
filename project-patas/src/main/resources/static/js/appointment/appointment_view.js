@@ -2,25 +2,16 @@
 // jsonToForm := Object -> Void
 // sends all the obtained values to the form.
 function jsonToForm(json) {
-	$(" #dogId ").val(json.dogId);
+	putDogsInComboBoxAndSet(json.dogId);
 	$(" #responsibleName ").val(json.responsibleName);
 	$(" #location ").val(json.location);
 	$(" #vetName ").val(json.vetName);
 	$(" #reason ").val(json.reason);
 	$(" #examDescription ").val(json.examDescription);
 	$(" #appointmentDescription ").val(json.appointmentDescription);
-
-	if (json.totalCost)
-		$(" #totalCost ").val((json.totalCost).toFixed(2));
-	
-	if (json.appointmentDate) {
-		var appointment_date = new Date();
-		appointment_date.setTime(json.appointmentDate);
-		$(" #appointmentDate ").val(dateToString(appointment_date));
-	}
-	
-	if (json.examinated == true)
-		$(" #examinated ").prop('checked', true);
+	putDateInField($(" #appointmentDate "), json.appointmentDate);
+	json.totalCost && $(" #totalCost ").val((json.totalCost).toFixed(2));
+	json.examinated && $(" #examinated ").prop('checked', true);
 }
 
 // Document load script
@@ -59,7 +50,7 @@ $(document).ready(function() {
 		event.preventDefault();
 		
 		if (confirm("Tem certeza que deseja excluir este registro?")) {
-			var app_id = getUrlParameter('id');
+			var app_id = getIdFromURLasString();
 			
 			$.ajax({
 				url: "/appointment/delete",
@@ -82,39 +73,15 @@ $(document).ready(function() {
 		event.preventDefault();
 		
 		// Form validation
-		if ( validateStringField( $( "#dogId" )[0] ) == 0 )
-			showAlert($( "#errorDogId" ), "Nome do cachorro deve ser informado.");
-		else if ( validateStringField( $( "#responsibleName" )[0] ) == -1 )
-			showAlert($( "#errorResponsibleName" ), "Nome inválido.");
-		else if ( validateDateField( $( "#appointmentDate" )[0] ) == 0 ) 
-			showAlert($( "#errorAppointmentDate" ), "Data deve ser informada.");
-		else if ( validateDateField( $( "#appointmentDate" )[0] ) == -1 ) 
-			showAlert($( "#errorAppointmentDate" ), "Data inválida.");
-		else if ( validateStringField( $( "#location" )[0] ) == -1 )
-			showAlert($( "#errorLocation" ), "Nome inválido.");
-		else if ( validateStringField( $( "#vetName" )[0] ) == -1 )
-			showAlert($( "#errorVetName" ), "Nome inválido.");
-		else if ( validateCurrencyField( $( "#totalCost" )[0] ) == -1 )
-			showAlert($( "#errorTotalCost" ), "Preço deve ser informado.");
-		else if ( validateStringField( $( "#reason" )[0] ) == 0 )
-			showAlert($( "#errorReason" ), "O motivo deve ser informado.");
-		else if ( validateStringField( $( "#reason" )[0] ) == -1 )
-			showAlert($( "#errorReason" ), "Descrição inválida.");
-		else if ( validateStringField( $( "#examDescription" )[0] ) == -1 )
-			showAlert($( "#errorExamDescription" ), "Descrição inválida.");
-		else if ( validateStringField( $( "#appointmentDescription" )[0] ) == -1 )
-			showAlert($( "#errorAppointmentDescription" ), "Descrição inválida.");
-		else {
+		if (validateForm()) {
 			// Convert form to json
 			var jsonData = formToJson(this);
 			
 			// Store id
-			jsonData["id"] = parseInt(getUrlParameter('id'));
+			jsonData["id"] = parseInt(getIdFromURLasString());
 		
 			// Fix the checkbox values within the json
-			if ( $(" #examinated ").prop("checked") )
-				jsonData["examinated"] = true;
-			else jsonData["examinated"] = false;
+			$(" #examinated ").prop("checked") ? jsonData["examinated"] = true : jsonData["examinated"] = false;
 			
 			// Fix JSON so it's in the right format
 			jsonData = JSON.stringify(jsonData);
@@ -129,7 +96,6 @@ $(document).ready(function() {
 					console.log(response);
 				},
 				success: function() {
-					/* UNIQUE PART */
 					// Reset the form to previous state
 					$(" #dogId ").prop('disabled', true);
 					$(" #responsibleName ").prop('disabled', true);	
@@ -157,14 +123,8 @@ $(document).ready(function() {
 	/** INIT STATE **/
 	/****************/
 	
-	putDogsInComboBox();
-	
-	// Load the data using id (specified in URL)
-	var appointment_id = getUrlParameter('id');
-	
-	// if the id isn't specified, set it to 1 by default
-	if (appointment_id == 0)
-		appointment_id = "1";
+	// Load the data using dog id (specified in URL)
+	var appointment_id = getIdFromURLasString();
 	
 	$.ajax({
 		url: "/appointment/view",
