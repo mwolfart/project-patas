@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import repository.DogRepository;
 import repository.AppointmentRepository;
 import repository.AppointmentSpecifications;
 
@@ -27,8 +26,6 @@ public class AppointmentService {
 	
 	@Autowired
 	private AppointmentRepository appointmentRepository;
-	@Autowired
-	private DogRepository dogRepository;
 	
 	// Given a list of appointments, return only the desired information
 	// Used in search function.
@@ -38,7 +35,7 @@ public class AppointmentService {
 		
 		for (Appointment app : appointment_list) {
 			Long dogId = app.getDogId();			
-			String dogName = dogRepository.findById(dogId).getName();
+			String dogName = DogService.getDogNameById(dogId);
 			String appDateAsString = df.format(app.getAppointmentDate());
 			String appLocation = app.getLocation() != null ? app.getLocation() : "";
 			String appVetName = app.getVetName() != null ? app.getVetName() : "";
@@ -95,6 +92,7 @@ public class AppointmentService {
 	
 			return new ResponseEntity<List<List<Object>>>(filtered_data, HttpStatus.OK);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return new ResponseEntity<List<List<Object>>>(HttpStatus.BAD_REQUEST);
 		}
 	}

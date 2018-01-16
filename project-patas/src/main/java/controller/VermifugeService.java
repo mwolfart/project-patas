@@ -18,17 +18,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import repository.DogRepository;
 import repository.VermifugeRepository;
 import repository.VermifugeSpecifications;
 
 @RestController
 public class VermifugeService {
 	
+	private static VermifugeRepository vermifugeRepository;
+	
 	@Autowired
-	private VermifugeRepository vermifugeRepository;
-	@Autowired
-	private DogRepository dogRepository;
+	public VermifugeService(VermifugeRepository vermifugeRepository) {
+		VermifugeService.vermifugeRepository = vermifugeRepository;
+	}
 	
 	// Given a list of vermifuges, return only the desired information
 	// Used in search function.
@@ -38,7 +39,7 @@ public class VermifugeService {
 		
 		for (Vermifuge verm : vermifuge_list) {
 			Long dogId = verm.getDogId();
-			String dogName = dogRepository.findById(dogId).getName();
+			String dogName = DogService.getDogNameById(dogId);
 			String appDateAsString = df.format(verm.getApplicationDate());
 			
 			List<Object> entry = new ArrayList<Object>(Arrays.asList(verm.getId(), dogName, verm.getVermifugeName(), appDateAsString));
@@ -46,6 +47,12 @@ public class VermifugeService {
 		}
 		
 		return filtered_list;
+	}
+	
+	// Check if a given dog (by id) has any vermifug(ations(?))
+	public static Boolean dogHasVermifuges(Long dogId) {
+		List<Vermifuge> foundVerm = vermifugeRepository.findByDogId(dogId);
+		return (foundVerm.size() != 0);
 	}
 	
 	// Register (and update)
@@ -96,6 +103,7 @@ public class VermifugeService {
 			
 			return new ResponseEntity<List<List<Object>>>(filtered_data, HttpStatus.OK);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return new ResponseEntity<List<List<Object>>>(HttpStatus.BAD_REQUEST);
 		}
 	}

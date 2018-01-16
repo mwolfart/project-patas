@@ -84,7 +84,7 @@ public class Vaccination {
 
 	@Override
 	public String toString() {
-		return "Vermifuge [id=" + id + ", dogId=" + dogId + ", vaccineName="
+		return "Vaccination [id=" + id + ", dogId=" + dogId + ", vaccineName="
 				+ vaccineName + ", applicationDate="
 				+ applicationDate + ", nextApplicationDate="
 				+ nextApplicationDate + ", obs=" + obs + "]";

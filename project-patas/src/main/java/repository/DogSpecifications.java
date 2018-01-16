@@ -110,10 +110,6 @@ public final class DogSpecifications {
 			return dogArrivalYearEquals(Integer.parseInt(criterion.getValue()));
 		case "castrated":
 			return dogCastratedEquals(Boolean.parseBoolean(criterion.getValue()));
-		case "vacinated":
-			/* TODO */
-		case "vermifuged":
-			/* TODO */
 		default:
 			return null;
 		}

@@ -502,5 +502,19 @@ function arrayToTable(table, table_type, entry_array) {
 		table.append('<tr><td colspan="5"> Nenhum registro encontrado. </td></tr>');
 	}
 	table.removeClass("disabled-table");
+}
 
+// Post a json object to a given url
+// Used to simplify the calls to the server
+// TODO: CHECK IF THIS HAS ANY USE
+function ajaxPostJson(url, data, success_callback, error_callback) {
+	$.ajax({
+		url: url,
+		type: "POST",
+		dataType: "json",
+		data: data,
+		contentType: "application/json; charset=UTF-8",
+		success: success_callback(),
+		error: error_callback()
+	});
 }

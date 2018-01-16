@@ -21,12 +21,15 @@ import org.springframework.web.bind.annotation.RestController;
 import repository.DogRepository;
 import repository.DogSpecifications;
 
-
 @RestController
 public class DogService { 
 
-	@Autowired 
-	private DogRepository dogRepository;
+	private static DogRepository dogRepository;
+	
+	@Autowired
+	public DogService(DogRepository dogRepository) {
+		DogService.dogRepository = dogRepository;
+	}
 	
 	// Given a list of dogs, return only the desired information
 	// Used in search function and also in the function to get all dogs.
@@ -57,6 +60,29 @@ public class DogService {
 		return filtered_list;
 	}
 	
+	// Filter vaccinated/vermifuged dogs
+	private List<Dog> filterDogsWithDependencies(List<Dog> dogList, String filterType) {
+		List<Dog> filteredDogs = new ArrayList<Dog>();
+		
+		for(Dog dog : dogList) {
+			Boolean dogHasRegisters = false;
+			
+			switch(filterType) {
+			case "vermifuge":
+				dogHasRegisters = VermifugeService.dogHasVermifuges(dog.getId());
+				break;
+			case "vaccination":
+				dogHasRegisters = VaccinationService.dogHasVaccinations(dog.getId());
+				break;
+			}
+			
+			if (dogHasRegisters) 
+				filteredDogs.add(dog);
+		}
+		
+		return filteredDogs;
+	}
+	
 	// Validate a given dog accordingly to user's requirements
 	// Also save it to database
 	private ResponseEntity<?> validateAndSaveDog(Dog dog, Boolean editingDog) {
@@ -75,6 +101,16 @@ public class DogService {
 		
 		dogRepository.saveAndFlush(dog);
 		return new ResponseEntity<Long>(dog.getId(), HttpStatus.OK);
+	}
+	
+	// Find a dog name given its id
+	public static String getDogNameById(Long dogId) {
+		try {
+			return dogRepository.findById(dogId).getName();
+		} catch (Exception e) {
+			System.out.println("ERRO NA BASE DE DADOS: CACHORRO NÃO EXISTE (INCONSISTENCIA!)");
+			return "Erro - Cachorro inexistente";
+		}
 	}
 	
 	// Register dog
@@ -127,10 +163,28 @@ public class DogService {
 			Specification<Dog> final_specification = Helper.buildSpecFromSpecList(spec_list);
 			
 			List<Dog> filtered_dog_list = dogRepository.findAll(final_specification);
+			
+			// Check if vermifuged
+			if (criteria_list.get("vermifuged") != null) {
+				List<Dog> vermifuged_dogs = filterDogsWithDependencies(filtered_dog_list, "vermifuge");
+				if (criteria_list.get("vermifuged").equals("true"))
+					filtered_dog_list = vermifuged_dogs;
+				else filtered_dog_list.removeAll(vermifuged_dogs);
+			}
+				
+			// Check if vaccinated
+			if (criteria_list.get("vaccinated") != null) {
+				List<Dog> vaccinated_dogs = filterDogsWithDependencies(filtered_dog_list, "vaccination");
+				if (criteria_list.get("vaccinated").equals("true"))
+					filtered_dog_list = vaccinated_dogs;
+				else filtered_dog_list.removeAll(vaccinated_dogs);
+			}
+			
 			List<List<Object>> filtered_data = filterDogsInfo(filtered_dog_list, true);
 			
 			return new ResponseEntity<List<List<Object>>>(filtered_data, HttpStatus.OK);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return new ResponseEntity<List<List<Object>>>(HttpStatus.BAD_REQUEST);
 		}
 	}

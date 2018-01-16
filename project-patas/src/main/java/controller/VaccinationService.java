@@ -18,17 +18,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import repository.DogRepository;
 import repository.VaccinationRepository;
 import repository.VaccinationSpecifications;
 
 @RestController
 public class VaccinationService {
 	
+	private static VaccinationRepository vaccinationRepository;
+	
 	@Autowired
-	private VaccinationRepository vaccinationRepository;
-	@Autowired
-	private DogRepository dogRepository;
+	public VaccinationService(VaccinationRepository vaccinationRepository) {
+		VaccinationService.vaccinationRepository = vaccinationRepository;
+	}
 	
 	// Given a list of vaccinations, return only the desired information
 	// Used in search function.
@@ -38,7 +39,7 @@ public class VaccinationService {
 		
 		for (Vaccination vac : vaccination_list) {
 			Long dogId = vac.getDogId();
-			String dogName = dogRepository.findById(dogId).getName();
+			String dogName = DogService.getDogNameById(dogId);
 			String appDateAsString = df.format(vac.getApplicationDate());
 			
 			List<Object> entry = new ArrayList<Object>(Arrays.asList(vac.getId(), dogName, vac.getVaccineName(), appDateAsString));
@@ -46,6 +47,12 @@ public class VaccinationService {
 		}
 		
 		return filtered_list;
+	}
+	
+	// Check if a given dog (by id) has any vaccinations
+	public static Boolean dogHasVaccinations(Long dogId) {
+		List<Vaccination> foundVac = vaccinationRepository.findByDogId(dogId);
+		return (foundVac.size() != 0);
 	}
 	
 	// Register (and update)
@@ -87,14 +94,13 @@ public class VaccinationService {
 			
 			List<Specification<Vaccination>> spec_list = VaccinationSpecifications.buildSpecListFromCriteria(criteria_list);
 			Specification<Vaccination> final_specification = Helper.buildSpecFromSpecList(spec_list);
-	
-			System.out.println(final_specification);
 			
 			List<Vaccination> filtered_vaccination_list = vaccinationRepository.findAll(final_specification);
 			List<List<Object>> filtered_data = filterVaccinationsInfo(filtered_vaccination_list);
 			
 			return new ResponseEntity<List<List<Object>>>(filtered_data, HttpStatus.OK);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return new ResponseEntity<List<List<Object>>>(HttpStatus.BAD_REQUEST);
 		}	
 	}
