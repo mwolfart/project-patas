@@ -22,7 +22,6 @@ $(document).ready(function() {
 			data: userData,
 			contentType: "application/json; charset=UTF-8",
 			success: function(response) {
-				// TODO: set current user or session
 				if (response == true) {
 					$.session.set("username", username);
 					window.location.replace("/index.html");	

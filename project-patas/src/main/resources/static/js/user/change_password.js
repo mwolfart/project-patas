@@ -51,7 +51,7 @@ $(document).ready(function() {
 				},
 				error: function(response) {
 					alert(response.responseText);
-					window.location.replace("/user/my_account.html");
+					window.location.replace("/user/change_password.html");
 				}
 			});
 		}

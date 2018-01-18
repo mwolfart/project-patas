@@ -9,6 +9,7 @@ import org.springframework.data.jpa.domain.Specifications;
 // Class containing the helper functions
 public class Helper {
 
+	// objectToLong
 	// Casts an object to Long
 	public static Long objectToLong(Object object) {
 		String stringValue = String.valueOf(object);
@@ -35,6 +36,7 @@ public class Helper {
 		return criteria_list;
 	}
 	
+	// isNumeric
 	// Checks if a string is numeric
 	public static boolean isNumeric(String s) {  
 	    return s != null && s.matches("[-+]?\\d*\\.?\\d+");  
@@ -52,6 +54,20 @@ public class Helper {
 
 		return result_spec;
 	}	
+	
+	// countCharInString
+	// returns the amount of characters of specific type in a string
+	public static Integer countCharInString(String type, String str) {
+		Integer count = 0;
+		
+		for (int i = 0; i < str.length(); i++) {
+			if (type == "digits" && Character.isDigit(str.charAt(i))
+					|| type == "letters" && Character.isAlphabetic(str.charAt(i)))
+				count++;
+		}
+		
+		return count;
+	}
 	
 	/*
 	public static byte[] savePrescription(String path){
