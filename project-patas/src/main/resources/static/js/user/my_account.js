@@ -34,26 +34,34 @@ $(document).ready(function() {
 		event.preventDefault();
 		
 		if (confirm("Tem certeza que deseja excluir sua conta?")) {
-			var POST = getUrlParameter('id');
+			//var POST = getUrlParameter('id');
+			//var username = $.session.get("username");
+			var username = "";
 			
-			var username = $.session.get("username");
-			if (username != "") {
-				$.ajax({
-					url: "/user/delete",
-					type: "POST",
-					data: username,
-					contentType: "application/json; charset=UTF-8",
-					success: function(response) {
-						alert("Conta excluída com sucesso!");
-						window.location.replace("/login.html");
-					},
-					error: function(response) {
-						alert(response.responseText);
-					}
-				});
-			} else {
-				window.location.replace("/login.html");
-			}
+			$.ajax({
+				url: "/user/get_session",
+				type: "POST",
+				data: "username",
+				contentType: "application/json; charset=UTF-8",
+				success: function(response) {
+					$.ajax({
+						url: "/user/delete",
+						type: "POST",
+						data: response,
+						contentType: "application/json; charset=UTF-8",
+						success: function(response) {
+							alert("Conta excluída com sucesso!");
+							window.location.replace("/login.html");
+						},
+						error: function(response) {
+							alert(response.responseText);
+						}
+					});
+				},
+				error: function() {
+					window.location.replace("/login.html");	
+				}
+			});
 		}
 	});
 	
@@ -67,6 +75,7 @@ $(document).ready(function() {
 			var jsonData = formToJson(this);	
 			
 			// Store the id so we know which user to edit
+			// TODO: GET THE USER NAME FROM BACK
 			jsonData["username"] = $.session.get("username");
 			if (jsonData["username"] == "")
 				window.location.replace("/login.html");
@@ -95,25 +104,32 @@ $(document).ready(function() {
 		}
 	});
 	
-	var username = $.session.get("username");
+	var username = "";
 	
-	if (username != "") {
-		$.ajax({
-			url: "/user/view",
-			type: "POST",
-			data: username,
-			contentType: "application/json; charset=UTF-8",
-			success: function(response) {
-				jsonToForm(response);
-			},
-			error: function(response) {
-				alert(response.responseText);
-				$(" #editBtn ").prop("disabled", true);
-				$(" #deleteBtn ").prop("disabled", true);
-				$(" #changePasswordBtn ").prop("disabled", true);
-			}
-		});
-	} else {
-		window.location.replace("/login.html");
-	}
+	$.ajax({
+		url: "/user/get_session",
+		type: "POST",
+		data: "username",
+		contentType: "application/json; charset=UTF-8",
+		success: function(response) {
+			$.ajax({
+				url: "/user/view",
+				type: "POST",
+				data: response,
+				contentType: "application/json; charset=UTF-8",
+				success: function(response) {
+					jsonToForm(response);
+				},
+				error: function(response) {
+					alert(response.responseText);
+					$(" #editBtn ").prop("disabled", true);
+					$(" #deleteBtn ").prop("disabled", true);
+					$(" #changePasswordBtn ").prop("disabled", true);
+				}
+			});
+		},
+		error: function() {
+			window.location.replace("/login.html");	
+		}
+	});
 });

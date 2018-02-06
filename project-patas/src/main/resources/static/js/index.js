@@ -21,8 +21,17 @@ function displayTodaysVermifugations(vermArray) {
 $(document).ready(function() {	
 	$("#userLogout").click(function(event) {
 		event.preventDefault();
-		$.session.clear();
-		window.location.replace("/login.html");
+		//$.session.clear();
+		
+		$.ajax({
+			url: "/user/clear_session",
+			type: "POST",
+			data: "username",
+			contentType: "application/json; charset=UTF-8",
+			success: function() {
+				window.location.replace("/login.html");
+			}
+		});
 	});
 	
 	var current_date = new Date();

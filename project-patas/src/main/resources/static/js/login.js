@@ -5,6 +5,8 @@ $(document).ready(function() {
 	
 	// TODO: CHECK VALIDATION? IS IT NEEDED?
 	
+	// TODO: IF LOGGED IN, REDIRECT
+	
 	$("#loginForm").submit(function(event) {
 		event.preventDefault();
 		
@@ -23,8 +25,27 @@ $(document).ready(function() {
 			contentType: "application/json; charset=UTF-8",
 			success: function(response) {
 				if (response == true) {
-					$.session.set("username", username);
-					window.location.replace("/index.html");	
+					//$.session.set("username", username);
+					var session = {};
+					session["key"] = "username";
+					session["value"] = username;
+					// Duration can be altered
+					// current duration = 1h
+					session["duration"] = 60 * 60 * 1000;					
+					session = JSON.stringify(session);
+					
+					$.ajax({
+						url: "/user/set_session",
+						type: "POST",
+						data: session,
+						contentType: "application/json; charset=UTF-8",
+						success: function() {
+							window.location.replace("/index.html");
+						},
+						error: function(response) {
+							console.log(response);
+						}						
+					});
 				}
 				else {
 					alert("Senha incorreta. Cuidado maiúsculas e minúsculas.");
@@ -33,7 +54,6 @@ $(document).ready(function() {
 			},
 			error: function(response) {
 				alert(response.responseText);
-				console.log(response);
 				window.location.replace("/login.html");
 			}
 		});

@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import model.Session;
 import model.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,8 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 
+	private List<Session> sessions = new ArrayList<Session>();
+	
 	// Given a list of users, return only the desired information
 	// Used in search function.
 	private List<List<Object>> filterUsersInfo(List<User> user_list) {
@@ -258,5 +261,63 @@ public class UserService {
 		} catch(NumberFormatException e) {
 			return new ResponseEntity<String>("Id inválido.", HttpStatus.BAD_REQUEST);
 		}
+	}
+	
+	@RequestMapping(value = "user/set_session", method = RequestMethod.POST)
+	public ResponseEntity<String> setSession(@RequestBody String sessionDataAsString) {
+		try {
+			String[] pairs = sessionDataAsString.split("\\{|,|\\}");
+			Map<String, String> sessionData = Helper.splitCriteriaFromKeys(pairs);
+			
+			String key = sessionData.get("key");
+			String value = sessionData.get("value");
+			Long duration = Long.parseLong(sessionData.get("duration"));
+			Long createdTime = System.currentTimeMillis();
+			
+			Session session = new Session(key, value, duration, createdTime);
+			sessions.add(session);
+			
+			return new ResponseEntity<String>(HttpStatus.OK);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@RequestMapping(value = "user/get_session", method = RequestMethod.POST)
+	public ResponseEntity<String> getSession(@RequestBody String key) {
+		Integer num_of_sessions = sessions.size();
+		
+		// TODO: SEMAPHORES?
+		
+		for (int i = 0; i < num_of_sessions; i++) {
+			Session s = sessions.get(i);
+			
+			if (s.getKey().equals(key)) {
+				Long currentTime = System.currentTimeMillis();
+				if (s.getCreatedTime() + s.getDuration() > currentTime)
+					return new ResponseEntity<String>(s.getValue(), HttpStatus.OK);
+				else {
+					sessions.remove(i);
+					num_of_sessions--;
+					i--;
+				}
+			}
+		}
+		
+		return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+	}
+	
+	@RequestMapping(value = "user/clear_session", method = RequestMethod.POST)
+	public ResponseEntity<String> clearSession(@RequestBody String key) {
+		for (Session s : sessions) {
+			if (s.getKey().equals(key)) {
+				sessions.remove(s);
+				return new ResponseEntity<String>(HttpStatus.OK);
+			}
+		}
+		
+		return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
 	}
 }
