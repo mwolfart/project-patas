@@ -61,7 +61,7 @@ public class UserService {
 	}
 	
 	// Validate user and save. Acts slightly different if updating or creating.
-	private ResponseEntity<?> validateAndSaveUser(String userDataAsString, Boolean isUserNew) {
+	private ResponseEntity<String> validateAndSaveUser(String userDataAsString, Boolean isUserNew) {
 		String[] pairs = userDataAsString.split("\\{|,|\\}");
 		Map<String, String> userData = Helper.splitCriteriaFromKeys(pairs);
 		
@@ -106,7 +106,7 @@ public class UserService {
 			}
 
 			userRepository.saveAndFlush(user);
-			return new ResponseEntity<Long>(user.getId(), HttpStatus.OK);
+			return new ResponseEntity<String>(user.getUsername(), HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Dados mal formatados.", HttpStatus.BAD_REQUEST);
@@ -115,13 +115,13 @@ public class UserService {
 	
 	// Register
 	@RequestMapping(value = "/user/register", method = RequestMethod.POST)
-	public ResponseEntity<?> userRegister(@RequestBody String userDataAsString) {
+	public ResponseEntity<String> userRegister(@RequestBody String userDataAsString) {
 		return validateAndSaveUser(userDataAsString, true);
 	}
 	
 	// Update
 	@RequestMapping(value = "/user/update", method = RequestMethod.POST)
-	public ResponseEntity<?> userUpdate(@RequestBody String userDataAsString) {
+	public ResponseEntity<String> userUpdate(@RequestBody String userDataAsString) {
 		return validateAndSaveUser(userDataAsString, false);
 	}
 
@@ -254,12 +254,13 @@ public class UserService {
 	
 	// Delete
 	@RequestMapping(value = "/user/delete", method = RequestMethod.POST)
-	public ResponseEntity<String> userDelete(@RequestBody String userId) {
+	public ResponseEntity<String> userDelete(@RequestBody String username) {
 		try {
-			userRepository.delete(Long.parseLong(userId));
+			// TODO: MAKE USERNAME PRIMARY KEY???? CONSULT WITH CLIENTS
+			userRepository.delete(userRepository.findByUsername(username));
 			return new ResponseEntity<String>(HttpStatus.OK);
 		} catch(NumberFormatException e) {
-			return new ResponseEntity<String>("Id inválido.", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>("Nome de usuário inválido.", HttpStatus.BAD_REQUEST);
 		}
 	}
 	

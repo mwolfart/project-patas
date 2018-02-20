@@ -31,28 +31,38 @@ $(document).ready(function() {
 			showAlert($( "#errorPasswordConf" ), "Senhas não coincidem.");
 		else {	
 			var jsonData = {};
-			jsonData["username"] = $.session.get("username");
-			
-			if (jsonData["username"] == "")
-				window.location.replace("/login.html");
-			
-			jsonData["password"] = $("#password").val();
-			jsonData["new_password"] = $("#newPassword").val();
-			jsonData = JSON.stringify(jsonData);
 			
 			$.ajax({
-				url: "/user/set_password",
+				url: "/user/get_session",
 				type: "POST",
-				data: jsonData,
+				data: "username",
 				contentType: "application/json; charset=UTF-8",
 				success: function(response) {
-					alert("Senha alterada com sucesso!");
-					window.location.replace("/user/my_account.html");					
+					// Store the username so we know which user to edit
+					jsonData["username"] = response;
+					jsonData["password"] = $("#password").val();
+					jsonData["new_password"] = $("#newPassword").val();
+					
+					jsonData = JSON.stringify(jsonData);
+					
+					$.ajax({
+						url: "/user/set_password",
+						type: "POST",
+						data: jsonData,
+						contentType: "application/json; charset=UTF-8",
+						success: function(response) {
+							alert("Senha alterada com sucesso!");
+							window.location.replace("/user/my_account.html");					
+						},
+						error: function(response) {
+							alert(response.responseText);
+							window.location.replace("/user/change_password.html");
+						}
+					});
 				},
 				error: function(response) {
-					alert(response.responseText);
-					window.location.replace("/user/change_password.html");
-				}
+					window.location.replace("/login.html");
+				}	
 			});
 		}
 	});

@@ -92,12 +92,12 @@ $(document).ready(function() {
 	});
 	
 	// Load the data using dog id (specified in URL)
-	var user_id = getIdFromURLasString();
+	var username = getUrlParameter("username");
 	
 	$.ajax({
 		url: "/user/view",
 		type: "POST",
-		data: user_id,
+		data: username,
 		contentType: "application/json; charset=UTF-8",
 		success: function(response) {
 			jsonToForm(response);

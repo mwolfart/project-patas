@@ -482,7 +482,7 @@ function putDateInField(field, date) {
 // arrayToTable : String, Object[] -> Void
 // Send the data received from the database to a table
 // Used in search forms
-function arrayToTable(table, table_type, entry_array) {
+function arrayToTable(table, table_type, entry_array, primary_field = "id") {
 	$("tbody > tr").remove();
 	if (entry_array.length > 0) {
 		table.append(
@@ -494,7 +494,7 @@ function arrayToTable(table, table_type, entry_array) {
 					for (var iter = 1; iter < entry.length; iter++)
 						return_string += entry[iter] + '</td><td>';
 					
-					return_string += '<a href="' + table_type + '_view.html?id=' + entry[0] 
+					return_string += '<a href="' + table_type + '_view.html?' + primary_field + '=' + entry[0] 
 										+ '" class="btn" role="button">Visualizar</a></td></tr>';
 					return return_string;
 				}).join());

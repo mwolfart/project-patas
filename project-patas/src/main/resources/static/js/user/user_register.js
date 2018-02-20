@@ -33,7 +33,7 @@ $(document).ready(function() {
 				contentType: "application/json; charset=UTF-8",
 				success: function(response) {
 					alert("Usuário cadastrado com sucesso!");
-					window.location.replace("/user/user_view.html?id=" + response);
+					window.location.replace("/user/user_view.html?username=" + response);
 				},
 				error: function(response) {
 					alert(response.responseText);

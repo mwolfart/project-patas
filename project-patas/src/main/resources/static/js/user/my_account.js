@@ -74,31 +74,38 @@ $(document).ready(function() {
 			// Convert form to json and fix its format
 			var jsonData = formToJson(this);	
 			
-			// Store the id so we know which user to edit
-			// TODO: GET THE USER NAME FROM BACK
-			jsonData["username"] = $.session.get("username");
-			if (jsonData["username"] == "")
-				window.location.replace("/login.html");
-			
-			jsonData = JSON.stringify(jsonData);
-			
-			// Post the data
 			$.ajax({
-				url: "/user/update",
+				url: "/user/get_session",
 				type: "POST",
-				data: jsonData,
+				data: "username",
 				contentType: "application/json; charset=UTF-8",
-				error: function(response) {
-					alert(response.responseText);
-				},
-				success: function() {
-					// Reset the form to previous state
-					$(" #fullName ").prop('disabled', true);
+				success: function(response) {
+					// Store the username so we know which user to edit
+					jsonData["username"] = response;					
+					jsonData = JSON.stringify(jsonData);
 					
-					$(" #editBtn ").prop('disabled', false);
-					$(" #saveBtn ").prop('disabled', true);
-					$(" #changePasswordBtn ").prop('disabled', false);
-					$(" #deleteBtn ").prop('disabled', false);
+					// Post the data
+					$.ajax({
+						url: "/user/update",
+						type: "POST",
+						data: jsonData,
+						contentType: "application/json; charset=UTF-8",
+						error: function(response) {
+							alert(response.responseText);
+						},
+						success: function() {
+							// Reset the form to previous state
+							$(" #fullName ").prop('disabled', true);
+							
+							$(" #editBtn ").prop('disabled', false);
+							$(" #saveBtn ").prop('disabled', true);
+							$(" #changePasswordBtn ").prop('disabled', false);
+							$(" #deleteBtn ").prop('disabled', false);
+						}
+					});
+				},
+				error: function(response) {
+					window.location.replace("/login.html");
 				}
 			});
 		}

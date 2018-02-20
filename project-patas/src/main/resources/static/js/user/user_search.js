@@ -25,7 +25,7 @@ $(document).ready(function() {
 				data: jsonData,
 				contentType: "application/json; charset=UTF-8",
 				success: function(response) {
-					arrayToTable($('#users'), "user", response);
+					arrayToTable($('#users'), "user", response, "username");
 				}
 			});
 		}

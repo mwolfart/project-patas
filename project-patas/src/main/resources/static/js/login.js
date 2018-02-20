@@ -5,7 +5,15 @@ $(document).ready(function() {
 	
 	// TODO: CHECK VALIDATION? IS IT NEEDED?
 	
-	// TODO: IF LOGGED IN, REDIRECT
+	$.ajax({
+		url: "/user/get_session",
+		type: "POST",
+		data: "username",
+		contentType: "application/json; charset=UTF-8",
+		success: function(response) {
+			window.location.replace("/index.html");
+		}
+	});
 	
 	$("#loginForm").submit(function(event) {
 		event.preventDefault();
