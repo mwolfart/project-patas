@@ -25,14 +25,14 @@ $(document).ready(function() {
 	$(" #deleteBtn ").click(function(event) {
 		event.preventDefault();
 		
-		if (confirm("Tem certeza que deseja excluir este usu�rio?")) {
-			// TODO: TESTAR SE USUÁRIO ESTÁ LOGADO
-			var POST = getIdFromURLasString();
+		if (confirm("Tem certeza que deseja excluir este usuário?")) {
+			// Load the data using username (specified in URL)
+			var username = getUrlParameter("username");
 			
 			$.ajax({
 				url: "/user/delete",
 				type: "POST",
-				data: user_id,
+				data: username,
 				contentType: "application/json; charset=UTF-8",
 				success: function(response) {
 					alert("Usuário removido com sucesso!");
@@ -91,7 +91,7 @@ $(document).ready(function() {
 		}
 	});
 	
-	// Load the data using dog id (specified in URL)
+	// Load the data using username (specified in URL)
 	var username = getUrlParameter("username");
 	
 	$.ajax({
