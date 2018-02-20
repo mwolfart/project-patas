@@ -10,12 +10,12 @@ $.ajax({
 			data: username,
 			contentType: "application/json; charset=UTF-8",
 			success: function(response) {
-				if (response == false)
-					window.location.replace("/warnings/access_denied.html");
+				//if (response == false)
+					//window.location.replace("/warnings/access_denied.html");
 			}
 		});
 	},
 	error: function() {
-		window.location.replace("/login.html");	
+		//window.location.replace("/login.html");	
 	}
 });

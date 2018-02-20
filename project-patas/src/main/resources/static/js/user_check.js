@@ -4,6 +4,6 @@ $.ajax({
 	data: "username",
 	contentType: "application/json; charset=UTF-8",
 	error: function() {
-		window.location.replace("/login.html");	
+		//window.location.replace("/login.html");	
 	}
 });
