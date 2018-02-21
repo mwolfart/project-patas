@@ -12,10 +12,12 @@ $.ajax({
 			success: function(response) {
 				if (response == false)
 					window.location.replace("/warnings/access_denied.html");
-			}
+			},
+			async: false
 		});
 	},
 	error: function() {
 		window.location.replace("/login.html");	
-	}
+	},
+	async: false
 });

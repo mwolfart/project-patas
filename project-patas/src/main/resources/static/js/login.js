@@ -5,16 +5,6 @@ $(document).ready(function() {
 	
 	// TODO: CHECK VALIDATION? IS IT NEEDED?
 	
-	$.ajax({
-		url: "/user/get_session",
-		type: "POST",
-		data: "username",
-		contentType: "application/json; charset=UTF-8",
-		success: function(response) {
-			window.location.replace("/index.html");
-		}
-	});
-	
 	$("#loginForm").submit(function(event) {
 		event.preventDefault();
 		
@@ -33,7 +23,6 @@ $(document).ready(function() {
 			contentType: "application/json; charset=UTF-8",
 			success: function(response) {
 				if (response == true) {
-					//$.session.set("username", username);
 					var session = {};
 					session["key"] = "username";
 					session["value"] = username;
