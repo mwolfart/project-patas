@@ -199,7 +199,7 @@ function protectStringField(key) {
 	var is_braces = (key.shiftKey && ((key.which >= 219) && (key.which <= 221)));
 	var is_quotes = (key.shiftKey && (key.which == 222 || key.which == 192));
 	var is_semicolon = (key.which == 59);
-	var is_slash = (key.which == 191) || (key.which == 193);	// used to replace commas
+	var is_slash = !key.shiftKey  && ((key.which == 191) || (key.which == 193));	// used to replace commas
 	
 	if (is_braces || is_quotes || is_semicolon || is_slash)
 		return false;
